@@ -100,9 +100,9 @@ app.post("/student-register", async (req, res) => {
 });
 
 /* PAYMENT PAGE */
-app.get("/payment", (req, res) => {
-    res.render("payment");
-});
+// app.get("/payment", (req, res) => {
+//     res.render("payment");
+// });
 
 
 /* 404 */
