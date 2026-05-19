@@ -63,18 +63,24 @@ app.post("/student-register", async (req, res) => {
             password = ""
         } = req.body;
 
+        /* DEBUG (inside function ONLY) */
+        console.log("PHONE RAW:", phone);
+        console.log("TYPE:", typeof phone);
+
         /* VALIDATION */
         if (!name || !dob || !phone) {
             return res.send("❌ Required fields missing");
         }
 
- const phoneStr = String(phone || "")
-    .replace(/\D/g, "")   // only digits
-    .trim();
+        /* CLEAN PHONE */
+        const phoneStr = String(phone || "")
+            .replace(/\D/g, "")
+            .trim();
 
-if (phoneStr.length !== 10) {
-    return res.send("❌ Wrong Number");
-}
+        if (phoneStr.length !== 10) {
+            return res.send("❌ Wrong Number");
+        }
+
         /* SAFE DOB */
         const dobPart = dob ? dob.replace(/-/g, "") : "000000";
 
@@ -88,7 +94,7 @@ if (phoneStr.length !== 10) {
             father,
             dob,
             className,
-            phone,
+            phone: phoneStr,   // 👈 IMPORTANT FIX
             password,
             username
         });
@@ -100,9 +106,6 @@ if (phoneStr.length !== 10) {
         res.status(500).send("❌ Register Error");
     }
 });
-console.log("PHONE RAW:", phone);
-console.log("TYPE:", typeof phone);
-
 /* PAYMENT PAGE */
 app.get("/payment", (req, res) => {
     res.render("payment");
