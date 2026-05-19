@@ -45,9 +45,9 @@ app.get("/", (req, res) => {
 });
 
 /* STUDENT PAGE */
-// app.get("/student", (req, res) => {
-//     res.render("student-register");
-// });
+app.get("/student", (req, res) => {
+    res.render("student-register");
+});
 
 /* REGISTER */
 // app.post("/student-register", async (req, res) => {
