@@ -55,29 +55,31 @@ app.post("/student-register", async (req, res) => {
     try {
 
         const {
-            name,
-            father,
-            dob,
-            className,
-            phone,
-            password
+            name = "",
+            father = "",
+            dob = "",
+            className = "",
+            phone = "",
+            password = ""
         } = req.body;
 
-        /* AUTO USERNAME */
-
-        const dobPart = dob.split("-").join("");
-
-        const username =
-            name.replace(/\s/g, "").toLowerCase() + dobPart;
-
-        /* PHONE VALIDATION */
+        /* VALIDATION */
+        if (!name || !dob || !phone) {
+            return res.send("❌ Required fields missing");
+        }
 
         if (phone.length !== 10) {
             return res.send("❌ Wrong Number");
         }
 
-        /* SAVE STUDENT */
+        /* SAFE DOB */
+        const dobPart = dob ? dob.replace(/-/g, "") : "000000";
 
+        /* AUTO USERNAME */
+        const username =
+            name.replace(/\s/g, "").toLowerCase() + dobPart;
+
+        /* SAVE */
         await Student.create({
             name,
             father,
@@ -88,21 +90,18 @@ app.post("/student-register", async (req, res) => {
             username
         });
 
-        /* PAYMENT REDIRECT */
-
         res.redirect("/payment");
 
     } catch (err) {
-
-        console.log("REGISTER ERROR:", err);
-        res.send("❌ Register Error");
+        console.log("REGISTER ERROR:", err.message);
+        res.status(500).send("❌ Register Error");
     }
 });
 
 /* PAYMENT PAGE */
-// app.get("/payment", (req, res) => {
-//     res.render("payment");
-// });
+app.get("/payment", (req, res) => {
+    res.render("payment");
+});
 
 
 /* 404 */
