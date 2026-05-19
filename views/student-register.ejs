@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+    <title>Student Registration</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial,sans-serif;
+        }
+
+        body{
+
+            background:#f1f5f9;
+
+            display:flex;
+
+            justify-content:center;
+            align-items:center;
+
+            min-height:100vh;
+        }
+
+        .form-box{
+
+            width:90%;
+            max-width:420px;
+
+            background:white;
+
+            padding:30px;
+
+            border-radius:20px;
+
+            box-shadow:0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .form-box h1{
+
+            text-align:center;
+
+            margin-bottom:25px;
+
+            color:#111827;
+        }
+
+        input{
+
+            width:100%;
+
+            padding:14px;
+
+            margin-top:12px;
+
+            border:1px solid #ccc;
+
+            border-radius:10px;
+
+            font-size:15px;
+        }
+
+        button{
+
+            width:100%;
+
+            padding:14px;
+
+            margin-top:15px;
+
+            border:none;
+
+            border-radius:10px;
+
+            background:#2563eb;
+
+            color:white;
+
+            font-size:16px;
+
+            font-weight:bold;
+
+            cursor:pointer;
+
+            transition:0.3s;
+        }
+
+        button:hover{
+
+            opacity:0.9;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="form-box">
+
+        <h1>🎓 Student Registration</h1>
+
+        <form
+        id="registerForm"
+        action="/student-register"
+        method="POST">
+
+            <input
+            type="text"
+            name="name"
+            placeholder="Student Name"
+            required>
+
+            <input
+            type="text"
+            name="father"
+            placeholder="Father Name"
+            required>
+
+            <input
+            type="date"
+            name="dob"
+            required>
+
+            <input
+            type="text"
+            name="className"
+            placeholder="Class"
+            required>
+
+            <input
+            type="text"
+            id="phone"
+            name="phone"
+            placeholder="Phone Number"
+            required>
+
+            <input
+            type="password"
+            name="password"
+            placeholder="Create Password"
+            required>
+
+            <!-- SEND OTP -->
+
+            <button
+            type="button"
+            id="sendOtpBtn"
+            onclick="sendOTP()">
+
+                Send OTP
+
+            </button>
+
+            <!-- OTP -->
+
+            <input
+            type="text"
+            id="otp"
+            placeholder="Enter OTP">
+
+            <!-- VERIFY -->
+
+            <button
+            type="button"
+            onclick="verifyOTP()">
+
+                Verify OTP & Register
+
+            </button>
+
+        </form>
+
+    </div>
+
+    <!-- ================= FIREBASE OTP ================= -->
+
+    <script type="module">
+
+        import { initializeApp }
+
+        from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+        import {
+
+            getAuth,
+
+            RecaptchaVerifier,
+
+            signInWithPhoneNumber
+
+        }
+
+        from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        /* ================= FIREBASE CONFIG ================= */
+
+        const firebaseConfig = {
+
+          apiKey: "AIzaSyDPGxzcyBx71iVeIZ65pSyUJWr6iTvaPGE",
+
+          authDomain: "global-services-6ef05.firebaseapp.com",
+
+          projectId: "global-services-6ef05",
+
+          storageBucket: "global-services-6ef05.firebasestorage.app",
+
+          messagingSenderId: "1045507358479",
+
+          appId: "1:1045507358479:web:daef2c28999ec192b8c87a",
+
+          measurementId: "G-3SRPB72ENR"
+        };
+
+        /* ================= INIT ================= */
+
+        const app = initializeApp(firebaseConfig);
+
+        const auth = getAuth(app);
+
+        /* ================= RECAPTCHA ================= */
+
+        window.recaptchaVerifier =
+
+        new RecaptchaVerifier(auth, 'sendOtpBtn', {
+
+            size: 'invisible'
+        });
+
+        /* ================= SEND OTP ================= */
+
+        window.sendOTP = function(){
+
+            const phone =
+
+            "+91" +
+
+            document.getElementById("phone").value;
+
+            signInWithPhoneNumber(
+
+                auth,
+
+                phone,
+
+                window.recaptchaVerifier
+            )
+
+            .then((confirmationResult) => {
+
+                window.confirmationResult =
+
+                confirmationResult;
+
+                alert("✅ OTP Sent");
+            })
+
+            .catch((error) => {
+
+                console.log(error);
+
+                alert("❌ Wrong Number");
+            });
+        }
+
+        /* ================= VERIFY OTP ================= */
+
+        window.verifyOTP = function(){
+
+            const otp =
+
+            document.getElementById("otp").value;
+
+            confirmationResult.confirm(otp)
+
+            .then((result) => {
+
+                alert("✅ Mobile Verified");
+
+                document
+                .getElementById("registerForm")
+                .submit();
+            })
+
+            .catch((error) => {
+
+                alert("❌ Invalid OTP");
+            });
+        }
+
+    </script>
+
+</body>
+
+</html>

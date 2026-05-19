@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>G & S Coaching</title>
+
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins',sans-serif;
+        }
+
+        body{
+            background:#eef2ff;
+            overflow-x:hidden;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar{
+
+            width:100%;
+            height:75px;
+
+            background:rgba(0,0,0,0.75);
+
+            backdrop-filter:blur(10px);
+
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+
+            padding:0 25px;
+
+            position:sticky;
+            top:0;
+            z-index:1000;
+
+            box-shadow:0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .logo{
+
+            color:white;
+            font-size:30px;
+            font-weight:bold;
+
+            letter-spacing:2px;
+        }
+
+        .menu{
+
+            display:flex;
+            align-items:center;
+            gap:15px;
+        }
+
+        .menu a{
+
+            color:white;
+            text-decoration:none;
+
+            padding:12px 18px;
+
+            border-radius:12px;
+
+            font-size:15px;
+
+            transition:0.3s;
+        }
+
+        .menu a:hover{
+
+            background:white;
+            color:#111827;
+
+            transform:translateY(-2px);
+        }
+
+        /* ================= HAMBURGER ================= */
+
+        .hamburger{
+
+            width:45px;
+            height:45px;
+
+            background:rgba(255,255,255,0.15);
+
+            border-radius:12px;
+
+            display:none;
+
+            justify-content:center;
+            align-items:center;
+
+            cursor:pointer;
+
+            transition:0.3s;
+        }
+
+        .hamburger:hover{
+
+            background:white;
+        }
+
+        .hamburger:hover i{
+
+            color:#111827;
+        }
+
+        .hamburger i{
+
+            color:white;
+            font-size:22px;
+
+            transition:0.3s;
+        }
+
+        /* ================= MOBILE MENU ================= */
+
+        @media(max-width:768px){
+
+            .hamburger{
+                display:flex;
+            }
+
+            .menu{
+
+                position:absolute;
+
+                top:85px;
+                right:20px;
+
+                width:260px;
+
+                background:white;
+
+                border-radius:20px;
+
+                padding:20px;
+
+                display:flex;
+                flex-direction:column;
+
+                gap:12px;
+
+                box-shadow:0 10px 30px rgba(0,0,0,0.2);
+
+                opacity:0;
+                visibility:hidden;
+
+                transform:translateY(-20px);
+
+                transition:0.4s;
+            }
+
+            .menu.active{
+
+                opacity:1;
+                visibility:visible;
+
+                transform:translateY(0);
+            }
+
+            .menu a{
+
+                color:#111827;
+
+                background:#f3f4f6;
+
+                font-weight:bold;
+
+                text-align:center;
+            }
+
+            .menu a:hover{
+
+                background:#111827;
+                color:white;
+            }
+        }
+
+        /* ================= HERO ================= */
+
+        .hero{
+
+            width:92%;
+            max-width:1150px;
+
+            margin:40px auto;
+
+            background:white;
+
+            border-radius:30px;
+
+            padding:70px 35px;
+
+            text-align:center;
+
+            box-shadow:0 15px 35px rgba(0,0,0,0.08);
+
+            position:relative;
+
+            overflow:hidden;
+        }
+
+        .hero::before{
+
+            content:"";
+
+            position:absolute;
+
+            width:300px;
+            height:300px;
+
+            background:#6366f1;
+
+            border-radius:50%;
+
+            top:-120px;
+            right:-100px;
+
+            opacity:0.1;
+        }
+
+        .hero::after{
+
+            content:"";
+
+            position:absolute;
+
+            width:250px;
+            height:250px;
+
+            background:#3b82f6;
+
+            border-radius:50%;
+
+            bottom:-120px;
+            left:-100px;
+
+            opacity:0.1;
+        }
+
+        .hero h1{
+
+            font-size:48px;
+
+            color:#111827;
+
+            margin-bottom:20px;
+
+            position:relative;
+        }
+
+        .hero p{
+
+            font-size:18px;
+
+            color:#6b7280;
+
+            line-height:1.8;
+
+            margin-bottom:40px;
+
+            position:relative;
+        }
+
+        /* ================= BUTTONS ================= */
+
+        .buttons{
+
+            display:flex;
+
+            justify-content:center;
+
+            flex-wrap:wrap;
+
+            gap:18px;
+
+            position:relative;
+        }
+
+        .btn{
+
+            text-decoration:none;
+
+            background:linear-gradient(135deg,#2563eb,#1e3a8a);
+
+            color:white;
+
+            padding:15px 28px;
+
+            border-radius:15px;
+
+            font-size:15px;
+
+            font-weight:bold;
+
+            transition:0.3s;
+
+            box-shadow:0 6px 18px rgba(37,99,235,0.3);
+        }
+
+        .btn:hover{
+
+            transform:translateY(-4px) scale(1.03);
+
+            opacity:0.95;
+        }
+
+        /* ================= FEATURES ================= */
+
+        .features{
+
+            width:92%;
+            max-width:1150px;
+
+            margin:auto;
+
+            display:grid;
+
+            grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+
+            gap:25px;
+
+            margin-bottom:50px;
+        }
+
+        .card{
+
+            background:white;
+
+            padding:35px;
+
+            border-radius:25px;
+
+            text-align:center;
+
+            box-shadow:0 10px 25px rgba(0,0,0,0.07);
+
+            transition:0.3s;
+
+            position:relative;
+
+            overflow:hidden;
+        }
+
+        .card:hover{
+
+            transform:translateY(-8px);
+        }
+
+        .card::before{
+
+            content:"";
+
+            position:absolute;
+
+            width:120px;
+            height:120px;
+
+            background:#2563eb;
+
+            border-radius:50%;
+
+            top:-50px;
+            right:-40px;
+
+            opacity:0.08;
+        }
+
+        .card i{
+
+            font-size:45px;
+
+            color:#2563eb;
+
+            margin-bottom:18px;
+
+            position:relative;
+        }
+
+        .card h3{
+
+            font-size:22px;
+
+            margin-bottom:12px;
+
+            color:#111827;
+
+            position:relative;
+        }
+
+        .card p{
+
+            color:#6b7280;
+
+            line-height:1.7;
+
+            position:relative;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <div class="navbar">
+
+        <div class="logo">
+
+            G & S
+
+        </div>
+
+        <div class="hamburger" onclick="toggleMenu()">
+
+            <i class="fa-solid fa-bars" id="menu-icon"></i>
+
+        </div>
+
+        <div class="menu" id="menu">
+
+            <a href="/">Home</a>
+
+            <a href="/student">Student Login</a>
+
+            <a href="/customer">Customer</a>
+
+            <a href="/admin">Admin</a>
+
+            <a href="/gs">G & S</a>
+
+        </div>
+
+    </div>
+
+    <!-- ================= HERO ================= -->
+
+    <div class="hero">
+
+        <h1>🎓 G & S Coaching Management</h1>
+
+        <p>
+
+            Professional Coaching ERP Using
+            Node.js, Express, MongoDB and EJS
+
+        </p>
+
+        <div class="buttons">
+
+            <a href="/student" class="btn">
+
+                Student Login
+
+            </a>
+
+            <a href="/customer" class="btn">
+
+                Customer
+
+            </a>
+
+            <a href="/admin" class="btn">
+
+                Admin Panel
+
+            </a>
+
+            <a href="/dashboard" class="btn">
+
+                Dashboard
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- ================= FEATURES ================= -->
+
+    <div class="features">
+
+        <div class="card">
+
+            <i class="fa-solid fa-user-graduate"></i>
+
+            <h3>Student Panel</h3>
+
+            <p>
+                Manage students, attendance and courses professionally.
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <i class="fa-solid fa-file-lines"></i>
+
+            <h3>Notes System</h3>
+
+            <p>
+                Upload and manage notes, PDFs and study materials online.
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <i class="fa-solid fa-chart-line"></i>
+
+            <h3>Dashboard</h3>
+
+            <p>
+                Professional dashboard with live student and coaching data.
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- ================= SCRIPT ================= -->
+
+    <script>
+
+        function toggleMenu(){
+
+            const menu =
+            document.getElementById("menu");
+
+            const icon =
+            document.getElementById("menu-icon");
+
+            menu.classList.toggle("active");
+
+            if(menu.classList.contains("active")){
+
+                icon.classList.remove("fa-bars");
+
+                icon.classList.add("fa-xmark");
+
+            }else{
+
+                icon.classList.remove("fa-xmark");
+
+                icon.classList.add("fa-bars");
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>
