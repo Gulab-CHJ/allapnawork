@@ -35,7 +35,7 @@ mongoose.connect(process.env.MONGO_URL)
 
 /* ================= MODEL ================= */
 
-const Student = require("./models/Student");
+// const Student = require("./models/Student");
 
 /* ================= ROUTES ================= */
 
@@ -45,69 +45,65 @@ app.get("/", (req, res) => {
 });
 
 /* STUDENT PAGE */
-app.get("/student", (req, res) => {
-    res.render("student-register");
-});
+// app.get("/student", (req, res) => {
+//     res.render("student-register");
+// });
 
 /* REGISTER */
-app.post("/student-register", async (req, res) => {
+// app.post("/student-register", async (req, res) => {
 
-    try {
+//     try {
 
-        const {
-            name,
-            father,
-            dob,
-            className,
-            phone,
-            password
-        } = req.body;
+//         const {
+//             name,
+//             father,
+//             dob,
+//             className,
+//             phone,
+//             password
+//         } = req.body;
 
-        /* AUTO USERNAME */
+//         /* AUTO USERNAME */
 
-        const dobPart = dob.split("-").join("");
+//         const dobPart = dob.split("-").join("");
 
-        const username =
-            name.replace(/\s/g, "").toLowerCase() + dobPart;
+//         const username =
+//             name.replace(/\s/g, "").toLowerCase() + dobPart;
 
-        /* PHONE VALIDATION */
+//         /* PHONE VALIDATION */
 
-        if (phone.length !== 10) {
-            return res.send("❌ Wrong Number");
-        }
+//         if (phone.length !== 10) {
+//             return res.send("❌ Wrong Number");
+//         }
 
-        /* SAVE STUDENT */
+//         /* SAVE STUDENT */
 
-        await Student.create({
-            name,
-            father,
-            dob,
-            className,
-            phone,
-            password,
-            username
-        });
+//         await Student.create({
+//             name,
+//             father,
+//             dob,
+//             className,
+//             phone,
+//             password,
+//             username
+//         });
 
-        /* PAYMENT REDIRECT */
+//         /* PAYMENT REDIRECT */
 
-        res.redirect("/payment");
+//         res.redirect("/payment");
 
-    } catch (err) {
+//     } catch (err) {
 
-        console.log("REGISTER ERROR:", err);
-        res.send("❌ Register Error");
-    }
-});
+//         console.log("REGISTER ERROR:", err);
+//         res.send("❌ Register Error");
+//     }
+// });
 
 /* PAYMENT PAGE */
-app.get("/payment", (req, res) => {
-    res.render("payment");
-});
+// app.get("/payment", (req, res) => {
+//     res.render("payment");
+// });
 
-/* TEST ROUTE */
-app.get("/test", (req, res) => {
-    res.send("🚀 Server Working Fine");
-});
 
 /* 404 */
 app.use((req, res) => {
