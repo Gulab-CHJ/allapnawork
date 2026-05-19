@@ -14,10 +14,8 @@ app.get("/", (req, res) => {
 
 // student
 app.get("/student", (req, res) => {
-
     res.render("student-register");
 });
-
 const Student = require("./models/Student");
 
 app.post("/student-register", async (req, res) => {
