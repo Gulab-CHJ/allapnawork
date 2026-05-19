@@ -78,58 +78,59 @@ import {
   signInWithPhoneNumber
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-/* ================= FIREBASE CONFIG ================= */
+/* ================= FIREBASE CONFIG (REAL MUST) ================= */
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT",
   appId: "YOUR_APP_ID"
 };
 
-/* ================= INIT ================= */
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-/* ================= RECAPTCHA FIX ================= */
-window.recaptchaVerifier = new RecaptchaVerifier(
-  'recaptcha-container',
-  {
-    size: 'invisible'
-  },
-  auth
-);
+/* ================= FIX: RECAPTCHA PROPER INIT ================= */
+window.onload = function () {
 
-window.recaptchaVerifier.render();
+    window.recaptchaVerifier = new RecaptchaVerifier(
+        'recaptcha-container',
+        {
+            size: 'invisible'
+        },
+        auth
+    );
+
+    window.recaptchaVerifier.render();
+};
 
 /* ================= SEND OTP ================= */
 window.sendOTP = async function () {
 
     let phone = document.getElementById("phone").value;
-
     phone = phone.replace(/\D/g, "");
 
     if (phone.length !== 10) {
-        alert("❌ Invalid Mobile Number");
+        alert("❌ Invalid Number");
         return;
     }
 
     const fullPhone = "+91" + phone;
 
     try {
-        const confirmationResult = await signInWithPhoneNumber(
+
+        const result = await signInWithPhoneNumber(
             auth,
             fullPhone,
             window.recaptchaVerifier
         );
 
-        window.confirmationResult = confirmationResult;
+        window.confirmationResult = result;
 
         alert("✅ OTP Sent Successfully");
 
-        console.log("OTP SENT TO:", fullPhone);
-
     } catch (error) {
-        console.log(error);
+
+        console.log("OTP ERROR:", error);
         alert("❌ OTP Failed (Check Firebase Settings)");
     }
 };
@@ -140,12 +141,13 @@ window.verifyOTP = function () {
     const otp = document.getElementById("otp").value;
 
     if (!window.confirmationResult) {
-        alert("❌ Please Send OTP First");
+        alert("❌ Send OTP first");
         return;
     }
 
     window.confirmationResult.confirm(otp)
         .then(() => {
+
             alert("✅ OTP Verified");
 
             document.getElementById("registerForm").submit();
