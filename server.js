@@ -38,14 +38,20 @@ app.get("/", (req, res) => {
     res.render("index");
 });
 
-/* STUDENT PAGE */
+/* STUDENT REGISTER PAGE */
 app.get("/student", (req, res) => {
     res.render("student-register");
+});
+
+/* EMAIL VERIFY PAGE (FOR EMAIL OTP SYSTEM) */
+app.get("/verify", (req, res) => {
+    res.render("verify");
 });
 
 /* REGISTER */
 app.post("/student-register", async (req, res) => {
     try {
+
         const {
             name = "",
             father = "",
@@ -55,24 +61,24 @@ app.post("/student-register", async (req, res) => {
             password = ""
         } = req.body;
 
-        /* PHONE CLEAN */
+        /* CLEAN PHONE */
         const phoneStr = String(phone).replace(/\D/g, "");
 
         if (phoneStr.length !== 10) {
             return res.status(400).send("❌ Wrong Number");
         }
 
-        /* DOB SAFE */
+        /* SAFE DOB */
         const dobPart = dob ? dob.replace(/-/g, "") : "000000";
 
         /* AUTO USERNAME */
         const username =
-            name.replace(/\s/g, "").toLowerCase() + dobPart;
+            name.trim().replace(/\s+/g, "").toLowerCase() + dobPart;
 
-        /* SAVE */
+        /* SAVE STUDENT */
         await Student.create({
-            name,
-            father,
+            name: name.trim(),
+            father: father.trim(),
             dob,
             className,
             phone: phoneStr,
@@ -83,7 +89,7 @@ app.post("/student-register", async (req, res) => {
         return res.redirect("/payment");
 
     } catch (err) {
-        console.log("REGISTER ERROR:", err.message);
+        console.log("REGISTER ERROR:", err);
         return res.status(500).send("❌ Register Error");
     }
 });
@@ -104,7 +110,6 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log("🚀 Server Running on port " + PORT);
 });
-
 // const express = require("express");
 // const app = express();
 
