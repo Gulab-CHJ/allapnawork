@@ -68,10 +68,11 @@ app.post("/student-register", async (req, res) => {
             return res.send("❌ Required fields missing");
         }
 
-        if (phone.length !== 10) {
-            return res.send("❌ Wrong Number");
-        }
+        const phoneStr = String(phone);
 
+if (!/^[0-9]{10}$/.test(phoneStr)) {
+    return res.send("❌ Wrong Number");
+}
         /* SAFE DOB */
         const dobPart = dob ? dob.replace(/-/g, "") : "000000";
 
