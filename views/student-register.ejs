@@ -78,7 +78,7 @@ import {
   signInWithPhoneNumber
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-/* ================= FIREBASE CONFIG (REAL MUST) ================= */
+/* 🔥 YOUR REAL FIREBASE CONFIG (REPLACE THIS) */
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY",
   authDomain: "YOUR_PROJECT.firebaseapp.com",
@@ -89,34 +89,31 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-/* ================= FIX: RECAPTCHA PROPER INIT ================= */
-window.onload = function () {
+/* ================= CAPTCHA INIT ================= */
+window.recaptchaVerifier = new RecaptchaVerifier(
+  'recaptcha-container',
+  {
+    size: 'invisible'
+  },
+  auth
+);
 
-    window.recaptchaVerifier = new RecaptchaVerifier(
-        'recaptcha-container',
-        {
-            size: 'invisible'
-        },
-        auth
-    );
-
-    window.recaptchaVerifier.render();
-};
+window.recaptchaVerifier.render();
 
 /* ================= SEND OTP ================= */
 window.sendOTP = async function () {
 
-    let phone = document.getElementById("phone").value;
-    phone = phone.replace(/\D/g, "");
-
-    if (phone.length !== 10) {
-        alert("❌ Invalid Number");
-        return;
-    }
-
-    const fullPhone = "+91" + phone;
-
     try {
+
+        let phone = document.getElementById("phone").value;
+        phone = phone.replace(/\D/g, "");
+
+        if (phone.length !== 10) {
+            alert("❌ Invalid Number");
+            return;
+        }
+
+        const fullPhone = "+91" + phone;
 
         const result = await signInWithPhoneNumber(
             auth,
@@ -129,9 +126,8 @@ window.sendOTP = async function () {
         alert("✅ OTP Sent Successfully");
 
     } catch (error) {
-
-        console.log("OTP ERROR:", error);
-        alert("❌ OTP Failed (Check Firebase Settings)");
+        console.log(error);
+        alert("❌ OTP Failed: " + error.code);
     }
 };
 
@@ -141,7 +137,7 @@ window.verifyOTP = function () {
     const otp = document.getElementById("otp").value;
 
     if (!window.confirmationResult) {
-        alert("❌ Send OTP first");
+        alert("❌ Please send OTP first");
         return;
     }
 
@@ -152,7 +148,8 @@ window.verifyOTP = function () {
 
             document.getElementById("registerForm").submit();
         })
-        .catch(() => {
+        .catch((error) => {
+            console.log(error);
             alert("❌ Wrong OTP");
         });
 };
