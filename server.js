@@ -8,33 +8,27 @@ const session = require("express-session");
 const app = express();
 
 /* ================= MIDDLEWARE ================= */
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
 app.use(express.static(path.join(__dirname, "public")));
 
 /* ================= SESSION ================= */
-
 app.use(session({
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET || "defaultsecret",
     resave: false,
     saveUninitialized: false
 }));
 
 /* ================= VIEW ENGINE ================= */
-
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 /* ================= DATABASE ================= */
-
 mongoose.connect(process.env.MONGO_URL)
 .then(() => console.log("✅ MongoDB Connected"))
 .catch(err => console.log("❌ Mongo Error:", err));
 
 /* ================= MODEL ================= */
-
 const Student = require("./models/student");
 
 /* ================= ROUTES ================= */
@@ -51,29 +45,31 @@ app.get("/student", (req, res) => {
 
 /* REGISTER */
 app.post("/student-register", async (req, res) => {
-
     try {
-
         const {
-            name,
-            father,
-            dob,
-            className,
-            phone,
-            password
+            name = "",
+            father = "",
+            dob = "",
+            className = "",
+            phone = "",
+            password = ""
         } = req.body;
 
+        /* PHONE CLEAN */
         const phoneStr = String(phone).replace(/\D/g, "");
 
         if (phoneStr.length !== 10) {
-            return res.send("❌ Wrong Number");
+            return res.status(400).send("❌ Wrong Number");
         }
 
-        const dobPart = dob.replace(/-/g, "");
+        /* DOB SAFE */
+        const dobPart = dob ? dob.replace(/-/g, "") : "000000";
 
+        /* AUTO USERNAME */
         const username =
             name.replace(/\s/g, "").toLowerCase() + dobPart;
 
+        /* SAVE */
         await Student.create({
             name,
             father,
@@ -84,26 +80,25 @@ app.post("/student-register", async (req, res) => {
             username
         });
 
-        res.redirect("/payment");
+        return res.redirect("/payment");
 
     } catch (err) {
-        console.log(err);
-        res.send("❌ Register Error");
+        console.log("REGISTER ERROR:", err.message);
+        return res.status(500).send("❌ Register Error");
     }
 });
+
 /* PAYMENT PAGE */
 app.get("/payment", (req, res) => {
     res.render("payment");
 });
 
-
 /* 404 */
 app.use((req, res) => {
-    res.status(404).send("404 Page Not Found");
+    res.status(404).send("❌ 404 Page Not Found");
 });
 
 /* ================= START SERVER ================= */
-
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
