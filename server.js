@@ -35,7 +35,7 @@ mongoose.connect(process.env.MONGO_URL)
 
 /* ================= MODEL ================= */
 
-const Student = require("./models/Student");
+const Student = require("./models/student");
 
 /* ================= ROUTES ================= */
 
