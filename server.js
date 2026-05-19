@@ -113,83 +113,131 @@
 
 
 
-
-
 require("dotenv").config();
 
 const express = require("express");
-const mongoose = require("mongoose");
-const nodemailer = require("nodemailer");
 const path = require("path");
+const mongoose = require("mongoose");
+const session = require("express-session");
+const nodemailer = require("nodemailer");
 
 const app = express();
 
+/* ================= MIDDLEWARE ================= */
+
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));
 
+app.use(express.static(path.join(__dirname, "public")));
 
-/* ================= MONGODB ================= */
+/* ================= SESSION ================= */
 
-mongoose.connect(process.env.MONGO_URI)
-.then(()=>console.log("MongoDB Connected"))
-.catch(err=>console.log(err));
+app.use(session({
+    secret: process.env.SESSION_SECRET || "defaultsecret",
+    resave: false,
+    saveUninitialized: false
+}));
 
+/* ================= VIEW ENGINE ================= */
+
+app.set("view engine", "ejs");
+
+app.set("views", path.join(__dirname, "views"));
+
+/* ================= DATABASE ================= */
+
+mongoose.connect(process.env.MONGO_URL)
+.then(() => console.log("✅ MongoDB Connected"))
+.catch(err => console.log("❌ Mongo Error:", err));
 
 /* ================= MODELS ================= */
 
+const Student = require("./models/student");
+
 const otpSchema = new mongoose.Schema({
-    email:String,
-    otp:String,
-    createdAt:{
-        type:Date,
-        default:Date.now,
-        expires:300
+
+    email: String,
+
+    otp: String,
+
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        expires: 300
     }
+
 });
 
-const OTP = mongoose.model("OTP",otpSchema);
-
-
-const studentSchema = new mongoose.Schema({
-    name:String,
-    father:String,
-    dob:String,
-    className:String,
-    email:String
-});
-
-const Student = mongoose.model("Student",studentSchema);
-
+const OTP = mongoose.model("OTP", otpSchema);
 
 /* ================= NODEMAILER ================= */
 
 const transporter = nodemailer.createTransport({
-    service:"gmail",
-    auth:{
-        user:process.env.EMAIL_USER,
-        pass:process.env.EMAIL_PASS
+
+    service: "gmail",
+
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
     }
+
 });
 
+/* ================= ROUTES ================= */
 
-/* ================= FRONTEND ================= */
+/* HOME */
 
-app.get("/",(req,res)=>{
-    res.sendFile(path.join(__dirname,"index.html"));
+app.get("/", (req, res) => {
+
+    res.render("index");
+
 });
 
+/* STUDENT PAGE */
+
+app.get("/student", (req, res) => {
+
+    res.render("student-register");
+
+});
+
+/* VERIFY PAGE */
+
+app.get("/verify", (req, res) => {
+
+    res.render("verify");
+
+});
+
+/* PAYMENT PAGE */
+
+app.get("/payment", (req, res) => {
+
+    res.render("payment");
+
+});
 
 /* ================= SEND OTP ================= */
 
-app.post("/send-otp",async(req,res)=>{
+app.post("/send-otp", async (req, res) => {
 
-    try{
+    try {
 
-        const {email} = req.body;
+        const { email } = req.body;
 
-        const otp = Math.floor(100000 + Math.random()*900000).toString();
+        if (!email) {
 
-        await OTP.deleteMany({email});
+            return res.json({
+                success: false,
+                message: "Email Required"
+            });
+
+        }
+
+        const otp =
+            Math.floor(100000 + Math.random() * 900000).toString();
+
+        await OTP.deleteMany({ email });
 
         await OTP.create({
             email,
@@ -197,104 +245,190 @@ app.post("/send-otp",async(req,res)=>{
         });
 
         await transporter.sendMail({
-            from:process.env.EMAIL_USER,
-            to:email,
-            subject:"Your OTP Code",
-            html:`
-                <h2>Your OTP is:</h2>
-                <h1>${otp}</h1>
-                <p>Valid for 5 minutes</p>
+
+            from: process.env.EMAIL_USER,
+
+            to: email,
+
+            subject: "Your OTP Code",
+
+            html: `
+                <div style="font-family:Arial;padding:20px;">
+                    <h2>Email Verification</h2>
+
+                    <h1 style="letter-spacing:5px;">
+                        ${otp}
+                    </h1>
+
+                    <p>OTP valid for 5 minutes.</p>
+                </div>
             `
         });
 
         res.json({
-            success:true,
-            message:"OTP Sent Successfully"
+            success: true,
+            message: "OTP Sent Successfully"
         });
 
-    }catch(err){
+    } catch (err) {
 
-        console.log(err);
+        console.log("OTP ERROR:", err);
 
         res.json({
-            success:false,
-            message:"OTP Send Failed"
+            success: false,
+            message: "OTP Send Failed"
         });
+
     }
 
 });
-
 
 /* ================= VERIFY OTP ================= */
 
-app.post("/verify-otp",async(req,res)=>{
+app.post("/verify-otp", async (req, res) => {
 
-    try{
+    try {
 
-        const {email,otp} = req.body;
+        const { email, otp } = req.body;
 
-        const data = await OTP.findOne({email,otp});
+        const data = await OTP.findOne({ email, otp });
 
-        if(!data){
+        if (!data) {
 
             return res.json({
-                success:false,
-                message:"Invalid OTP"
+                success: false,
+                message: "Invalid OTP"
             });
+
         }
 
+        req.session.verifiedEmail = email;
+
         res.json({
-            success:true,
-            message:"OTP Verified"
+            success: true,
+            message: "OTP Verified"
         });
 
-    }catch(err){
+    } catch (err) {
 
-        console.log(err);
+        console.log("VERIFY ERROR:", err);
 
         res.json({
-            success:false,
-            message:"Verification Failed"
+            success: false,
+            message: "Verification Failed"
         });
 
     }
 
 });
-
 
 /* ================= REGISTER ================= */
 
-app.post("/student-register",async(req,res)=>{
+app.post("/student-register", async (req, res) => {
 
-    try{
+    try {
 
-        await Student.create(req.body);
+        const {
 
-        res.json({
-            success:true,
-            message:"Student Registered Successfully"
+            name = "",
+            father = "",
+            dob = "",
+            className = "",
+            phone = "",
+            password = "",
+            email = ""
+
+        } = req.body;
+
+        /* EMAIL VERIFY CHECK */
+
+        if (req.session.verifiedEmail !== email) {
+
+            return res
+            .status(400)
+            .send("❌ Verify Email First");
+
+        }
+
+        /* CLEAN PHONE */
+
+        const phoneStr =
+            String(phone).replace(/\D/g, "");
+
+        if (phoneStr.length !== 10) {
+
+            return res
+            .status(400)
+            .send("❌ Wrong Number");
+
+        }
+
+        /* DOB */
+
+        const dobPart =
+            dob ? dob.replace(/-/g, "") : "000000";
+
+        /* USERNAME */
+
+        const username =
+            name.trim()
+            .replace(/\s+/g, "")
+            .toLowerCase() + dobPart;
+
+        /* SAVE */
+
+        await Student.create({
+
+            name: name.trim(),
+
+            father: father.trim(),
+
+            dob,
+
+            className,
+
+            phone: phoneStr,
+
+            email,
+
+            password,
+
+            username
+
         });
 
-    }catch(err){
+        req.session.verifiedEmail = null;
 
-        console.log(err);
+        return res.redirect("/payment");
 
-        res.json({
-            success:false,
-            message:"Registration Failed"
-        });
+    } catch (err) {
+
+        console.log("REGISTER ERROR:", err);
+
+        return res
+        .status(500)
+        .send("❌ Register Error");
 
     }
 
 });
 
+/* ================= 404 ================= */
 
-/* ================= START ================= */
+app.use((req, res) => {
 
-const PORT = process.env.PORT || 5000;
+    res.status(404).send("❌ 404 Page Not Found");
 
-app.listen(PORT,()=>{
-    console.log("Server Running On Port",PORT);
+});
+
+/* ================= START SERVER ================= */
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+
+    console.log("🚀 Server Running On Port " + PORT);
+
 });
 
 
