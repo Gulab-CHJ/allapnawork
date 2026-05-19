@@ -32,9 +32,7 @@ app.get("/", (req, res) => {
 
 /* STUDENT PAGE */
 
-app.get("/student", (req, res) => {
-    res.render("student-register");
-});
+
 
 /* REGISTER */
 
