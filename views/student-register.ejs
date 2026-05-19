@@ -67,12 +67,12 @@ button{
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, sendSignInLinkToEmail } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-/* 🔥 YOUR FIREBASE CONFIG */
+/* 🔥 FIREBASE CONFIG (FIXED) */
 const firebaseConfig = {
   apiKey: "AIzaSyDPGxzcyBx71iVeIZ65pSyUJWr6iTvaPGE",
   authDomain: "global-services-6ef05.firebaseapp.com",
   projectId: "global-services-6ef05",
-  storageBucket: "global-services-6ef05.firebasestorage.app",
+  storageBucket: "global-services-6ef05.appspot.com",   // ✅ FIXED
   messagingSenderId: "1045507358479",
   appId: "1:1045507358479:web:daef2c28999ec192b8c87a",
   measurementId: "G-3SRPB72ENR"
@@ -81,13 +81,18 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-/* EMAIL OTP SEND */
+/* ================= SEND EMAIL OTP ================= */
 window.sendEmailLink = async function () {
 
     const email = document.getElementById("email").value;
 
+    if (!email) {
+        alert("❌ Enter email first");
+        return;
+    }
+
     const actionCodeSettings = {
-        url: "http://localhost:3000/verify",
+        url: "https://all.apnaworkbygulab.com/verify", // 🔥 production URL
         handleCodeInApp: true
     };
 
@@ -99,8 +104,8 @@ window.sendEmailLink = async function () {
         alert("📩 OTP Email Sent Successfully");
 
     } catch (err) {
-        console.log(err);
-        alert("❌ Email Send Failed");
+        console.log("EMAIL ERROR:", err);
+        alert("❌ Email Send Failed: " + err.code);
     }
 };
 
