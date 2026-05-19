@@ -1,26 +1,46 @@
 const express = require("express");
 const path = require("path");
+const mongoose = require("mongoose");
 
 const app = express();
 
-app.set("view engine", "ejs");
+/* ================= MIDDLEWARE ================= */
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+/* ================= VIEW ================= */
+
+app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-app.get("/", (req, res) => {
+/* ================= DB ================= */
 
+mongoose.connect("mongodb://127.0.0.1:27017/gs")
+.then(() => console.log("DB Connected"))
+.catch(err => console.log(err));
+
+/* ================= MODEL ================= */
+
+const Student = require("./models/Student");
+
+/* ================= ROUTES ================= */
+
+app.get("/", (req, res) => {
     res.render("index");
 });
 
-// student
+/* STUDENT PAGE */
+
 app.get("/student", (req, res) => {
     res.render("student-register");
 });
-const Student = require("./models/Student");
+
+/* REGISTER */
 
 app.post("/student-register", async (req, res) => {
 
-    try{
+    try {
 
         const {
             name,
@@ -31,26 +51,23 @@ app.post("/student-register", async (req, res) => {
             password
         } = req.body;
 
-        /* ================= AUTO USERNAME ================= */
+        /* AUTO USERNAME */
 
-        const dobPart =
-        dob.replaceAll("-", "");
+        const dobPart = dob.split("-").join("");
 
         const username =
-        name.replace(/\s/g,"").toLowerCase()
-        + dobPart;
+            name.replace(/\s/g, "").toLowerCase()
+            + dobPart;
 
-        /* ================= PHONE CHECK ================= */
+        /* PHONE CHECK */
 
-        if(phone.length !== 10){
-
+        if (phone.length !== 10) {
             return res.send("❌ Wrong Number");
         }
 
-        /* ================= SAVE ================= */
+        /* SAVE */
 
         await Student.create({
-
             name,
             father,
             dob,
@@ -60,24 +77,25 @@ app.post("/student-register", async (req, res) => {
             username
         });
 
-        /* ================= PAYMENT PAGE ================= */
+        /* PAYMENT */
 
         res.redirect("/payment");
 
-    }catch(err){
+    } catch (err) {
 
         console.log(err);
-
         res.send("Register Error");
     }
 });
 
-// Payment Page Route
+/* PAYMENT */
+
 app.get("/payment", (req, res) => {
     res.render("payment");
 });
 
-app.listen(3000, () => {
+/* SERVER */
 
-    console.log("Server Running");
+app.listen(3000, () => {
+    console.log("Server Running on 3000");
 });
