@@ -55,46 +55,31 @@ app.post("/student-register", async (req, res) => {
     try {
 
         const {
-            name = "",
-            father = "",
-            dob = "",
-            className = "",
-            phone = "",
-            password = ""
+            name,
+            father,
+            dob,
+            className,
+            phone,
+            password
         } = req.body;
 
-        /* DEBUG (inside function ONLY) */
-        console.log("PHONE RAW:", phone);
-        console.log("TYPE:", typeof phone);
-
-        /* VALIDATION */
-        if (!name || !dob || !phone) {
-            return res.send("❌ Required fields missing");
-        }
-
-        /* CLEAN PHONE */
-        const phoneStr = String(phone || "")
-            .replace(/\D/g, "")
-            .trim();
+        const phoneStr = String(phone).replace(/\D/g, "");
 
         if (phoneStr.length !== 10) {
             return res.send("❌ Wrong Number");
         }
 
-        /* SAFE DOB */
-        const dobPart = dob ? dob.replace(/-/g, "") : "000000";
+        const dobPart = dob.replace(/-/g, "");
 
-        /* AUTO USERNAME */
         const username =
             name.replace(/\s/g, "").toLowerCase() + dobPart;
 
-        /* SAVE */
         await Student.create({
             name,
             father,
             dob,
             className,
-            phone: phoneStr,   // 👈 IMPORTANT FIX
+            phone: phoneStr,
             password,
             username
         });
@@ -102,8 +87,8 @@ app.post("/student-register", async (req, res) => {
         res.redirect("/payment");
 
     } catch (err) {
-        console.log("REGISTER ERROR:", err.message);
-        res.status(500).send("❌ Register Error");
+        console.log(err);
+        res.send("❌ Register Error");
     }
 });
 /* PAYMENT PAGE */
