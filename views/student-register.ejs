@@ -408,15 +408,15 @@ document
 
     if(data.success){
 
-        status.innerHTML =
-        "✅ Registration Successful";
+    status.innerHTML =
+    "✅ Registration Successful";
 
-        setTimeout(()=>{
+    setTimeout(()=>{
 
-            window.location =
-            "/payment";
+        window.location.href =
+        data.redirect;
 
-        },1500);
+     },1000);
     }
 
 });
