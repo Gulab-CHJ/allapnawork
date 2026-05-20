@@ -387,6 +387,17 @@ app.post("/student-register", async (req, res) => {
         .replace(/\s+/g,"")
         .toLowerCase() + dobPart;
 
+        /* AUTO ROLL NUMBER */
+
+        const lastStudent =
+        await Student.findOne()
+        .sort({ roll:-1 });
+
+        const roll =
+        lastStudent
+        ? lastStudent.roll + 1
+        : 1;
+
         await Student.create({
 
             roll,
@@ -437,17 +448,9 @@ app.post("/student-register", async (req, res) => {
 
     }
 
+
 });
 
-/* AUTO ROLL NUMBER */
-
-const lastStudent =
-await Student.findOne()
-.sort({ roll: -1 });
-
-const roll = lastStudent
-? lastStudent.roll + 1
-: 1;
 
 
 
