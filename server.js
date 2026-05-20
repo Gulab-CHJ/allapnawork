@@ -114,6 +114,7 @@
 
 
 require("dotenv").config();
+const crypto = require("crypto");
 
 const express = require("express");
 const path = require("path");
@@ -521,6 +522,57 @@ app.post("/verify-otp", async (req, res) => {
         return res.json({
             success: false,
             message: "Verification Failed"
+        });
+    }
+});
+
+app.post("/verify-payment", (req, res) => {
+
+    try {
+
+        const {
+
+            razorpay_order_id,
+
+            razorpay_payment_id,
+
+            razorpay_signature
+
+        } = req.body;
+
+        const body =
+        razorpay_order_id + "|" + razorpay_payment_id;
+
+        const expectedSignature =
+        crypto
+        .createHmac(
+            "sha256",
+            process.env.RAZORPAY_KEY_SECRET
+        )
+        .update(body.toString())
+        .digest("hex");
+
+        if(expectedSignature === razorpay_signature){
+
+            return res.json({
+                success:true,
+                message:"Payment Verified"
+            });
+
+        }else{
+
+            return res.status(400).json({
+                success:false,
+                message:"Invalid Signature"
+            });
+        }
+
+    } catch (err) {
+
+        console.log(err);
+
+        return res.status(500).json({
+            success:false
         });
     }
 });
