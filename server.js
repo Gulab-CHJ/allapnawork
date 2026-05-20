@@ -389,6 +389,8 @@ app.post("/student-register", async (req, res) => {
 
         await Student.create({
 
+            roll,
+
             name:name.trim(),
 
             father:father.trim(),
@@ -436,6 +438,16 @@ app.post("/student-register", async (req, res) => {
     }
 
 });
+
+/* AUTO ROLL NUMBER */
+
+const lastStudent =
+await Student.findOne()
+.sort({ roll: -1 });
+
+const roll = lastStudent
+? lastStudent.roll + 1
+: 1;
 
 
 
