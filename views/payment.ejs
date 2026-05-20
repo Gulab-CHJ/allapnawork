@@ -1,49 +1,97 @@
+<!-- views/payment.ejs -->
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 
-<title>Payment</title>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Premium Payment</title>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <style>
 
 body{
+
+    margin:0;
+
+    padding:0;
+
     font-family:Arial;
-    background:#f4f4f4;
+
+    background:linear-gradient(135deg,#111827,#1e3a8a);
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
 }
 
-.box{
+.card{
 
     width:90%;
-    max-width:400px;
 
-    margin:auto;
-    margin-top:50px;
+    max-width:420px;
 
     background:white;
 
-    padding:25px;
+    border-radius:20px;
 
-    border-radius:10px;
+    padding:30px;
 
     text-align:center;
+
+    box-shadow:0 10px 40px rgba(0,0,0,0.3);
+}
+
+h1{
+
+    color:#111827;
+}
+
+.price{
+
+    font-size:42px;
+
+    font-weight:bold;
+
+    color:#2563eb;
+
+    margin:20px 0;
 }
 
 button{
 
     width:100%;
 
-    padding:15px;
+    padding:14px;
 
     border:none;
 
-    background:green;
+    border-radius:10px;
+
+    background:#2563eb;
 
     color:white;
 
-    border-radius:5px;
+    font-size:16px;
 
-    font-size:18px;
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+button:hover{
+
+    background:#1d4ed8;
 }
 
 </style>
@@ -52,20 +100,100 @@ button{
 
 <body>
 
-<div class="box">
+<div class="card">
 
-<h1>₹299 Payment</h1>
+<h1>Premium Registration</h1>
 
-<p>Complete Registration Payment</p>
+<p>Complete Payment To Activate Account</p>
 
-<button>
+<div class="price">
+₹299
+</div>
 
+<button onclick="payNow()">
 Pay Now
-
 </button>
 
 </div>
 
-</body>
+<script>
 
+async function payNow(){
+
+    const res = await fetch("/create-order",{
+
+        method:"POST"
+
+    });
+
+    const data = await res.json();
+
+    if(!data.success){
+
+        alert("Order Failed");
+
+        return;
+    }
+
+    const options = {
+
+        key:process.env.RAZORPAY_KEY_ID,
+
+        amount:data.order.amount,
+
+        currency:data.order.currency,
+
+        name:"Student Registration",
+
+        description:"Premium Registration",
+
+        order_id:data.order.id,
+
+        handler: async function(response){
+
+            const studentData =
+            JSON.parse(
+                localStorage.getItem("studentData")
+            );
+
+            studentData.razorpay_payment_id =
+            response.razorpay_payment_id;
+
+            const saveRes =
+            await fetch("/student-register",{
+
+                method:"POST",
+
+                headers:{
+                    "Content-Type":"application/json"
+                },
+
+                body:JSON.stringify(studentData)
+
+            });
+
+            const saveData =
+            await saveRes.json();
+
+            alert(saveData.message);
+
+            if(saveData.success){
+
+                window.location.href =
+                "/payment-success";
+            }
+
+        }
+
+    };
+
+    const rzp =
+    new Razorpay(options);
+
+    rzp.open();
+}
+
+</script>
+
+</body>
 </html>

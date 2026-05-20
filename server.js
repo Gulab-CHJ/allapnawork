@@ -443,6 +443,75 @@ app.use((req, res) => {
 
 });
 
+/* ================= RAZORPAY ================= */
+
+
+const Razorpay = require("razorpay");
+
+const razorpay = new Razorpay({
+
+    key_id: process.env.RAZORPAY_KEY_ID,
+
+    key_secret: process.env.RAZORPAY_KEY_SECRET
+
+});
+
+
+/* ================= CREATE ORDER ================= */
+
+app.post("/create-order", async (req, res) => {
+
+    try {
+
+        const order = await razorpay.orders.create({
+
+            amount: 29900,
+
+            currency: "INR",
+
+            receipt: "receipt_order"
+
+        });
+
+        res.json({
+
+            success: true,
+
+            order
+
+        });
+
+    } catch (err) {
+
+        console.log(err);
+
+        res.json({
+
+            success: false,
+
+            message: "Order Failed"
+
+        });
+
+    }
+
+});
+
+
+/* ================= SAVE FORM BEFORE PAYMENT ================= */
+
+localStorage.setItem(
+
+    "studentData",
+
+    JSON.stringify(obj)
+
+);
+
+window.location.href =
+"/payment";
+
+
 /* ================= START SERVER ================= */
 
 const PORT = process.env.PORT || 3000;
