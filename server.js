@@ -484,6 +484,46 @@ app.post("/payment-success-save", async (req, res) => {
         });
     }
 });
+/* ================= VERIFY OTP ================= */
+
+app.post("/verify-otp", async (req, res) => {
+
+    try {
+
+        const email = req.body.email;
+
+        const otp = req.body.otp;
+
+        const data = await OTP.findOne({
+            email,
+            otp
+        });
+
+        if (!data) {
+
+            return res.json({
+                success: false,
+                message: "Invalid OTP"
+            });
+        }
+
+        req.session.verifiedEmail = email;
+
+        return res.json({
+            success: true,
+            message: "OTP Verified"
+        });
+
+    } catch (err) {
+
+        console.log("VERIFY ERROR:", err);
+
+        return res.json({
+            success: false,
+            message: "Verification Failed"
+        });
+    }
+});
 
 
 
