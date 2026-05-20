@@ -346,20 +346,7 @@ app.post("/verify-otp", async (req, res) => {
 /* ================= REGISTER ================= */
 app.post("/student-register", async (req, res) => {
 
-    try{
-    // check existing
-        const existing = await Student.findOne({ roll: req.body.roll });
-
-if (existing) {
-    return res.json({
-        success: false,
-        message: "Roll already exists!"
-    });
-}
-
-    
-    
-    
+    try {
 
         const {
             name = "",
@@ -372,96 +359,53 @@ if (existing) {
         } = req.body;
 
         if (req.session.verifiedEmail !== email) {
-
             return res.json({
-                success:false,
-                message:"Verify Email First"
+                success: false,
+                message: "Verify Email First"
             });
-
         }
 
-        const phoneStr =
-        String(phone).replace(/\D/g,"");
+        const phoneStr = String(phone).replace(/\D/g, "");
 
-        if(phoneStr.length !== 10){
-
+        if (phoneStr.length !== 10) {
             return res.json({
-                success:false,
-                message:"Wrong Number"
+                success: false,
+                message: "Wrong Number"
             });
-
         }
 
-        const dobPart =
-        dob ? dob.replace(/-/g,"") : "000000";
+        const dobPart = dob ? dob.replace(/-/g, "") : "000000";
 
         const username =
-        name.trim()
-        .replace(/\s+/g,"")
-        .toLowerCase() + dobPart;
+            name.trim().replace(/\s+/g, "").toLowerCase() + dobPart;
 
-        /* AUTO ROLL NUMBER */
-
-        const lastStudent =
-        await Student.findOne()
-        .sort({ roll:-1 });
-
-        const roll =
-        lastStudent
-        ? lastStudent.roll + 1
-        : 1;
-
-        await Student.create({
-
-            roll,
-
-            name:name.trim(),
-
-            father:father.trim(),
-
+        // 🔥 TEMP STORE ONLY (NO DB SAVE)
+        req.session.tempStudent = {
+            name,
+            father,
             dob,
-
             className,
-
-            phone:phoneStr,
-
+            phone: phoneStr,
             email,
-
             password,
-
-            username,
-
-            paymentId:"rzp_test_Smh6HdEEold6vg"
-
-        });
-
-        req.session.verifiedEmail = null;
+            username
+        };
 
         return res.json({
-
-            success:true,
-
-            message:"Registration Successful",
-
-            redirect:"/payment"
-
+            success: true,
+            redirect: "/payment"
         });
 
-    } catch(err){
+    } catch (err) {
 
-      console.log("REGISTER ERROR =>", err);
+        console.log(err);
 
-      res.json({
-
-        success:false,
-
-        message: err.message
-
-    });
+        return res.json({
+            success: false,
+            message: err.message
+        });
 
     }
-
-
 });
 app.get("/payment-success",(req,res)=>{
     res.send("Payment Successful 🎉 Registration Complete");
@@ -529,6 +473,43 @@ app.post("/create-order", async (req, res) => {
 
     }
 
+});
+
+app.post("/payment-success-save", async (req, res) => {
+
+    try {
+
+        const data = req.session.tempStudent;
+
+        if (!data) {
+            return res.json({
+                success: false,
+                message: "No student data found"
+            });
+        }
+
+        const lastStudent = await Student.findOne().sort({ roll: -1 });
+        const roll = lastStudent ? lastStudent.roll + 1 : 1;
+
+        const student = await Student.create({
+            ...data,
+            roll,
+            paymentId: req.body.payment_id
+        });
+
+        req.session.tempStudent = null;
+
+        res.json({
+            success: true,
+            message: "Registration Complete"
+        });
+
+    } catch (err) {
+        res.json({
+            success: false,
+            message: err.message
+        });
+    }
 });
 
 

@@ -161,23 +161,31 @@ const studentData = JSON.parse(rawData);
 
     studentData.razorpay_payment_id = response.razorpay_payment_id;
 
-    const saveRes = await fetch("/student-register",{
-        method:"POST",
-        headers:{
-            "Content-Type":"application/json"
-              },
-               body:JSON.stringify(studentData)
-            });
+    const saveRes = await fetch("/payment-success-save", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        ...studentData,
+        payment_id: response.razorpay_payment_id
+    })
+});
 
-                const saveData = await saveRes.json();
+const saveData = await saveRes.json();
 
-                alert(saveData.message);
+alert(saveData.message);
 
-                if(saveData.success){
-                window.location.href = "/payment-success";
-            }
-         }
+if(saveData.success){
+    window.location.href = "/payment-success";
+}
 
+        },
+
+        theme:{
+
+            color:"#2563eb"
+        }
     };
 
     const rzp =
@@ -185,6 +193,7 @@ const studentData = JSON.parse(rawData);
 
     rzp.open();
 }
+ 
 
 </script>
 
