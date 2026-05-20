@@ -346,7 +346,20 @@ app.post("/verify-otp", async (req, res) => {
 /* ================= REGISTER ================= */
 app.post("/student-register", async (req, res) => {
 
-    try {
+    try{
+    // check existing
+        const existing = await Student.findOne({ roll: req.body.roll });
+
+if (existing) {
+    return res.json({
+        success: false,
+        message: "Roll already exists!"
+    });
+}
+
+    
+    
+    
 
         const {
             name = "",
@@ -453,14 +466,6 @@ app.post("/student-register", async (req, res) => {
 app.get("/payment-success",(req,res)=>{
     res.send("Payment Successful 🎉 Registration Complete");
 });
-const existing = await Student.findOne({ roll: req.body.roll });
-
-if (existing) {
-    return res.json({
-        success: false,
-        message: "Roll already exists!"
-    });
-}
 
 
 
