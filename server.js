@@ -420,7 +420,15 @@ app.post("/student-register", async (req, res) => {
 
         req.session.verifiedEmail = null;
 
-        return res.redirect("/payment");
+        return res.json({
+
+            success:true,
+
+           message:"Registration Successful",
+
+          redirect:"/payment"
+
+        });
 
     } catch (err) {
 
