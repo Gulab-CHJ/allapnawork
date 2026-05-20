@@ -485,13 +485,6 @@ app.post("/payment-success-save", async (req, res) => {
     }
 });
 
-/* ================= 404 ================= */
-
-app.use((req, res) => {
-
-    res.status(404).send("❌ 404 Page Not Found");
-
-});
 
 
 /* ================= START SERVER ================= */
@@ -503,6 +496,15 @@ app.listen(PORT, () => {
     console.log("🚀 Server Running On Port " + PORT);
 
 });
+
+/* ================= 404 ================= */
+
+app.use((req, res) => {
+
+    res.status(404).send("❌ 404 Page Not Found");
+
+});
+
 
 
 
