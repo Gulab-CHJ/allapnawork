@@ -2,20 +2,25 @@ const mongoose = require("mongoose");
 
 const studentSchema = new mongoose.Schema({
 
-    name: String,
+    name:String,
 
-    father: String,
+    father:String,
 
-    dob: String,
+    dob:String,
 
-    className: String,
+    className:String,
 
-    phone: String,
+    phone:String,
 
-    password: String,
+    email:String,
 
-    username: String
+    password:String,
+
+    username:String,
+
+    paymentId:String
+
 });
 
 module.exports =
-mongoose.model("student", studentSchema);
+mongoose.model("Student",studentSchema);
