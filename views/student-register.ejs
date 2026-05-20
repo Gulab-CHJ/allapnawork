@@ -249,51 +249,67 @@ let verified = false;
 
 async function sendOTP(){
 
-    const email =
-    document.getElementById("email").value;
+    try{
 
-    const status =
-    document.getElementById("status");
+        const email =
+        document.getElementById("email").value;
 
-    if(!email){
+        const status =
+        document.getElementById("status");
 
-        status.innerHTML = "❌ Enter Email";
+        if(!email){
 
-        return;
-    }
+            status.innerHTML =
+            "❌ Enter Email";
 
-    const sendBtn =
-    document.getElementById("sendBtn");
+            return;
+        }
 
-    sendBtn.innerHTML = "Sending...";
+        const sendBtn =
+        document.getElementById("sendBtn");
 
-    const res =
-    await fetch("/send-otp",{
+        sendBtn.innerHTML =
+        "Sending...";
 
-        method:"POST",
+        const res =
+        await fetch("/send-otp",{
 
-        headers:{
-            "Content-Type":"application/json"
-        },
+            method:"POST",
 
-        body:JSON.stringify({ email })
+            headers:{
+                "Content-Type":"application/json"
+            },
 
-    });
+            body:JSON.stringify({ email })
 
-    const data = await res.json();
+        });
 
-    sendBtn.innerHTML = "Send OTP";
+        const data =
+        await res.json();
 
-    status.innerHTML = data.message;
+        sendBtn.innerHTML =
+        "Send OTP";
 
-    if(data.success){
+        status.innerHTML =
+        data.message;
+
+        if(data.success){
+
+            document
+            .getElementById("otpBox")
+            .style.display = "block";
+        }
+
+    }catch(err){
+
+        console.log(err);
 
         document
-        .getElementById("otpBox")
-        .style.display = "block";
+        .getElementById("status")
+        .innerHTML =
+        "❌ OTP Send Failed";
     }
 }
-
 /* ================= VERIFY OTP ================= */
 
 async function verifyOTP(){
