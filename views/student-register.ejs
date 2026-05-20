@@ -314,56 +314,86 @@ async function sendOTP(){
 
 async function verifyOTP(){
 
-    const email =
-    document.getElementById("email").value;
+    try{
 
-    const otp =
-    document.getElementById("otp").value;
+        const email =
+        document.getElementById("email").value;
 
-    const status =
-    document.getElementById("status");
+        const otp =
+        document.getElementById("otp").value;
 
-    const verifyBtn =
-    document.getElementById("verifyBtn");
+        const status =
+        document.getElementById("status");
 
-    verifyBtn.innerHTML = "Verifying...";
+        const verifyBtn =
+        document.getElementById("verifyBtn");
 
-    const res =
-    await fetch("/verify-otp",{
+        if(!otp){
 
-        method:"POST",
+            status.innerHTML =
+            "❌ Enter OTP";
 
-        headers:{
-            "Content-Type":"application/json"
-        },
+            return;
+        }
 
-        body:JSON.stringify({
-            email,
-            otp
-        })
+        verifyBtn.innerHTML =
+        "Verifying...";
 
-    });
+        const res =
+        await fetch("/verify-otp",{
 
-    const data = await res.json();
+            method:"POST",
 
-    verifyBtn.innerHTML = "Verify OTP";
+            headers:{
+                "Content-Type":"application/json"
+            },
 
-    status.innerHTML = data.message;
+            body:JSON.stringify({
+                email,
+                otp
+            })
 
-    if(data.success){
+        });
 
-        verified = true;
+        const data =
+        await res.json();
 
-        status.innerHTML = "✅ Email Verified Successfully";
+        verifyBtn.innerHTML =
+        "Verify OTP";
 
-        const registerBtn =
-        document.getElementById("registerBtn");
+        status.innerHTML =
+        data.message;
 
-        registerBtn.disabled = false;
+        if(data.success){
 
-        registerBtn.classList.remove("disabled");
+            verified = true;
 
-        registerBtn.classList.add("success");
+            status.innerHTML =
+            "✅ Email Verified Successfully";
+
+            const registerBtn =
+            document.getElementById("registerBtn");
+
+            registerBtn.disabled = false;
+
+            registerBtn.classList.remove("disabled");
+
+            registerBtn.classList.add("success");
+        }
+
+    }catch(err){
+
+        console.log(err);
+
+        document
+        .getElementById("status")
+        .innerHTML =
+        "❌ Verification Failed";
+
+        document
+        .getElementById("verifyBtn")
+        .innerHTML =
+        "Verify OTP";
     }
 }
 
