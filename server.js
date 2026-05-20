@@ -265,44 +265,51 @@ app.post("/send-otp", async (req, res) => {
             otp
         });
 
-        await transporter.sendMail({
+        try {
 
-            from: process.env.EMAIL_USER,
+    await transporter.sendMail({
 
-            to: email,
+        from: process.env.EMAIL_USER,
 
-            subject: "Your OTP Code",
+        to: email,
 
-            html: `
-                <div style="font-family:Arial;padding:20px;">
-                    <h2>Email Verification</h2>
+        subject: "Your OTP Code",
 
-                    <h1 style="letter-spacing:5px;">
-                        ${otp}
-                    </h1>
+        html: `
+            <div style="font-family:Arial;padding:20px;">
+                <h2>Email Verification</h2>
 
-                    <p>OTP valid for 5 minutes.</p>
-                </div>
-            `
-        });
+                <h1 style="letter-spacing:5px;">
+                    ${otp}
+                </h1>
 
-        res.json({
-            success: true,
-            message: "OTP Sent Successfully"
-        });
+                <p>OTP valid for 5 minutes.</p>
+            </div>
+        `
+    });
 
-    } catch (err) {
+    res.json({
+        success: true,
+        message: "OTP Sent Successfully"
+    });
 
-        console.log("OTP ERROR:", err);
+} catch (mailErr) {
 
-        res.json({
+    console.log("MAIL ERROR:", mailErr);
+
+    if(mailErr.responseCode === 550){
+
+        return res.json({
             success: false,
-            message: "OTP Send Failed"
+            message: "Wrong Email ID"
         });
-
     }
 
-});
+    return res.json({
+        success: false,
+        message: "Email Send Failed"
+    });
+}
 
 /* ================= VERIFY OTP ================= */
 
