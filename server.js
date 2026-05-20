@@ -423,19 +423,21 @@ app.post("/student-register", async (req, res) => {
 
     } catch(err){
 
-        console.log(err);
+      console.log("REGISTER ERROR =>", err);
 
-        return res.json({
+      res.json({
 
-            success:false,
+        success:false,
 
-            message:"Register Error"
+        message: err.message
 
-        });
+    });
 
     }
 
 });
+
+
 
 /* ================= 404 ================= */
 
