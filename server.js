@@ -172,6 +172,7 @@ const OTP = mongoose.model("OTP", otpSchema);
 
 /* ================= NODEMAILER ================= */
 
+
 const transporter = nodemailer.createTransport({
 
     host: "smtp.gmail.com",
@@ -190,6 +191,19 @@ const transporter = nodemailer.createTransport({
 
 });
 
+transporter.verify((error, success) => {
+
+    if(error){
+
+        console.log("MAIL ERROR =>", error);
+
+    }else{
+
+        console.log("✅ MAIL SERVER READY");
+
+    }
+
+});
 /* ================= ROUTES ================= */
 
 /* HOME */
