@@ -453,7 +453,7 @@ app.post("/payment-success-save", async (req, res) => {
 
     try {
 
-        const data = req.session.tempStudent;
+        const data = req.body;
 
         if (!data) {
             return res.json({
@@ -471,7 +471,6 @@ app.post("/payment-success-save", async (req, res) => {
             paymentId: req.body.payment_id
         });
 
-        req.session.tempStudent = null;
 
         res.json({
             success: true,
