@@ -406,33 +406,59 @@ document
     status.innerHTML =
     data.message;
 
-    if(data.success){
+//     if(data.success){
+
+//     status.innerHTML =
+//     "✅ Registration Successful";
+
+//     setTimeout(()=>{
+
+//         window.location.href =
+//         data.redirect;
+
+//      },1000);
+//     }
+
+// });
+
+if(data.success){
 
     status.innerHTML =
     "✅ Registration Successful";
+
+    /* SAVE DATA */
+
+    localStorage.setItem(
+
+        "studentData",
+
+        JSON.stringify(obj)
+
+    );
 
     setTimeout(()=>{
 
         window.location.href =
         data.redirect;
 
-     },1000);
-    }
+    },1000);
+
+}
 
 });
 
 /* ================= SAVE FORM BEFORE PAYMENT ================= */
 
-localStorage.setItem(
+// localStorage.setItem(
 
-    "studentData",
+//     "studentData",
 
-    JSON.stringify(obj)
+//     JSON.stringify(obj)
 
-);
+// );
 
-window.location.href =
-"/payment";
+// window.location.href =
+// "/payment";
 
 
 </script>

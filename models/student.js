@@ -2,6 +2,12 @@ const mongoose = require("mongoose");
 
 const studentSchema = new mongoose.Schema({
 
+    roll:{
+        type:Number,
+        unique:true,
+        required:true
+    },
+
     name:String,
 
     father:String,
