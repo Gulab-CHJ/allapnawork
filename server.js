@@ -450,6 +450,9 @@ app.post("/student-register", async (req, res) => {
 
 
 });
+app.get("/payment-success",(req,res)=>{
+    res.send("Payment Successful 🎉 Registration Complete");
+});
 
 
 

@@ -137,7 +137,7 @@ async function payNow(){
 
     const options = {
 
-        key:process.env.RAZORPAY_KEY_ID,
+        key:"rzp_test_Smh6HdEEold6vg",
 
         amount:data.order.amount,
 
@@ -148,42 +148,35 @@ async function payNow(){
         description:"Premium Registration",
 
         order_id:data.order.id,
-
         handler: async function(response){
 
-            const studentData =
-            JSON.parse(
-                localStorage.getItem("studentData")
-            );
+           const rawData = localStorage.getItem("studentData");
 
-            studentData.razorpay_payment_id =
-            response.razorpay_payment_id;
+                if(!rawData){
+                    alert("Student data missing!");
+                      return;
+                }
 
-            const saveRes =
-            await fetch("/student-register",{
+const studentData = JSON.parse(rawData);
 
-                method:"POST",
+    studentData.razorpay_payment_id = response.razorpay_payment_id;
 
-                headers:{
-                    "Content-Type":"application/json"
-                },
-
-                body:JSON.stringify(studentData)
-
+    const saveRes = await fetch("/student-register",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+              },
+               body:JSON.stringify(studentData)
             });
 
-            const saveData =
-            await saveRes.json();
+                const saveData = await saveRes.json();
 
-            alert(saveData.message);
+                alert(saveData.message);
 
-            if(saveData.success){
-
-                window.location.href =
-                "/payment-success";
+                if(saveData.success){
+                window.location.href = "/payment-success";
             }
-
-        }
+         }
 
     };
 
