@@ -344,13 +344,11 @@ app.post("/verify-otp", async (req, res) => {
 });
 
 /* ================= REGISTER ================= */
-
 app.post("/student-register", async (req, res) => {
 
     try {
 
         const {
-
             name = "",
             father = "",
             dob = "",
@@ -358,57 +356,48 @@ app.post("/student-register", async (req, res) => {
             phone = "",
             password = "",
             email = ""
-
         } = req.body;
-
-        /* EMAIL VERIFY CHECK */
 
         if (req.session.verifiedEmail !== email) {
 
-            return res
-            .status(400)
-            .send("❌ Verify Email First");
+            return res.json({
+                success:false,
+                message:"Verify Email First"
+            });
 
         }
-
-        /* CLEAN PHONE */
 
         const phoneStr =
-            String(phone).replace(/\D/g, "");
+        String(phone).replace(/\D/g,"");
 
-        if (phoneStr.length !== 10) {
+        if(phoneStr.length !== 10){
 
-            return res
-            .status(400)
-            .send("❌ Wrong Number");
+            return res.json({
+                success:false,
+                message:"Wrong Number"
+            });
 
         }
 
-        /* DOB */
-
         const dobPart =
-            dob ? dob.replace(/-/g, "") : "000000";
-
-        /* USERNAME */
+        dob ? dob.replace(/-/g,"") : "000000";
 
         const username =
-            name.trim()
-            .replace(/\s+/g, "")
-            .toLowerCase() + dobPart;
-
-        /* SAVE */
+        name.trim()
+        .replace(/\s+/g,"")
+        .toLowerCase() + dobPart;
 
         await Student.create({
 
-            name: name.trim(),
+            name:name.trim(),
 
-            father: father.trim(),
+            father:father.trim(),
 
             dob,
 
             className,
 
-            phone: phoneStr,
+            phone:phoneStr,
 
             email,
 
@@ -424,19 +413,23 @@ app.post("/student-register", async (req, res) => {
 
             success:true,
 
-           message:"Registration Successful",
+            message:"Registration Successful",
 
-          redirect:"/payment"
+            redirect:"/payment"
 
         });
 
-    } catch (err) {
+    } catch(err){
 
-        console.log("REGISTER ERROR:", err);
+        console.log(err);
 
-        return res
-        .status(500)
-        .send("❌ Register Error");
+        return res.json({
+
+            success:false,
+
+            message:"Register Error"
+
+        });
 
     }
 
