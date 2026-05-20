@@ -498,20 +498,6 @@ app.post("/create-order", async (req, res) => {
 });
 
 
-/* ================= SAVE FORM BEFORE PAYMENT ================= */
-
-localStorage.setItem(
-
-    "studentData",
-
-    JSON.stringify(obj)
-
-);
-
-window.location.href =
-"/payment";
-
-
 /* ================= START SERVER ================= */
 
 const PORT = process.env.PORT || 3000;
