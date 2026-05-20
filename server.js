@@ -405,7 +405,7 @@ app.post("/student-register", async (req, res) => {
 
             username,
 
-            paymentId:rzp_test_Smh6HdEEold6vg
+            paymentId:"rzp_test_Smh6HdEEold6vg"
 
         });
 
