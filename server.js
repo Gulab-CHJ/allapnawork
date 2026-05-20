@@ -392,13 +392,7 @@ app.get("/payment-success",(req,res)=>{
 
 
 
-/* ================= 404 ================= */
 
-app.use((req, res) => {
-
-    res.status(404).send("❌ 404 Page Not Found");
-
-});
 
 /* ================= RAZORPAY ================= */
 
@@ -489,6 +483,14 @@ app.post("/payment-success-save", async (req, res) => {
             message: err.message
         });
     }
+});
+
+/* ================= 404 ================= */
+
+app.use((req, res) => {
+
+    res.status(404).send("❌ 404 Page Not Found");
+
 });
 
 
