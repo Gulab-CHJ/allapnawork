@@ -120,13 +120,15 @@ Pay Now
 
 async function payNow(){
 
+try{
+
     const res = await fetch("/create-order",{
-
         method:"POST"
-
     });
 
     const data = await res.json();
+
+    console.log(data);
 
     if(!data.success){
 
@@ -148,52 +150,79 @@ async function payNow(){
         description:"Premium Registration",
 
         order_id:data.order.id,
+
         handler: async function(response){
 
-           const rawData = localStorage.getItem("studentData");
+            try{
+
+                const rawData = localStorage.getItem("studentData");
 
                 if(!rawData){
+
                     alert("Student data missing!");
-                      return;
+
+                    return;
                 }
 
-const studentData = JSON.parse(rawData);
+                const studentData = JSON.parse(rawData);
 
-    studentData.razorpay_payment_id = response.razorpay_payment_id;
+                studentData.razorpay_payment_id =
+                response.razorpay_payment_id;
 
-    const saveRes = await fetch("/payment-success-save", {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-        ...studentData,
-        payment_id: response.razorpay_payment_id
-    })
-});
+                const saveRes = await fetch("/payment-success-save", {
 
-const saveData = await saveRes.json();
+                    method: "POST",
 
-alert(saveData.message);
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
 
-if(saveData.success){
-    window.location.href = "/payment-success";
-}
+                    body: JSON.stringify({
+
+                        ...studentData,
+
+                        payment_id:
+                        response.razorpay_payment_id
+                    })
+                });
+
+                const saveData =
+                await saveRes.json();
+
+                alert(saveData.message);
+
+                if(saveData.success){
+
+                    window.location.href =
+                    "/payment-success";
+                }
+
+            }catch(err){
+
+                console.log(err);
+
+                alert("Save Error");
+            }
 
         },
 
         theme:{
-
             color:"#2563eb"
         }
     };
 
-    const rzp =
-    new Razorpay(options);
+    const rzp = new Razorpay(options);
 
     rzp.open();
+
+}catch(err){
+
+    console.log(err);
+
+    alert("Payment Error");
 }
- 
+
+}
 
 </script>
 
