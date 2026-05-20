@@ -239,7 +239,6 @@ app.get("/payment", (req, res) => {
 });
 
 /* ================= SEND OTP ================= */
-
 app.post("/send-otp", async (req, res) => {
 
     try {
@@ -256,7 +255,7 @@ app.post("/send-otp", async (req, res) => {
         }
 
         const otp =
-            Math.floor(100000 + Math.random() * 900000).toString();
+        Math.floor(100000 + Math.random() * 900000).toString();
 
         await OTP.deleteMany({ email });
 
@@ -267,85 +266,58 @@ app.post("/send-otp", async (req, res) => {
 
         try {
 
-    await transporter.sendMail({
+            await transporter.sendMail({
 
-        from: process.env.EMAIL_USER,
+                from: process.env.EMAIL_USER,
 
-        to: email,
+                to: email,
 
-        subject: "Your OTP Code",
+                subject: "Your OTP Code",
 
-        html: `
-            <div style="font-family:Arial;padding:20px;">
-                <h2>Email Verification</h2>
+                html: `
+                    <div style="font-family:Arial;padding:20px;">
+                        <h2>Email Verification</h2>
 
-                <h1 style="letter-spacing:5px;">
-                    ${otp}
-                </h1>
+                        <h1 style="letter-spacing:5px;">
+                            ${otp}
+                        </h1>
 
-                <p>OTP valid for 5 minutes.</p>
-            </div>
-        `
-    });
+                        <p>OTP valid for 5 minutes.</p>
+                    </div>
+                `
+            });
 
-    res.json({
-        success: true,
-        message: "OTP Sent Successfully"
-    });
+            return res.json({
+                success: true,
+                message: "OTP Sent Successfully"
+            });
 
-} catch (mailErr) {
+        } catch (mailErr) {
 
-    console.log("MAIL ERROR:", mailErr);
+            console.log("MAIL ERROR:", mailErr);
 
-    if(mailErr.responseCode === 550){
+            if(mailErr.responseCode === 550){
 
-        return res.json({
-            success: false,
-            message: "Wrong Email ID"
-        });
-    }
-
-    return res.json({
-        success: false,
-        message: "Email Send Failed"
-    });
-}
-
-/* ================= VERIFY OTP ================= */
-
-app.post("/verify-otp", async (req, res) => {
-
-    try {
-
-        const { email, otp } = req.body;
-
-        const data = await OTP.findOne({ email, otp });
-
-        if (!data) {
+                return res.json({
+                    success: false,
+                    message: "Wrong Email ID"
+                });
+            }
 
             return res.json({
                 success: false,
-                message: "Invalid OTP"
+                message: "Email Send Failed"
             });
-
         }
-
-        req.session.verifiedEmail = email;
-
-        res.json({
-            success: true,
-            message: "OTP Verified"
-        });
 
     } catch (err) {
 
-        console.log("VERIFY ERROR:", err);
+        console.log("OTP ERROR:", err);
 
-        res.json({
+        return res.json({
             success: false,
-            message: "Verification Failed"
+            message: "OTP Send Failed"
         });
-
     }
 
 });
