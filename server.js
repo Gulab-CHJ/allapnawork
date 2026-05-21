@@ -610,6 +610,17 @@ function isAdmin(req, res, next){
     }
     return res.redirect("/admin-login");
 }
+app.post("/admin-login", (req, res) => {
+
+    const { username, password } = req.body;
+
+    if(username === ADMIN_ID && password === ADMIN_PASS){
+        req.session.isAdmin = true;
+        return res.redirect("/admin");
+    }
+
+    return res.send("❌ Wrong ID or Password");
+});
 
 
 /* ================= START SERVER ================= */
