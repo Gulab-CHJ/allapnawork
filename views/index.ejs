@@ -645,7 +645,6 @@ body {
 
 </html> -->
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -674,7 +673,7 @@ body{
 /* ================= NAVBAR ================= */
 .navbar{
     width:100%;
-    height:75px;
+    height:70px;
     background:rgba(0,0,0,0.85);
     backdrop-filter:blur(10px);
 
@@ -682,29 +681,31 @@ body{
     justify-content:space-between;
     align-items:center;
 
-    padding:0 25px;
+    padding:0 20px;
 
     position:sticky;
     top:0;
     z-index:1000;
-
-    box-shadow:0 5px 20px rgba(0,0,0,0.2);
 }
 
-/* ================= LOGO ================= */
+/* ================= LOGO (SMALL + CLEAN) ================= */
 .logo-container{
     display:flex;
     flex-direction:column;
     justify-content:center;
-    align-items:center;   /* ✅ CENTER FIX */
+    align-items:center;
+
     line-height:1;
     cursor:pointer;
-    text-align:center;
+
+    padding:0;
+    margin:0;
 }
 
+/* main text smaller */
 .main-logo{
     font-family:'Orbitron',sans-serif;
-    font-size:18px;
+    font-size:16px;
     font-weight:900;
     letter-spacing:1px;
 }
@@ -712,27 +713,33 @@ body{
 .black-text{color:#fff;}
 .red-text{color:#e50006;}
 
-/* ================= TAGLINE ================= */
+/* tagline */
 .tagline{
     display:flex;
     align-items:center;
-    justify-content:center;  /* ✅ CENTER FIX */
-    margin-top:3px;
+    justify-content:center;
+    margin-top:2px;
 }
 
+/* safe & secure text */
 .tagline-text{
-    font-size:9px;
+    font-size:8px;
     font-weight:700;
-    letter-spacing:3px;
+    letter-spacing:2px;
     color:#fff;
-    padding:0 6px;
+    padding:0 5px;
 }
 
-/* red lines */
+/* lines smaller */
 .line{
-    width:15px;
+    width:12px;
     height:1px;
     background:#e50006;
+}
+
+/* remove hover effect */
+.logo-container:hover{
+    opacity:1;
 }
 
 /* ================= MENU ================= */
@@ -745,8 +752,8 @@ body{
 .menu a{
     color:white;
     text-decoration:none;
-    padding:12px 18px;
-    border-radius:12px;
+    padding:10px 16px;
+    border-radius:10px;
     transition:0.3s;
 }
 
@@ -757,10 +764,10 @@ body{
 
 /* ================= HAMBURGER ================= */
 .hamburger{
-    width:45px;
-    height:45px;
+    width:40px;
+    height:40px;
     background:rgba(255,255,255,0.15);
-    border-radius:12px;
+    border-radius:10px;
 
     display:none;
     justify-content:center;
@@ -770,7 +777,7 @@ body{
 
 .hamburger i{
     color:white;
-    font-size:22px;
+    font-size:20px;
 }
 
 /* ================= MOBILE ================= */
@@ -780,21 +787,21 @@ body{
 
     .menu{
         position:absolute;
-        top:85px;
-        right:20px;
+        top:80px;
+        right:15px;
 
-        width:260px;
+        width:240px;
         background:white;
-        border-radius:20px;
-        padding:20px;
+        border-radius:15px;
+        padding:15px;
 
         flex-direction:column;
-        gap:12px;
+        gap:10px;
 
         opacity:0;
         visibility:hidden;
-        transform:translateY(-20px);
-        transition:0.4s;
+        transform:translateY(-15px);
+        transition:0.3s;
     }
 
     .menu.active{
@@ -814,27 +821,25 @@ body{
 /* ================= HERO ================= */
 .hero{
     width:92%;
-    max-width:1150px;
-    margin:40px auto;
+    max-width:1100px;
+    margin:35px auto;
 
     background:white;
-    border-radius:30px;
-    padding:70px 35px;
+    border-radius:25px;
+    padding:60px 30px;
 
     text-align:center;
-    box-shadow:0 15px 35px rgba(0,0,0,0.08);
 }
 
 .hero h1{
-    font-size:48px;
+    font-size:42px;
     color:#111827;
-    margin-bottom:20px;
+    margin-bottom:15px;
 }
 
 .hero p{
-    font-size:18px;
+    font-size:17px;
     color:#6b7280;
-    line-height:1.8;
 }
 
 /* ================= BUTTONS ================= */
@@ -842,41 +847,41 @@ body{
     display:flex;
     justify-content:center;
     flex-wrap:wrap;
-    gap:18px;
-    margin-top:30px;
+    gap:15px;
+    margin-top:25px;
 }
 
 .btn{
     text-decoration:none;
     background:linear-gradient(135deg,#2563eb,#1e3a8a);
     color:white;
-    padding:15px 28px;
-    border-radius:15px;
+    padding:12px 22px;
+    border-radius:12px;
     font-weight:bold;
 }
 
 /* ================= FEATURES ================= */
 .features{
     width:92%;
-    max-width:1150px;
-    margin:50px auto;
+    max-width:1100px;
+    margin:40px auto;
 
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:25px;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
 }
 
 .card{
     background:white;
-    padding:35px;
-    border-radius:25px;
+    padding:30px;
+    border-radius:20px;
     text-align:center;
 }
 
 .card i{
-    font-size:45px;
+    font-size:40px;
     color:#2563eb;
-    margin-bottom:15px;
+    margin-bottom:10px;
 }
 
 </style>
@@ -889,6 +894,7 @@ body{
 
     <!-- LOGO -->
     <div class="logo-container">
+
         <div class="main-logo">
             <span class="black-text">GLOBAL</span>
             <span class="red-text">SERVICES</span>
@@ -899,6 +905,7 @@ body{
             <span class="tagline-text">SAFE & SECURE</span>
             <span class="line"></span>
         </div>
+
     </div>
 
     <!-- MENU -->
