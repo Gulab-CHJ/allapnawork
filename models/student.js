@@ -30,12 +30,21 @@
 
 // module.exports =
 // mongoose.model("Student",studentSchema);
-
 const mongoose = require("mongoose");
+
 const studentSchema = new mongoose.Schema({
 
-    roll: { type: Number, unique: true, required: true },
-    name: { type: String, required: true },
+    roll: {
+        type: Number,
+        unique: true,
+        required: true
+    },
+
+    name: {
+        type: String,
+        required: true
+    },
+
     father: String,
     dob: String,
     className: String,
@@ -45,7 +54,7 @@ const studentSchema = new mongoose.Schema({
     password: String,
     paymentId: String,
 
-    photo: {   // 👈 ADD THIS
+    photo: {
         type: String,
         default: ""
     },
