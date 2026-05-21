@@ -1,32 +1,78 @@
+// const mongoose = require("mongoose");
+
+// const studentSchema = new mongoose.Schema({
+
+//     roll:{
+//         type:Number,
+//         unique:true,
+//         required:true
+//     },
+
+//     name:String,
+
+//     father:String,
+
+//     dob:String,
+
+//     className:String,
+
+//     phone:String,
+
+//     email:String,
+
+//     password:String,
+
+//     username:String,
+
+//     paymentId:String
+
+// });
+
+// module.exports =
+// mongoose.model("Student",studentSchema);
+
+
 const mongoose = require("mongoose");
 
 const studentSchema = new mongoose.Schema({
 
-    roll:{
-        type:Number,
-        unique:true,
-        required:true
+    roll: {
+        type: Number,
+        unique: true,
+        required: true
     },
 
-    name:String,
+    name: {
+        type: String,
+        required: true
+    },
 
-    father:String,
+    father: String,
 
-    dob:String,
+    dob: String,
 
-    className:String,
+    className: String,
 
-    phone:String,
+    phone: String,
 
-    email:String,
+    email: String,
 
-    password:String,
+    username: String,
 
-    username:String,
+    password: String,
 
-    paymentId:String
+    paymentId: String,
+
+    status: {
+        type: String,
+        default: "active"
+    },
+
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
 
 });
 
-module.exports =
-mongoose.model("Student",studentSchema);
+module.exports = mongoose.model("Student", studentSchema);

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Panel - Students</title>
+
+<style>
+
+body{
+    font-family: Arial;
+    margin:0;
+    background:#f3f4f6;
+}
+
+.header{
+    background:#111827;
+    color:white;
+    padding:15px 20px;
+    font-size:20px;
+}
+
+.container{
+    padding:20px;
+}
+
+/* TABLE */
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+th,td{
+    padding:12px;
+    text-align:center;
+    border-bottom:1px solid #eee;
+}
+
+th{
+    background:#2563eb;
+    color:white;
+}
+
+/* BUTTONS */
+button{
+    padding:6px 10px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.edit{
+    background:#f59e0b;
+    color:white;
+}
+
+.delete{
+    background:#ef4444;
+    color:white;
+}
+
+button:hover{
+    opacity:0.8;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+    🛠 Admin Panel - Student Management
+</div>
+
+<div class="container">
+
+<table>
+<thead>
+<tr>
+    <th>Name</th>
+    <th>Phone</th>
+    <th>Course</th>
+    <th>Fee</th>
+    <th>Action</th>
+</tr>
+</thead>
+
+<tbody id="tableData"></tbody>
+</table>
+
+</div>
+
+<script>
+
+/* ================= FETCH STUDENTS ================= */
+function loadStudents(){
+
+fetch("/api/students")
+.then(res => res.json())
+.then(data => {
+
+    let html = "";
+
+    data.forEach(s => {
+        html += `
+        <tr>
+            <td>${s.name}</td>
+            <td>${s.phone}</td>
+            <td>${s.course || s.className}</td>
+            <td>${s.fee || "-"}</td>
+            <td>
+                <button class="edit" onclick="editStudent('${s._id}')">Edit</button>
+                <button class="delete" onclick="deleteStudent('${s._id}')">Delete</button>
+            </td>
+        </tr>`;
+    });
+
+    document.getElementById("tableData").innerHTML = html;
+});
+
+}
+
+loadStudents();
+
+
+/* ================= DELETE ================= */
+function deleteStudent(id){
+
+    if(!confirm("Are you sure to delete this student?")) return;
+
+    fetch("/api/student/" + id, {
+        method: "DELETE"
+    })
+    .then(() => loadStudents());
+}
+
+
+/* ================= EDIT ================= */
+function editStudent(id){
+
+    let name = prompt("Enter new name:");
+    let phone = prompt("Enter new phone:");
+
+    if(!name || !phone){
+        alert("Invalid input");
+        return;
+    }
+
+    fetch("/api/student/" + id, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ name, phone })
+    })
+    .then(() => loadStudents());
+}
+
+</script>
+
+</body>
+</html>

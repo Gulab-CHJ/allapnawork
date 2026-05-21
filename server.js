@@ -576,6 +576,22 @@ app.post("/verify-payment", (req, res) => {
     }
 });
 
+// new change code
+
+app.get("/api/students", async (req, res) => {
+    const data = await Student.find();
+    res.json(data);
+});
+
+app.put("/api/student/:id", async (req, res) => {
+    await Student.findByIdAndUpdate(req.params.id, req.body);
+    res.json({ message: "Updated" });
+});
+
+app.delete("/api/student/:id", async (req, res) => {
+    await Student.findByIdAndDelete(req.params.id);
+    res.json({ message: "Deleted" });
+});
 
 
 /* ================= START SERVER ================= */
