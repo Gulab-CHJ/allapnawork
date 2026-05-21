@@ -31,7 +31,7 @@
 // module.exports =
 // mongoose.model("Student",studentSchema);
 
-
+const mongoose = require("mongoose");
 const studentSchema = new mongoose.Schema({
 
     roll: { type: Number, unique: true, required: true },
