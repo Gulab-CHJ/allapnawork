@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -473,6 +473,249 @@ document
 // window.location.href =
 // "/payment";
 
+
+</script>
+
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Student Registration OTP</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:#f1f5f9;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    padding:20px;
+}
+
+.box{
+    width:100%;
+    max-width:450px;
+    background:#fff;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.1);
+}
+
+h2{
+    text-align:center;
+    margin-bottom:20px;
+    color:#111827;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin-top:12px;
+    border-radius:8px;
+    border:1px solid #d1d5db;
+    outline:none;
+    font-size:15px;
+}
+
+input:focus{
+    border-color:#2563eb;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    margin-top:12px;
+    border:none;
+    border-radius:8px;
+    background:#2563eb;
+    color:white;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+#otpBox{
+    display:none;
+}
+
+.success{
+    background:#16a34a !important;
+}
+
+.disabled{
+    background:#9ca3af !important;
+    cursor:not-allowed;
+}
+
+.status{
+    margin-top:10px;
+    text-align:center;
+    font-size:14px;
+    font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<h2>Student Registration</h2>
+
+<form id="registerForm">
+
+<input type="text" name="name" placeholder="Student Name" required>
+<input type="text" name="father" placeholder="Father Name" required>
+<input type="date" name="dob" required>
+<input type="text" name="className" placeholder="Class" required>
+
+<!-- PHOTO -->
+<input type="file" name="photo" accept="image/*" required>
+
+<input type="tel" name="phone" placeholder="Phone Number" required>
+<input type="password" name="password" placeholder="Password" required>
+<input type="email" id="email" name="email" placeholder="Enter Email" required>
+
+<button type="button" onclick="sendOTP()">Send OTP</button>
+
+<div id="otpBox">
+    <input type="text" id="otp" placeholder="Enter OTP">
+    <button type="button" onclick="verifyOTP()">Verify OTP</button>
+</div>
+
+<div class="status" id="status"></div>
+
+<button type="submit" id="registerBtn" class="disabled" disabled>
+Register Student
+</button>
+
+</form>
+
+</div>
+
+<script>
+
+let verified = false;
+
+/* ================= SEND OTP ================= */
+async function sendOTP(){
+
+    const email = document.getElementById("email").value;
+    const status = document.getElementById("status");
+
+    if(!email){
+        status.innerHTML = "❌ Enter Email";
+        return;
+    }
+
+    const res = await fetch("/send-otp",{
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        body: JSON.stringify({ email })
+    });
+
+    const data = await res.json();
+
+    status.innerHTML = data.message;
+
+    if(data.success){
+        document.getElementById("otpBox").style.display = "block";
+    }
+}
+
+/* ================= VERIFY OTP ================= */
+async function verifyOTP(){
+
+    const email = document.getElementById("email").value;
+    const otp = document.getElementById("otp").value;
+    const status = document.getElementById("status");
+
+    const res = await fetch("/verify-otp",{
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        body: JSON.stringify({ email, otp })
+    });
+
+    const data = await res.json();
+
+    status.innerHTML = data.message;
+
+    if(data.success){
+
+        verified = true;
+
+        status.innerHTML = "✅ Email Verified Successfully";
+
+        const btn = document.getElementById("registerBtn");
+        btn.disabled = false;
+        btn.classList.remove("disabled");
+        btn.classList.add("success");
+    }
+}
+
+/* ================= REGISTER ================= */
+document.getElementById("registerForm")
+.addEventListener("submit", async (e) => {
+
+    e.preventDefault();
+
+    const status = document.getElementById("status");
+
+    if(!verified){
+        status.innerHTML = "❌ Verify OTP First";
+        return;
+    }
+
+    const btn = document.getElementById("registerBtn");
+    btn.innerHTML = "Registering...";
+
+    const formData = new FormData(e.target);
+
+    const res = await fetch("/student-register",{
+        method:"POST",
+        body: formData   // 🔥 IMPORTANT (photo support)
+    });
+
+    const data = await res.json();
+
+    btn.innerHTML = "Register Student";
+
+    status.innerHTML = data.message;
+
+    if(data.success){
+
+        // save for payment page
+        const obj = {};
+        formData.forEach((v,k)=>obj[k]=v);
+
+        localStorage.setItem("studentData", JSON.stringify(obj));
+
+        setTimeout(()=>{
+            window.location.href = data.redirect;
+        },1000);
+    }
+
+});
 
 </script>
 
