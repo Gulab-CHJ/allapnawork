@@ -578,6 +578,10 @@ app.post("/verify-payment", (req, res) => {
 
 // new change code
 
+app.get("/admin", (req, res) => {
+    res.render("admin"); // admin.ejs file honi chahiye
+});
+
 app.get("/api/students", async (req, res) => {
     const data = await Student.find();
     res.json(data);
