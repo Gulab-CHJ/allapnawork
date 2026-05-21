@@ -417,7 +417,7 @@ app.post("/create-order", async (req, res) => {
 
         const order = await razorpay.orders.create({
 
-            amount: 29900,
+            amount: 299 * 100, // amount in paise
 
             currency: "INR",
 
@@ -599,6 +599,8 @@ app.delete("/api/student/:id", isAdmin, async (req, res) => {
 
 const ADMIN_ID = "admin";
 const ADMIN_PASS = "12345";
+
+
 app.get("/admin-login", (req, res) => {
     res.render("admin-login");
 });
