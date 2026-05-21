@@ -578,24 +578,36 @@ app.post("/verify-payment", (req, res) => {
 
 // new change code
 
-app.get("/admin", (req, res) => {
-    res.render("admin"); // admin.ejs file honi chahiye
+app.get("/admin", isAdmin, (req, res) => {
+    res.render("admin");
 });
 
-app.get("/api/students", async (req, res) => {
+app.get("/api/students", isAdmin, async (req, res) => {
     const data = await Student.find();
     res.json(data);
 });
 
-app.put("/api/student/:id", async (req, res) => {
+app.put("/api/student/:id", isAdmin, async (req, res) => {
     await Student.findByIdAndUpdate(req.params.id, req.body);
     res.json({ message: "Updated" });
 });
 
-app.delete("/api/student/:id", async (req, res) => {
+app.delete("/api/student/:id", isAdmin, async (req, res) => {
     await Student.findByIdAndDelete(req.params.id);
     res.json({ message: "Deleted" });
 });
+
+const ADMIN_ID = "admin";
+const ADMIN_PASS = "12345";
+app.get("/admin-login", (req, res) => {
+    res.render("admin-login");
+});
+function isAdmin(req, res, next){
+    if(req.session.isAdmin){
+        return next();
+    }
+    return res.redirect("/admin-login");
+}
 
 
 /* ================= START SERVER ================= */
