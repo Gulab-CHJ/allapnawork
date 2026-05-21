@@ -20,6 +20,7 @@ body{
     color:white;
     padding:15px 20px;
     font-size:20px;
+    text-align:center;
 }
 
 .container{
@@ -33,6 +34,7 @@ table{
     background:white;
     border-radius:10px;
     overflow:hidden;
+    box-shadow:0 5px 20px rgba(0,0,0,0.1);
 }
 
 th,td{
@@ -68,6 +70,16 @@ button:hover{
     opacity:0.8;
 }
 
+.status-paid{
+    color:green;
+    font-weight:bold;
+}
+
+.status-unpaid{
+    color:red;
+    font-weight:bold;
+}
+
 </style>
 
 </head>
@@ -85,8 +97,10 @@ button:hover{
 <tr>
     <th>Name</th>
     <th>Phone</th>
-    <th>Course</th>
-    <th>Fee</th>
+    <th>Class</th>
+    <th>Email</th>
+    <th>Payment</th>
+    <th>Status</th>
     <th>Action</th>
 </tr>
 </thead>
@@ -108,12 +122,19 @@ fetch("/api/students")
     let html = "";
 
     data.forEach(s => {
+
+        let paymentStatus = s.paymentId ? 
+            `<span class="status-paid">Paid</span>` :
+            `<span class="status-unpaid">Pending</span>`;
+
         html += `
         <tr>
-            <td>${s.name}</td>
-            <td>${s.phone}</td>
-            <td>${s.course || s.className}</td>
-            <td>${s.fee || "-"}</td>
+            <td>${s.name || "-"}</td>
+            <td>${s.phone || "-"}</td>
+            <td>${s.className || "-"}</td>
+            <td>${s.email || "-"}</td>
+            <td>${paymentStatus}</td>
+            <td>${s.status || "active"}</td>
             <td>
                 <button class="edit" onclick="editStudent('${s._id}')">Edit</button>
                 <button class="delete" onclick="deleteStudent('${s._id}')">Delete</button>
@@ -122,6 +143,7 @@ fetch("/api/students")
     });
 
     document.getElementById("tableData").innerHTML = html;
+
 });
 
 }
