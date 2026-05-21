@@ -324,7 +324,71 @@ app.post("/send-otp", async (req, res) => {
 });
 
 /* ================= REGISTER ================= */
-app.post("/student-register", async (req, res) => {
+// app.post("/student-register", async (req, res) => {
+
+//     try {
+
+//         const {
+//             name = "",
+//             father = "",
+//             dob = "",
+//             className = "",
+//             phone = "",
+//             password = "",
+//             email = ""
+//         } = req.body;
+
+//         if (req.session.verifiedEmail !== email) {
+//             return res.json({
+//                 success: false,
+//                 message: "Verify Email First"
+//             });
+//         }
+
+//         const phoneStr = String(phone).replace(/\D/g, "");
+
+//         if (phoneStr.length !== 10) {
+//             return res.json({
+//                 success: false,
+//                 message: "Wrong Number"
+//             });
+//         }
+
+//         const dobPart = dob ? dob.replace(/-/g, "") : "000000";
+
+//         const username =
+//             name.trim().replace(/\s+/g, "").toLowerCase() + dobPart;
+
+//         // 🔥 TEMP STORE ONLY (NO DB SAVE)
+//         req.session.tempStudent = {
+//             name,
+//             father,
+//             dob,
+//             className,
+//             phone: phoneStr,
+//             email,
+//             password,
+//             username
+//         };
+
+//         return res.json({
+//             success: true,
+//             redirect: "/payment"
+//         });
+
+//     } catch (err) {
+
+//         console.log(err);
+
+//         return res.json({
+//             success: false,
+//             message: err.message
+//         });
+
+//     }
+// });
+
+app.post("/student-register", upload.single("photo"), async (req, res) => {
 
     try {
 
@@ -338,29 +402,20 @@ app.post("/student-register", async (req, res) => {
             email = ""
         } = req.body;
 
-        if (req.session.verifiedEmail !== email) {
-            return res.json({
-                success: false,
-                message: "Verify Email First"
-            });
-        }
-
         const phoneStr = String(phone).replace(/\D/g, "");
-
-        if (phoneStr.length !== 10) {
-            return res.json({
-                success: false,
-                message: "Wrong Number"
-            });
-        }
 
         const dobPart = dob ? dob.replace(/-/g, "") : "000000";
 
         const username =
             name.trim().replace(/\s+/g, "").toLowerCase() + dobPart;
 
-        // 🔥 TEMP STORE ONLY (NO DB SAVE)
-        req.session.tempStudent = {
+        const photoPath = req.file ? "/uploads/" + req.file.filename : "";
+
+        const last = await Student.findOne().sort({ roll: -1 });
+        const roll = last ? last.roll + 1 : 1;
+
+        const student = await Student.create({
+            roll,
             name,
             father,
             dob,
@@ -368,25 +423,21 @@ app.post("/student-register", async (req, res) => {
             phone: phoneStr,
             email,
             password,
-            username
-        };
+            username,
+            photo: photoPath
+        });
 
-        return res.json({
+        res.json({
             success: true,
-            redirect: "/payment"
+            message: "Student Registered"
         });
 
     } catch (err) {
-
         console.log(err);
-
-        return res.json({
-            success: false,
-            message: err.message
-        });
-
+        res.json({ success: false, message: err.message });
     }
 });
+
 app.get("/payment-success",(req,res)=>{
     res.send("Payment Successful 🎉 Registration Complete");
 });
@@ -621,6 +672,21 @@ app.post("/admin-login", (req, res) => {
 
     return res.send("❌ Wrong ID or Password");
 });
+
+const multer = require("multer");
+const fs = require("fs");
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, "public/uploads");
+    },
+    filename: function (req, file, cb) {
+        const uniqueName = Date.now() + "-" + file.originalname;
+        cb(null, uniqueName);
+    }
+});
+
+const upload = multer({ storage });
 
 
 /* ================= START SERVER ================= */

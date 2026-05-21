@@ -179,6 +179,13 @@ required
 >
 
 <input
+type="file"
+name="photo"
+accept="image/*"
+required
+>
+
+<input
 type="tel"
 name="phone"
 placeholder="Phone Number"
@@ -398,98 +405,58 @@ async function verifyOTP(){
 }
 
 /* ================= REGISTER ================= */
-
 document
 .getElementById("registerForm")
-.addEventListener("submit", async(e)=>{
+.addEventListener("submit", async (e) => {
 
     e.preventDefault();
 
     const status =
     document.getElementById("status");
 
-    if(!verified){
-
+    if (!verified) {
         status.innerHTML = "❌ Verify OTP First";
-
         return;
     }
-
-    const formData =
-    new FormData(e.target);
-
-    const obj = {};
-
-    formData.forEach((v,k)=>{
-
-        obj[k] = v;
-
-    });
 
     const registerBtn =
     document.getElementById("registerBtn");
 
     registerBtn.innerHTML = "Registering...";
 
-    const res =
-    await fetch("/student-register",{
+    /* ✅ FORM DATA (photo included) */
+    const formData = new FormData(e.target);
 
-        method:"POST",
-
-        headers:{
-            "Content-Type":"application/json"
-        },
-
-        body:JSON.stringify(obj)
-
+    const res = await fetch("/student-register", {
+        method: "POST",
+        body: formData   // ✅ IMPORTANT: no headers
     });
 
     const data = await res.json();
 
-    registerBtn.innerHTML =
-    "Register Student";
+    registerBtn.innerHTML = "Register Student";
 
-    status.innerHTML =
-    data.message;
+    status.innerHTML = data.message;
 
-//     if(data.success){
+    if (data.success) {
 
-//     status.innerHTML =
-//     "✅ Registration Successful";
+        status.innerHTML = "✅ Registration Successful";
 
-//     setTimeout(()=>{
+        /* Save for payment */
+        const obj = {};
+        formData.forEach((v, k) => {
+            obj[k] = v;
+        });
 
-//         window.location.href =
-//         data.redirect;
+        localStorage.setItem(
+            "studentData",
+            JSON.stringify(obj)
+        );
 
-//      },1000);
-//     }
-
-// });
-
-if(data.success){
-
-    status.innerHTML =
-    "✅ Registration Successful";
-
-    /* SAVE DATA */
-
-    localStorage.setItem(
-
-        "studentData",
-
-        JSON.stringify(obj)
-
-    );
-
-    setTimeout(()=>{
-
-        window.location.href =
-        data.redirect;
-
-    },1000);
-
-}
+        setTimeout(() => {
+            window.location.href = data.redirect;
+        }, 1000);
+    }
 
 });
 
