@@ -720,7 +720,6 @@
 
 // app.listen(3000);
 
-
 require("dotenv").config();
 
 const express = require("express");
@@ -749,41 +748,13 @@ app.use(session({
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-/* ================= DATABASE ================= */
+/* ================= DB ================= */
 mongoose.connect(process.env.MONGO_URL)
 .then(() => console.log("✅ MongoDB Connected"))
 .catch(err => console.log(err));
 
 /* ================= MODEL ================= */
 const Student = require("./models/student");
-
-/* ================= UPLOAD (PHOTO FIX) ================= */
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, "public/uploads");
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + "-" + file.originalname);
-    }
-});
-
-const upload = multer({ storage });
-
-/* ================= NODEMAILER (OTP EMAIL) ================= */
-const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    }
-});
-
-transporter.verify((err) => {
-    if(err) console.log("❌ MAIL ERROR", err);
-    else console.log("✅ MAIL READY");
-});
 
 /* ================= OTP MODEL ================= */
 const otpSchema = new mongoose.Schema({
@@ -793,14 +764,27 @@ const otpSchema = new mongoose.Schema({
 });
 const OTP = mongoose.model("OTP", otpSchema);
 
-/* ================= ADMIN ================= */
-const ADMIN_ID = "admin";
-const ADMIN_PASS = "12345";
+/* ================= UPLOAD ================= */
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, "public/uploads");
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + "-" + file.originalname);
+    }
+});
+const upload = multer({ storage });
 
-function isAdmin(req, res, next){
-    if(req.session.isAdmin) return next();
-    return res.redirect("/admin-login");
-}
+/* ================= EMAIL ================= */
+const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+    }
+});
 
 /* ================= ROUTES ================= */
 app.get("/", (req, res) => res.render("index"));
@@ -822,7 +806,7 @@ app.post("/send-otp", async (req, res) => {
             from: process.env.EMAIL_USER,
             to: email,
             subject: "OTP Verification",
-            html: `<h2>Your OTP is</h2><h1>${otp}</h1>`
+            html: `<h1>Your OTP: ${otp}</h1>`
         });
 
         res.json({ success: true, message: "OTP Sent" });
@@ -839,33 +823,33 @@ app.post("/verify-otp", async (req, res) => {
 
     const data = await OTP.findOne({ email, otp });
 
-    if(!data){
-        return res.json({ success:false, message:"Invalid OTP" });
+    if (!data) {
+        return res.json({ success: false, message: "Invalid OTP" });
     }
 
     req.session.verifiedEmail = email;
 
-    res.json({ success:true, message:"OTP Verified" });
+    res.json({ success: true, message: "OTP Verified" });
 });
 
 /* ================= REGISTER STUDENT ================= */
 app.post("/student-register", upload.single("photo"), async (req, res) => {
     try {
-        const {
-            name,
-            father,
-            dob,
-            className,
-            phone,
-            email,
-            password
-        } = req.body;
+
+        const { name, father, dob, className, phone, email, password } = req.body;
+
+        /* OTP CHECK */
+        if (req.session.verifiedEmail !== email) {
+            return res.json({
+                success: false,
+                message: "❌ Email not verified"
+            });
+        }
 
         const phoneStr = String(phone).replace(/\D/g, "");
-
         const dobPart = dob ? dob.replace(/-/g, "") : "000000";
 
-        const username = name.toLowerCase().replace(/\s+/g,"") + dobPart;
+        const username = name.toLowerCase().replace(/\s+/g, "") + dobPart;
 
         const last = await Student.findOne().sort({ roll: -1 });
         const roll = last ? last.roll + 1 : 1;
@@ -885,15 +869,65 @@ app.post("/student-register", upload.single("photo"), async (req, res) => {
             photo
         });
 
-        res.json({
-    success: true,
-    message: "Student Registered",
-    redirect: "/payment-success"   // ✅ ADD THIS
-});
+        return res.json({
+            success: true,
+            message: "Student Registered",
+            redirect: "/payment-success"
+        });
 
     } catch (err) {
-        res.json({ success:false, message:err.message });
+        console.log(err);
+        return res.json({ success: false, message: err.message });
     }
+});
+
+/* ================= SUCCESS PAGE ================= */
+app.get("/payment-success", (req, res) => {
+    res.send("🎉 Registration Complete");
+});
+
+/* ================= ADMIN LOGIN ================= */
+const ADMIN_ID = "admin";
+const ADMIN_PASS = "12345";
+
+app.get("/admin-login", (req, res) => {
+    res.render("admin-login");
+});
+
+app.post("/admin-login", (req, res) => {
+    const { username, password } = req.body;
+
+    if (username === ADMIN_ID && password === ADMIN_PASS) {
+        req.session.isAdmin = true;
+        return res.redirect("/admin");
+    }
+
+    res.send("❌ Wrong Login");
+});
+
+function isAdmin(req, res, next) {
+    if (req.session.isAdmin) return next();
+    res.redirect("/admin-login");
+}
+
+/* ================= ADMIN PANEL ================= */
+app.get("/admin", isAdmin, (req, res) => {
+    res.render("admin");
+});
+
+app.get("/api/students", isAdmin, async (req, res) => {
+    const data = await Student.find();
+    res.json(data);
+});
+
+app.put("/api/student/:id", isAdmin, async (req, res) => {
+    await Student.findByIdAndUpdate(req.params.id, req.body);
+    res.json({ message: "Updated" });
+});
+
+app.delete("/api/student/:id", isAdmin, async (req, res) => {
+    await Student.findByIdAndDelete(req.params.id);
+    res.json({ message: "Deleted" });
 });
 
 /* ================= RAZORPAY ================= */
@@ -912,67 +946,14 @@ app.post("/create-order", async (req, res) => {
             receipt: "order_rcpt"
         });
 
-        res.json({ success:true, order });
+        res.json({ success: true, order });
 
     } catch (err) {
-        res.json({ success:false });
+        res.json({ success: false });
     }
 });
 
-app.post("/payment-success-save", async (req, res) => {
-    try {
-        const data = req.body;
-
-        const last = await Student.findOne().sort({ roll: -1 });
-        const roll = last ? last.roll + 1 : 1;
-
-        await Student.create({
-            ...data,
-            roll,
-            paymentId: data.payment_id
-        });
-
-        res.json({ success:true });
-
-    } catch (err) {
-        res.json({ success:false });
-    }
-});
-
-/* ================= ADMIN ================= */
-app.get("/admin-login", (req,res)=>res.render("admin-login"));
-
-app.post("/admin-login",(req,res)=>{
-    const { username, password } = req.body;
-
-    if(username === ADMIN_ID && password === ADMIN_PASS){
-        req.session.isAdmin = true;
-        return res.redirect("/admin");
-    }
-
-    res.send("Wrong Login");
-});
-
-app.get("/admin", isAdmin, (req,res)=>{
-    res.render("admin");
-});
-
-app.get("/api/students", isAdmin, async (req,res)=>{
-    const data = await Student.find();
-    res.json(data);
-});
-
-app.put("/api/student/:id", isAdmin, async (req,res)=>{
-    await Student.findByIdAndUpdate(req.params.id, req.body);
-    res.json({ message:"Updated" });
-});
-
-app.delete("/api/student/:id", isAdmin, async (req,res)=>{
-    await Student.findByIdAndDelete(req.params.id);
-    res.json({ message:"Deleted" });
-});
-
-/* ================= START SERVER ================= */
+/* ================= SERVER ================= */
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
@@ -980,6 +961,6 @@ app.listen(PORT, () => {
 });
 
 /* ================= 404 ================= */
-app.use((req,res)=>{
+app.use((req, res) => {
     res.status(404).send("❌ 404 Page Not Found");
 });
