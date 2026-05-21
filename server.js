@@ -885,7 +885,11 @@ app.post("/student-register", upload.single("photo"), async (req, res) => {
             photo
         });
 
-        res.json({ success:true, message:"Registered" });
+        res.json({
+    success: true,
+    message: "Student Registered",
+    redirect: "/payment-success"   // ✅ ADD THIS
+});
 
     } catch (err) {
         res.json({ success:false, message:err.message });

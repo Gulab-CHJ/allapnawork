@@ -702,18 +702,41 @@ document.getElementById("registerForm")
 
     status.innerHTML = data.message;
 
-    if(data.success){
+    // if(data.success){
 
-        // save for payment page
-        const obj = {};
-        formData.forEach((v,k)=>obj[k]=v);
+    //     // save for payment page
+    //     const obj = {};
+    //     formData.forEach((v,k)=>obj[k]=v);
 
-        localStorage.setItem("studentData", JSON.stringify(obj));
+    //     localStorage.setItem("studentData", JSON.stringify(obj));
 
-        setTimeout(()=>{
+    //     setTimeout(()=>{
+    //         window.location.href = data.redirect;
+    //     },1000);
+    // }
+
+    if (data.success) {
+
+    status.innerHTML = "✅ Registration Successful";
+
+    const obj = {};
+    formData.forEach((v, k) => {
+        obj[k] = v;
+    });
+
+    localStorage.setItem(
+        "studentData",
+        JSON.stringify(obj)
+    );
+
+    setTimeout(() => {
+        if (data.redirect) {
             window.location.href = data.redirect;
-        },1000);
-    }
+        } else {
+            window.location.href = "/payment-success";
+        }
+    }, 1000);
+}
 
 });
 
