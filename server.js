@@ -836,48 +836,51 @@ app.post("/verify-otp", async (req, res) => {
 app.post("/student-register", upload.single("photo"), async (req, res) => {
     try {
 
-        const { name, father, dob, className, phone, email, password } = req.body;
+        console.log("BODY:", req.body);
+        console.log("FILE:", req.file);
 
-        /* OTP CHECK */
-        if (req.session.verifiedEmail !== email) {
-            return res.json({
-                success: false,
-                message: "❌ Email not verified"
-            });
-        }
-
-        const phoneStr = String(phone).replace(/\D/g, "");
-        const dobPart = dob ? dob.replace(/-/g, "") : "000000";
-
-        const username = name.toLowerCase().replace(/\s+/g, "") + dobPart;
-
-        const last = await Student.findOne().sort({ roll: -1 });
-        const roll = last ? last.roll + 1 : 1;
-
-        const photo = req.file ? "/uploads/" + req.file.filename : "";
-
-        await Student.create({
-            roll,
+        const {
             name,
             father,
             dob,
             className,
-            phone: phoneStr,
+            phone,
+            email,
+            password
+        } = req.body;
+
+        if(!name || !email){
+            return res.json({
+                success:false,
+                message:"Missing fields"
+            });
+        }
+
+        const photo = req.file ? "/uploads/" + req.file.filename : "";
+
+        await Student.create({
+            name,
+            father,
+            dob,
+            className,
+            phone,
             email,
             password,
-            username,
             photo
         });
 
         return res.json({
-            success: true,
-            message: "Student Registered",
-            redirect: "/payment-success"
+            success:true,
+            message:"Student Registered",
+            redirect:"/payment"
         });
 
-    } catch (err) {
-        console.log(err);
-        return res.json({ success: false, message: err.message });
+    } catch(err){
+        console.log("REGISTER ERROR:", err);
+        return res.json({
+            success:false,
+            message:err.message
+        });
     }
 });
 
