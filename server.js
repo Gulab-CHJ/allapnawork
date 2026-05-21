@@ -113,218 +113,283 @@
 
 
 
-require("dotenv").config();
-const crypto = require("crypto");
+// require("dotenv").config();
+// const crypto = require("crypto");
 
-const express = require("express");
-const path = require("path");
-const mongoose = require("mongoose");
-const session = require("express-session");
-const nodemailer = require("nodemailer");
+// const express = require("express");
+// const path = require("path");
+// const mongoose = require("mongoose");
+// const session = require("express-session");
+// const nodemailer = require("nodemailer");
+// const multer = require("multer");
 
-const app = express();
+// const app = express();
 
-/* ================= MIDDLEWARE ================= */
+// /* ================= MIDDLEWARE ================= */
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
+// app.use(express.json());
 
-app.use(express.static(path.join(__dirname, "public")));
+// app.use(express.static(path.join(__dirname, "public")));
 
-/* ================= SESSION ================= */
+// /* ================= SESSION ================= */
 
-app.use(session({
-    secret: process.env.SESSION_SECRET || "defaultsecret",
-    resave: false,
-    saveUninitialized: false
-}));
+// app.use(session({
+//     secret: process.env.SESSION_SECRET || "defaultsecret",
+//     resave: false,
+//     saveUninitialized: false
+// }));
 
-/* ================= VIEW ENGINE ================= */
+// /* ================= VIEW ENGINE ================= */
 
-app.set("view engine", "ejs");
+// app.set("view engine", "ejs");
 
-app.set("views", path.join(__dirname, "views"));
+// app.set("views", path.join(__dirname, "views"));
 
-/* ================= DATABASE ================= */
+// /* ================= DATABASE ================= */
 
-mongoose.connect(process.env.MONGO_URL)
-.then(() => console.log("✅ MongoDB Connected"))
-.catch(err => console.log("❌ Mongo Error:", err));
+// mongoose.connect(process.env.MONGO_URL)
+// .then(() => console.log("✅ MongoDB Connected"))
+// .catch(err => console.log("❌ Mongo Error:", err));
 
-/* ================= MODELS ================= */
+// /* ================= MODELS ================= */
 
-const Student = require("./models/student");
+// const Student = require("./models/student");
 
-const otpSchema = new mongoose.Schema({
+// const otpSchema = new mongoose.Schema({
 
-    email: String,
+//     email: String,
 
-    otp: String,
+//     otp: String,
 
-    createdAt: {
-        type: Date,
-        default: Date.now,
-        expires: 300
-    }
+//     createdAt: {
+//         type: Date,
+//         default: Date.now,
+//         expires: 300
+//     }
 
-});
+// });
 
-const OTP = mongoose.model("OTP", otpSchema);
+// const OTP = mongoose.model("OTP", otpSchema);
 
-/* ================= NODEMAILER ================= */
+// /* ================= NODEMAILER ================= */
 
 
-const transporter = nodemailer.createTransport({
+// const transporter = nodemailer.createTransport({
 
-    host: "smtp.gmail.com",
+//     host: "smtp.gmail.com",
 
-    port: 465,
+//     port: 465,
 
-    secure: true,
+//     secure: true,
 
-    auth: {
+//     auth: {
 
-        user: process.env.EMAIL_USER,
+//         user: process.env.EMAIL_USER,
 
-        pass: process.env.EMAIL_PASS
+//         pass: process.env.EMAIL_PASS
 
-    }
+//     }
 
-});
+// });
 
-transporter.verify((error, success) => {
+// transporter.verify((error, success) => {
 
-    if(error){
+//     if(error){
 
-        console.log("MAIL ERROR =>", error);
+//         console.log("MAIL ERROR =>", error);
 
-    }else{
+//     }else{
 
-        console.log("✅ MAIL SERVER READY");
+//         console.log("✅ MAIL SERVER READY");
 
-    }
+//     }
 
-});
-/* ================= ROUTES ================= */
+// });
+// /* ================= ROUTES ================= */
 
-/* HOME */
+// /* HOME */
 
-app.get("/", (req, res) => {
+// app.get("/", (req, res) => {
 
-    res.render("index");
+//     res.render("index");
 
-});
+// });
 
-/* STUDENT PAGE */
+// /* STUDENT PAGE */
 
-app.get("/student", (req, res) => {
+// app.get("/student", (req, res) => {
 
-    res.render("student-register");
+//     res.render("student-register");
 
-});
+// });
 
-/* VERIFY PAGE */
+// /* VERIFY PAGE */
 
-app.get("/verify", (req, res) => {
+// app.get("/verify", (req, res) => {
 
-    res.render("verify");
+//     res.render("verify");
 
-});
+// });
 
-/* PAYMENT PAGE */
+// /* PAYMENT PAGE */
 
-app.get("/payment", (req, res) => {
+// app.get("/payment", (req, res) => {
 
-    res.render("payment");
+//     res.render("payment");
 
-});
+// });
 
-/* ================= SEND OTP ================= */
-app.post("/send-otp", async (req, res) => {
+// /* ================= SEND OTP ================= */
+// app.post("/send-otp", async (req, res) => {
 
-    try {
+//     try {
 
-        const { email } = req.body;
+//         const { email } = req.body;
 
-        if (!email) {
+//         if (!email) {
 
-            return res.json({
-                success: false,
-                message: "Email Required"
-            });
+//             return res.json({
+//                 success: false,
+//                 message: "Email Required"
+//             });
 
-        }
+//         }
 
-        const otp =
-        Math.floor(100000 + Math.random() * 900000).toString();
+//         const otp =
+//         Math.floor(100000 + Math.random() * 900000).toString();
 
-        await OTP.deleteMany({ email });
+//         await OTP.deleteMany({ email });
 
-        await OTP.create({
-            email,
-            otp
-        });
+//         await OTP.create({
+//             email,
+//             otp
+//         });
 
-        try {
+//         try {
 
-            await transporter.sendMail({
+//             await transporter.sendMail({
 
-                from: process.env.EMAIL_USER,
+//                 from: process.env.EMAIL_USER,
 
-                to: email,
+//                 to: email,
 
-                subject: "Your OTP Code",
+//                 subject: "Your OTP Code",
 
-                html: `
-                    <div style="font-family:Arial;padding:20px;">
-                        <h2>Email Verification</h2>
+//                 html: `
+//                     <div style="font-family:Arial;padding:20px;">
+//                         <h2>Email Verification</h2>
 
-                        <h1 style="letter-spacing:5px;">
-                            ${otp}
-                        </h1>
+//                         <h1 style="letter-spacing:5px;">
+//                             ${otp}
+//                         </h1>
 
-                        <p>OTP valid for 5 minutes.</p>
-                    </div>
-                `
-            });
+//                         <p>OTP valid for 5 minutes.</p>
+//                     </div>
+//                 `
+//             });
 
-            return res.json({
-                success: true,
-                message: "OTP Sent Successfully"
-            });
+//             return res.json({
+//                 success: true,
+//                 message: "OTP Sent Successfully"
+//             });
 
-        } catch (mailErr) {
+//         } catch (mailErr) {
 
-            console.log("MAIL ERROR:", mailErr);
+//             console.log("MAIL ERROR:", mailErr);
 
-            if(mailErr.responseCode === 550){
+//             if(mailErr.responseCode === 550){
 
-                return res.json({
-                    success: false,
-                    message: "Wrong Email ID"
-                });
-            }
+//                 return res.json({
+//                     success: false,
+//                     message: "Wrong Email ID"
+//                 });
+//             }
 
-            return res.json({
-                success: false,
-                message: "Email Send Failed"
-            });
-        }
+//             return res.json({
+//                 success: false,
+//                 message: "Email Send Failed"
+//             });
+//         }
 
-    } catch (err) {
+//     } catch (err) {
 
-        console.log("OTP ERROR:", err);
+//         console.log("OTP ERROR:", err);
 
-        return res.json({
-            success: false,
-            message: "OTP Send Failed"
-        });
-    }
+//         return res.json({
+//             success: false,
+//             message: "OTP Send Failed"
+//         });
+//     }
 
-});
+// });
 
-/* ================= REGISTER ================= */
-// app.post("/student-register", async (req, res) => {
+// /* ================= REGISTER ================= */
+// // app.post("/student-register", async (req, res) => {
+
+// //     try {
+
+// //         const {
+// //             name = "",
+// //             father = "",
+// //             dob = "",
+// //             className = "",
+// //             phone = "",
+// //             password = "",
+// //             email = ""
+// //         } = req.body;
+
+// //         if (req.session.verifiedEmail !== email) {
+// //             return res.json({
+// //                 success: false,
+// //                 message: "Verify Email First"
+// //             });
+// //         }
+
+// //         const phoneStr = String(phone).replace(/\D/g, "");
+
+// //         if (phoneStr.length !== 10) {
+// //             return res.json({
+// //                 success: false,
+// //                 message: "Wrong Number"
+// //             });
+// //         }
+
+// //         const dobPart = dob ? dob.replace(/-/g, "") : "000000";
+
+// //         const username =
+// //             name.trim().replace(/\s+/g, "").toLowerCase() + dobPart;
+
+// //         // 🔥 TEMP STORE ONLY (NO DB SAVE)
+// //         req.session.tempStudent = {
+// //             name,
+// //             father,
+// //             dob,
+// //             className,
+// //             phone: phoneStr,
+// //             email,
+// //             password,
+// //             username
+// //         };
+
+// //         return res.json({
+// //             success: true,
+// //             redirect: "/payment"
+// //         });
+
+// //     } catch (err) {
+
+// //         console.log(err);
+
+// //         return res.json({
+// //             success: false,
+// //             message: err.message
+// //         });
+
+// //     }
+// // });
+
+// app.post("/student-register", upload.single("photo"), async (req, res) => {
 
 //     try {
 
@@ -338,29 +403,20 @@ app.post("/send-otp", async (req, res) => {
 //             email = ""
 //         } = req.body;
 
-//         if (req.session.verifiedEmail !== email) {
-//             return res.json({
-//                 success: false,
-//                 message: "Verify Email First"
-//             });
-//         }
-
 //         const phoneStr = String(phone).replace(/\D/g, "");
-
-//         if (phoneStr.length !== 10) {
-//             return res.json({
-//                 success: false,
-//                 message: "Wrong Number"
-//             });
-//         }
 
 //         const dobPart = dob ? dob.replace(/-/g, "") : "000000";
 
 //         const username =
 //             name.trim().replace(/\s+/g, "").toLowerCase() + dobPart;
 
-//         // 🔥 TEMP STORE ONLY (NO DB SAVE)
-//         req.session.tempStudent = {
+//         const photoPath = req.file ? "/uploads/" + req.file.filename : "";
+
+//         const last = await Student.findOne().sort({ roll: -1 });
+//         const roll = last ? last.roll + 1 : 1;
+
+//         const student = await Student.create({
+//             roll,
 //             name,
 //             father,
 //             dob,
@@ -368,336 +424,280 @@ app.post("/send-otp", async (req, res) => {
 //             phone: phoneStr,
 //             email,
 //             password,
-//             username
-//         };
+//             username,
+//             photo: photoPath
+//         });
 
-//         return res.json({
+//         res.json({
 //             success: true,
-//             redirect: "/payment"
+//             message: "Student Registered"
+//         });
+
+//     } catch (err) {
+//         console.log(err);
+//         res.json({ success: false, message: err.message });
+//     }
+// });
+
+// app.get("/payment-success",(req,res)=>{
+//     res.send("Payment Successful 🎉 Registration Complete");
+// });
+
+
+
+
+
+// /* ================= RAZORPAY ================= */
+
+
+// const Razorpay = require("razorpay");
+
+// const razorpay = new Razorpay({
+
+//     key_id: process.env.RAZORPAY_KEY_ID,
+
+//     key_secret: process.env.RAZORPAY_KEY_SECRET
+
+// });
+
+
+// /* ================= CREATE ORDER ================= */
+
+// app.post("/create-order", async (req, res) => {
+
+//     try {
+
+//         const order = await razorpay.orders.create({
+
+//             amount: 299 * 100, // amount in paise
+
+//             currency: "INR",
+
+//             receipt: "receipt_order"
+
+//         });
+
+//         res.json({
+
+//             success: true,
+
+//             order
+
 //         });
 
 //     } catch (err) {
 
 //         console.log(err);
 
-//         return res.json({
+//         res.json({
+
 //             success: false,
-//             message: err.message
+
+//             message: "Order Failed"
+
 //         });
 
 //     }
+
 // });
 
-app.post("/student-register", upload.single("photo"), async (req, res) => {
+// app.post("/payment-success-save", async (req, res) => {
 
-    try {
+//     try {
 
-        const {
-            name = "",
-            father = "",
-            dob = "",
-            className = "",
-            phone = "",
-            password = "",
-            email = ""
-        } = req.body;
+//         const data = req.body;
 
-        const phoneStr = String(phone).replace(/\D/g, "");
+//         if (!data) {
+//             return res.json({
+//                 success: false,
+//                 message: "No student data found"
+//             });
+//         }
 
-        const dobPart = dob ? dob.replace(/-/g, "") : "000000";
+//         const lastStudent = await Student.findOne().sort({ roll: -1 });
+//         const roll = lastStudent ? lastStudent.roll + 1 : 1;
 
-        const username =
-            name.trim().replace(/\s+/g, "").toLowerCase() + dobPart;
+//         const student = await Student.create({
+//             ...data,
+//             roll,
+//             paymentId: req.body.payment_id
+//         });
 
-        const photoPath = req.file ? "/uploads/" + req.file.filename : "";
 
-        const last = await Student.findOne().sort({ roll: -1 });
-        const roll = last ? last.roll + 1 : 1;
+//         res.json({
+//             success: true,
+//             message: "Registration Complete"
+//         });
 
-        const student = await Student.create({
-            roll,
-            name,
-            father,
-            dob,
-            className,
-            phone: phoneStr,
-            email,
-            password,
-            username,
-            photo: photoPath
-        });
+//     } catch (err) {
+//         res.json({
+//             success: false,
+//             message: err.message
+//         });
+//     }
+// });
+// /* ================= VERIFY OTP ================= */
 
-        res.json({
-            success: true,
-            message: "Student Registered"
-        });
+// app.post("/verify-otp", async (req, res) => {
 
-    } catch (err) {
-        console.log(err);
-        res.json({ success: false, message: err.message });
-    }
-});
+//     try {
 
-app.get("/payment-success",(req,res)=>{
-    res.send("Payment Successful 🎉 Registration Complete");
-});
+//         const email = req.body.email;
 
+//         const otp = req.body.otp;
 
+//         const data = await OTP.findOne({
+//             email,
+//             otp
+//         });
 
+//         if (!data) {
 
+//             return res.json({
+//                 success: false,
+//                 message: "Invalid OTP"
+//             });
+//         }
 
-/* ================= RAZORPAY ================= */
+//         req.session.verifiedEmail = email;
 
+//         return res.json({
+//             success: true,
+//             message: "OTP Verified"
+//         });
 
-const Razorpay = require("razorpay");
+//     } catch (err) {
 
-const razorpay = new Razorpay({
+//         console.log("VERIFY ERROR:", err);
 
-    key_id: process.env.RAZORPAY_KEY_ID,
+//         return res.json({
+//             success: false,
+//             message: "Verification Failed"
+//         });
+//     }
+// });
 
-    key_secret: process.env.RAZORPAY_KEY_SECRET
+// app.post("/verify-payment", (req, res) => {
 
-});
+//     try {
 
+//         const {
 
-/* ================= CREATE ORDER ================= */
+//             razorpay_order_id,
 
-app.post("/create-order", async (req, res) => {
+//             razorpay_payment_id,
 
-    try {
+//             razorpay_signature
 
-        const order = await razorpay.orders.create({
+//         } = req.body;
 
-            amount: 299 * 100, // amount in paise
+//         const body =
+//         razorpay_order_id + "|" + razorpay_payment_id;
 
-            currency: "INR",
+//         const expectedSignature =
+//         crypto
+//         .createHmac(
+//             "sha256",
+//             process.env.RAZORPAY_KEY_SECRET
+//         )
+//         .update(body.toString())
+//         .digest("hex");
 
-            receipt: "receipt_order"
+//         if(expectedSignature === razorpay_signature){
 
-        });
+//             return res.json({
+//                 success:true,
+//                 message:"Payment Verified"
+//             });
 
-        res.json({
+//         }else{
 
-            success: true,
+//             return res.status(400).json({
+//                 success:false,
+//                 message:"Invalid Signature"
+//             });
+//         }
 
-            order
+//     } catch (err) {
 
-        });
+//         console.log(err);
 
-    } catch (err) {
+//         return res.status(500).json({
+//             success:false
+//         });
+//     }
+// });
 
-        console.log(err);
+// // new change code
 
-        res.json({
+// app.get("/admin", isAdmin, (req, res) => {
+//     res.render("admin");
+// });
 
-            success: false,
+// app.get("/api/students", isAdmin, async (req, res) => {
+//     const data = await Student.find();
+//     res.json(data);
+// });
 
-            message: "Order Failed"
+// app.put("/api/student/:id", isAdmin, async (req, res) => {
+//     await Student.findByIdAndUpdate(req.params.id, req.body);
+//     res.json({ message: "Updated" });
+// });
 
-        });
+// app.delete("/api/student/:id", isAdmin, async (req, res) => {
+//     await Student.findByIdAndDelete(req.params.id);
+//     res.json({ message: "Deleted" });
+// });
 
-    }
+// const ADMIN_ID = "admin";
+// const ADMIN_PASS = "12345";
 
-});
 
-app.post("/payment-success-save", async (req, res) => {
+// app.get("/admin-login", (req, res) => {
+//     res.render("admin-login");
+// });
+// function isAdmin(req, res, next){
+//     if(req.session.isAdmin){
+//         return next();
+//     }
+//     return res.redirect("/admin-login");
+// }
+// app.post("/admin-login", (req, res) => {
 
-    try {
+//     const { username, password } = req.body;
 
-        const data = req.body;
+//     if(username === ADMIN_ID && password === ADMIN_PASS){
+//         req.session.isAdmin = true;
+//         return res.redirect("/admin");
+//     }
 
-        if (!data) {
-            return res.json({
-                success: false,
-                message: "No student data found"
-            });
-        }
+//     return res.send("❌ Wrong ID or Password");
+// });
 
-        const lastStudent = await Student.findOne().sort({ roll: -1 });
-        const roll = lastStudent ? lastStudent.roll + 1 : 1;
+// const fs = require("fs");
 
-        const student = await Student.create({
-            ...data,
-            roll,
-            paymentId: req.body.payment_id
-        });
+// const storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//         cb(null, "public/uploads");
+//     },
+//     filename: function (req, file, cb) {
+//         const uniqueName = Date.now() + "-" + file.originalname;
+//         cb(null, uniqueName);
+//     }
+// });
 
+// const upload = multer({ storage });
 
-        res.json({
-            success: true,
-            message: "Registration Complete"
-        });
 
-    } catch (err) {
-        res.json({
-            success: false,
-            message: err.message
-        });
-    }
-});
-/* ================= VERIFY OTP ================= */
+// /* ================= START SERVER ================= */
 
-app.post("/verify-otp", async (req, res) => {
+// const PORT = process.env.PORT || 3000;
 
-    try {
+// app.listen(PORT, () => {
 
-        const email = req.body.email;
+//     console.log("🚀 Server Running On Port " + PORT);
 
-        const otp = req.body.otp;
-
-        const data = await OTP.findOne({
-            email,
-            otp
-        });
-
-        if (!data) {
-
-            return res.json({
-                success: false,
-                message: "Invalid OTP"
-            });
-        }
-
-        req.session.verifiedEmail = email;
-
-        return res.json({
-            success: true,
-            message: "OTP Verified"
-        });
-
-    } catch (err) {
-
-        console.log("VERIFY ERROR:", err);
-
-        return res.json({
-            success: false,
-            message: "Verification Failed"
-        });
-    }
-});
-
-app.post("/verify-payment", (req, res) => {
-
-    try {
-
-        const {
-
-            razorpay_order_id,
-
-            razorpay_payment_id,
-
-            razorpay_signature
-
-        } = req.body;
-
-        const body =
-        razorpay_order_id + "|" + razorpay_payment_id;
-
-        const expectedSignature =
-        crypto
-        .createHmac(
-            "sha256",
-            process.env.RAZORPAY_KEY_SECRET
-        )
-        .update(body.toString())
-        .digest("hex");
-
-        if(expectedSignature === razorpay_signature){
-
-            return res.json({
-                success:true,
-                message:"Payment Verified"
-            });
-
-        }else{
-
-            return res.status(400).json({
-                success:false,
-                message:"Invalid Signature"
-            });
-        }
-
-    } catch (err) {
-
-        console.log(err);
-
-        return res.status(500).json({
-            success:false
-        });
-    }
-});
-
-// new change code
-
-app.get("/admin", isAdmin, (req, res) => {
-    res.render("admin");
-});
-
-app.get("/api/students", isAdmin, async (req, res) => {
-    const data = await Student.find();
-    res.json(data);
-});
-
-app.put("/api/student/:id", isAdmin, async (req, res) => {
-    await Student.findByIdAndUpdate(req.params.id, req.body);
-    res.json({ message: "Updated" });
-});
-
-app.delete("/api/student/:id", isAdmin, async (req, res) => {
-    await Student.findByIdAndDelete(req.params.id);
-    res.json({ message: "Deleted" });
-});
-
-const ADMIN_ID = "admin";
-const ADMIN_PASS = "12345";
-
-
-app.get("/admin-login", (req, res) => {
-    res.render("admin-login");
-});
-function isAdmin(req, res, next){
-    if(req.session.isAdmin){
-        return next();
-    }
-    return res.redirect("/admin-login");
-}
-app.post("/admin-login", (req, res) => {
-
-    const { username, password } = req.body;
-
-    if(username === ADMIN_ID && password === ADMIN_PASS){
-        req.session.isAdmin = true;
-        return res.redirect("/admin");
-    }
-
-    return res.send("❌ Wrong ID or Password");
-});
-
-const multer = require("multer");
-const fs = require("fs");
-
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, "public/uploads");
-    },
-    filename: function (req, file, cb) {
-        const uniqueName = Date.now() + "-" + file.originalname;
-        cb(null, uniqueName);
-    }
-});
-
-const upload = multer({ storage });
-
-
-/* ================= START SERVER ================= */
-
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-
-    console.log("🚀 Server Running On Port " + PORT);
-
-});
+// });
 
 /* ================= 404 ================= */
 
@@ -719,3 +719,235 @@ app.listen(PORT, () => {
 // app.get("/", (req, res) => res.send("Server Running"));
 
 // app.listen(3000);
+
+
+
+require("dotenv").config();
+const express = require("express");
+const path = require("path");
+const mongoose = require("mongoose");
+const session = require("express-session");
+const nodemailer = require("nodemailer");
+const crypto = require("crypto");
+const fs = require("fs");
+const multer = require("multer");
+
+const app = express();
+
+/* ================= MIDDLEWARE ================= */
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.static(path.join(__dirname, "public")));
+
+/* ================= SESSION ================= */
+app.use(session({
+    secret: process.env.SESSION_SECRET || "defaultsecret",
+    resave: false,
+    saveUninitialized: false
+}));
+
+/* ================= VIEW ENGINE ================= */
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+
+/* ================= DB ================= */
+mongoose.connect(process.env.MONGO_URL)
+.then(() => console.log("✅ MongoDB Connected"))
+.catch(err => console.log(err));
+
+const Student = require("./models/student");
+
+/* ================= OTP MODEL ================= */
+const otpSchema = new mongoose.Schema({
+    email: String,
+    otp: String,
+    createdAt: { type: Date, default: Date.now, expires: 300 }
+});
+const OTP = mongoose.model("OTP", otpSchema);
+
+/* ================= UPLOAD FIX (IMPORTANT) ================= */
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, "public/uploads");
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + "-" + file.originalname);
+    }
+});
+const upload = multer({ storage });
+
+/* ================= ADMIN LOGIN ================= */
+const ADMIN_ID = "admin";
+const ADMIN_PASS = "12345";
+
+function isAdmin(req, res, next){
+    if(req.session.isAdmin) return next();
+    return res.redirect("/admin-login");
+}
+
+app.get("/admin-login", (req, res) => {
+    res.render("admin-login");
+});
+
+app.post("/admin-login", (req, res) => {
+    const { username, password } = req.body;
+
+    if(username === ADMIN_ID && password === ADMIN_PASS){
+        req.session.isAdmin = true;
+        return res.redirect("/admin");
+    }
+
+    return res.send("❌ Wrong ID or Password");
+});
+
+/* ================= ADMIN PANEL ================= */
+app.get("/admin", isAdmin, (req, res) => {
+    res.render("admin");
+});
+
+app.get("/api/students", isAdmin, async (req, res) => {
+    const data = await Student.find();
+    res.json(data);
+});
+
+app.put("/api/student/:id", isAdmin, async (req, res) => {
+    await Student.findByIdAndUpdate(req.params.id, req.body);
+    res.json({ message: "Updated" });
+});
+
+app.delete("/api/student/:id", isAdmin, async (req, res) => {
+    await Student.findByIdAndDelete(req.params.id);
+    res.json({ message: "Deleted" });
+});
+
+/* ================= REGISTER WITH PHOTO ================= */
+app.post("/student-register",
+    upload.single("photo"),
+    async (req, res) => {
+
+    try {
+        const {
+            name,
+            father,
+            dob,
+            className,
+            phone,
+            email,
+            password
+        } = req.body;
+
+        const phoneStr = String(phone).replace(/\D/g, "");
+        const dobPart = dob ? dob.replace(/-/g, "") : "000000";
+
+        const username = name.toLowerCase().replace(/\s+/g, "") + dobPart;
+
+        const last = await Student.findOne().sort({ roll: -1 });
+        const roll = last ? last.roll + 1 : 1;
+
+        const photo = req.file ? "/uploads/" + req.file.filename : "";
+
+        await Student.create({
+            roll,
+            name,
+            father,
+            dob,
+            className,
+            phone: phoneStr,
+            email,
+            password,
+            username,
+            photo
+        });
+
+        res.json({
+            success: true,
+            message: "Student Registered"
+        });
+
+    } catch (err) {
+        res.json({ success: false, message: err.message });
+    }
+});
+
+/* ================= API ================= */
+app.get("/", (req, res) => res.render("index"));
+app.get("/student", (req, res) => res.render("student-register"));
+app.get("/payment", (req, res) => res.render("payment"));
+app.get("/verify", (req, res) => res.render("verify"));
+
+/* ================= OTP ================= */
+app.post("/send-otp", async (req, res) => {
+    const { email } = req.body;
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+
+    await OTP.deleteMany({ email });
+    await OTP.create({ email, otp });
+
+    res.json({ success: true, message: "OTP Sent" });
+});
+
+app.post("/verify-otp", async (req, res) => {
+    const { email, otp } = req.body;
+
+    const data = await OTP.findOne({ email, otp });
+
+    if(!data){
+        return res.json({ success:false, message:"Invalid OTP" });
+    }
+
+    req.session.verifiedEmail = email;
+
+    res.json({ success:true, message:"OTP Verified" });
+});
+
+/* ================= RAZORPAY ================= */
+const Razorpay = require("razorpay");
+
+const razorpay = new Razorpay({
+    key_id: process.env.RAZORPAY_KEY_ID,
+    key_secret: process.env.RAZORPAY_KEY_SECRET
+});
+
+app.post("/create-order", async (req, res) => {
+    try {
+        const order = await razorpay.orders.create({
+            amount: 299 * 100,
+            currency: "INR",
+            receipt: "order_rcpt"
+        });
+
+        res.json({ success: true, order });
+    } catch (err) {
+        res.json({ success: false });
+    }
+});
+
+app.post("/payment-success-save", async (req, res) => {
+    try {
+        const data = req.body;
+
+        const last = await Student.findOne().sort({ roll: -1 });
+        const roll = last ? last.roll + 1 : 1;
+
+        await Student.create({
+            ...data,
+            roll,
+            paymentId: data.payment_id
+        });
+
+        res.json({ success: true });
+    } catch (err) {
+        res.json({ success: false });
+    }
+});
+
+/* ================= SERVER ================= */
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log("🚀 Server running on " + PORT);
+});
+
+/* ================= 404 ================= */
+app.use((req, res) => {
+    res.status(404).send("❌ 404 Page Not Found");
+});
