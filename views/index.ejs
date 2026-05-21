@@ -421,19 +421,95 @@
 
     <!-- ================= NAVBAR ================= -->
 
-    <div class="navbar">
-
-      <div class="logo">
-    G & S
+   <div class="navbar">
+    <div class="logo-container">
+        <div class="main-logo">
+            <span class="black-text">GLOBAL</span><span class="red-text">SERVICES</span>
+        </div>
+        <div class="tagline">
+            <span class="line"></span>
+            <span class="tagline-text">SAFE & SECURE</span>
+            <span class="line"></span>
+        </div>
+    </div>
 </div>
 
 <style>
-.logo {
-    font-size: 28px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    color: #111;
+/* Importing the geometric font for the main logo, and a clean sans-serif for the tagline */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@800;900&family=Montserrat:wght@400;700&display=swap');
+
+body {
+    margin: 0;
     font-family: Arial, sans-serif;
+}
+
+.navbar {
+    height: 75px; /* Increased slightly to fit the stacked layout nicely */
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    background: #ffffff;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+/* Container to handle vertical alignment of logo and tagline */
+.logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s ease;
+    user-select: none;
+    cursor: pointer;
+}
+
+/* Main Brand Text */
+.main-logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 20px; 
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    line-height: 1.2;
+}
+
+.main-logo .black-text {
+    color: #0d0d0d;
+    margin-right: 6px;
+}
+
+.main-logo .red-text {
+    color: #e50006;
+}
+
+/* Tagline Layout with Red Lines */
+.tagline {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 3px;
+}
+
+.tagline-text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    color: #0d0d0d;
+    letter-spacing: 3px; /* Wide spacing like the image */
+    padding: 0 8px;      /* Spacing between text and lines */
+}
+
+/* Small red accent lines on the sides */
+.tagline .line {
+    flex-grow: 1;
+    height: 1px;
+    background-color: #e50006;
+    max-width: 20px; /* Controls the length of the lines */
+}
+
+/* Subtle hover effect for the entire logo group */
+.logo-container:hover {
+    opacity: 0.75;
 }
 </style>
 
