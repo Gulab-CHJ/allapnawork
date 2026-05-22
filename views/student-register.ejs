@@ -1392,14 +1392,27 @@ document.getElementById("registerForm")
                        SAVE DATABASE
                     ========================== */
 
-                    const saveRes =
-                    await fetch(
-                        "/student-register",
-                        {
-                            method:"POST",
-                            body:formData
-                        }
-                    );
+                    // const saveRes =
+                    // await fetch(
+                    //     "/student-register",
+                    //     {
+                    //         method:"POST",
+                    //         body:formData
+                    //     }
+                    // );
+
+                    const saveRes = await fetch("/student-register", {
+    method:"POST",
+    body:formData
+});
+
+console.log("STATUS:", saveRes.status);
+
+console.log("OK:", saveRes.ok);
+
+const text = await saveRes.text();
+
+console.log("RESPONSE:", text);
 
                     const saveData =
                     await saveRes.json();
