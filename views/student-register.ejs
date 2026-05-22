@@ -723,8 +723,6 @@ async function verifyOTP(){
 
 // });
 
-
-
 document.getElementById("registerForm")
 .addEventListener("submit", async (e) => {
 
@@ -739,130 +737,185 @@ document.getElementById("registerForm")
     registerBtn.innerHTML = "Processing...";
     registerBtn.disabled = true;
 
-    /* ✅ FORM DATA */
-    const formData = new FormData(e.target);
+    try {
 
-    /* =========================
-       CREATE ORDER
-    ========================== */
+        /* ✅ FORM DATA */
+        const formData = new FormData(e.target);
 
-    const orderRes = await fetch("/create-order", {
-        method: "POST"
-    });
+        /* =========================
+           CREATE ORDER
+        ========================== */
 
-    const orderData = await orderRes.json();
+        const orderRes = await fetch("/create-order", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
 
-    /* =========================
-       RAZORPAY
-    ========================== */
-
-    const options = {
-
-        key: "YOUR_RAZORPAY_KEY",
-
-        amount: orderData.amount,
-
-        currency: "INR",
-
-        name: "Global Services",
-
-        description: "Student Registration Payment",
-
-        order_id: orderData.id,
-
-        handler: async function (response) {
+        /* ❌ ORDER ERROR */
+        if (!orderRes.ok) {
 
             status.innerHTML =
-                "⏳ Saving Data...";
+                "❌ Order Create Failed";
 
-            /* ✅ PAYMENT ID */
-            formData.append(
-                "paymentId",
-                response.razorpay_payment_id
-            );
+            registerBtn.innerHTML =
+                "Register Student";
 
-            formData.append(
-                "orderId",
-                response.razorpay_order_id
-            );
+            registerBtn.disabled = false;
 
-            /* =========================
-               SAVE DATA IN DATABASE
-            ========================== */
-
-            const saveRes = await fetch(
-                "/student-register",
-                {
-                    method: "POST",
-                    body: formData
-                }
-            );
-
-            const saveData =
-                await saveRes.json();
-
-            if (saveData.success) {
-
-                status.innerHTML =
-                    "✅ Registration Successful";
-
-                setTimeout(() => {
-
-                    window.location.href =
-                        saveData.redirect;
-
-                }, 1500);
-
-            } else {
-
-                status.innerHTML =
-                    "❌ " + saveData.message;
-
-                registerBtn.innerHTML =
-                    "Register Student";
-
-                registerBtn.disabled = false;
-            }
-        },
-
-        prefill: {
-            name:
-                document.querySelector(
-                    'input[name="name"]'
-                ).value,
-
-            email:
-                document.querySelector(
-                    'input[name="email"]'
-                ).value,
-
-            contact:
-                document.querySelector(
-                    'input[name="phone"]'
-                ).value
-        },
-
-        theme: {
-            color: "#2563eb"
+            return;
         }
-    };
 
-    const rzp = new Razorpay(options);
+        const orderData = await orderRes.json();
 
-    rzp.on("payment.failed", function () {
+        console.log(orderData);
+
+        /* =========================
+           RAZORPAY
+        ========================== */
+
+        const options = {
+
+            key: "rzp_test_SrzTcHdvE8Qbkq",
+
+            amount: orderData.amount,
+
+            currency: "INR",
+
+            name: "Global Services",
+
+            description:
+                "Student Registration Payment",
+
+            order_id: orderData.id,
+
+            handler: async function (response) {
+
+                try {
+
+                    status.innerHTML =
+                        "⏳ Saving Data...";
+
+                    /* ✅ PAYMENT DETAILS */
+                    formData.append(
+                        "paymentId",
+                        response.razorpay_payment_id
+                    );
+
+                    formData.append(
+                        "orderId",
+                        response.razorpay_order_id
+                    );
+
+                    /* =========================
+                       SAVE DATABASE
+                    ========================== */
+
+                    const saveRes =
+                        await fetch(
+                            "/student-register",
+                            {
+                                method: "POST",
+                                body: formData
+                            }
+                        );
+
+                    const saveData =
+                        await saveRes.json();
+
+                    if (saveData.success) {
+
+                        status.innerHTML =
+                            "✅ Registration Successful";
+
+                        setTimeout(() => {
+
+                            window.location.href =
+                                saveData.redirect;
+
+                        }, 1500);
+
+                    } else {
+
+                        status.innerHTML =
+                            "❌ " + saveData.message;
+
+                        registerBtn.innerHTML =
+                            "Register Student";
+
+                        registerBtn.disabled =
+                            false;
+                    }
+
+                } catch (err) {
+
+                    console.log(err);
+
+                    status.innerHTML =
+                        "❌ Save Failed";
+
+                    registerBtn.innerHTML =
+                        "Register Student";
+
+                    registerBtn.disabled =
+                        false;
+                }
+            },
+
+            prefill: {
+
+                name:
+                    document.querySelector(
+                        'input[name="name"]'
+                    ).value,
+
+                email:
+                    document.querySelector(
+                        'input[name="email"]'
+                    ).value,
+
+                contact:
+                    document.querySelector(
+                        'input[name="phone"]'
+                    ).value
+            },
+
+            theme: {
+                color: "#2563eb"
+            }
+        };
+
+        const rzp = new Razorpay(options);
+
+        rzp.on("payment.failed", function (response) {
+
+            console.log(response.error);
+
+            status.innerHTML =
+                "❌ Payment Failed";
+
+            registerBtn.innerHTML =
+                "Register Student";
+
+            registerBtn.disabled = false;
+        });
+
+        rzp.open();
+
+    } catch (err) {
+
+        console.log(err);
 
         status.innerHTML =
-            "❌ Payment Failed";
+            "❌ Something Went Wrong";
 
         registerBtn.innerHTML =
             "Register Student";
 
         registerBtn.disabled = false;
-    });
-
-    rzp.open();
+    }
 });
-
 </script>
 
 </body>
