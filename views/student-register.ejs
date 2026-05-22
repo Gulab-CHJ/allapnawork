@@ -674,69 +674,52 @@ async function verifyOTP(){
 }
 
 /* ================= REGISTER ================= */
-document.getElementById("registerForm")
-.addEventListener("submit", async (e) => {
+
+document.getElementById("registerForm").addEventListener("submit", async (e) => {
 
     e.preventDefault();
 
-    const status = document.getElementById("status");
-
-    if(!verified){
-        status.innerHTML = "❌ Verify OTP First";
+    if (!verified) {
+        document.getElementById("status").innerHTML = "❌ Verify OTP First";
         return;
     }
 
-    const btn = document.getElementById("registerBtn");
-    btn.innerHTML = "Registering...";
+    const registerBtn = document.getElementById("registerBtn");
+    registerBtn.innerHTML = "Registering...";
 
+    /* ✅ FORM DATA (photo included) */
     const formData = new FormData(e.target);
 
-    const res = await fetch("/student-register",{
-        method:"POST",
-        body: formData   // 🔥 IMPORTANT (photo support)
+    const res = await fetch("/student-register", {
+        method: "POST",
+        body: formData   // ✅ IMPORTANT: no headers
     });
 
     const data = await res.json();
 
-    btn.innerHTML = "Register Student";
+    registerBtn.innerHTML = "Register Student";
 
-    status.innerHTML = data.message;
+    document.getElementById("status").innerHTML = data.message;
 
-    // if(data.success){
+    if (data.success) {
 
-    //     // save for payment page
-    //     const obj = {};
-    //     formData.forEach((v,k)=>obj[k]=v);
+        document.getElementById("status").innerHTML = "✅ Registration Successful";
 
-    //     localStorage.setItem("studentData", JSON.stringify(obj));
+        /* Save for payment */
+        const obj = {};
+        formData.forEach((v, k) => {
+            obj[k] = v;
+        });
 
-    //     setTimeout(()=>{
-    //         window.location.href = data.redirect;
-    //     },1000);
-    // }
+        localStorage.setItem(
+            "studentData",
+            JSON.stringify(obj)
+        );
 
-   if (data.success) {
-
-    status.innerHTML = "✅ Registration Successful";
-
-    const obj = {};
-    formData.forEach((v, k) => {
-        obj[k] = v;
-    });
-
-    localStorage.setItem(
-        "studentData",
-        JSON.stringify(obj)
-    );
-
-    setTimeout(() => {
-        if (data.redirect) {
+        setTimeout(() => {
             window.location.href = data.redirect;
-        } else {
-            window.location.href = "/payment-success";
-        }
-    }, 1000);
-}
+        }, 1000);
+    }
 
 });
 
