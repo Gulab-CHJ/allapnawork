@@ -1535,7 +1535,6 @@ function clearForm(){
 </html> -->
 
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -1612,6 +1611,24 @@ textarea{
     height:100px;
 }
 
+/* FILE INPUT */
+
+.file-input{
+    width:100%;
+
+    margin-top:14px;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    background:#1e293b;
+
+    color:white;
+
+    border:none;
+}
+
 /* SAVE BUTTON */
 
 .save-btn{
@@ -1669,6 +1686,32 @@ textarea{
 
 .hero-card p{
     color:#cbd5e1;
+}
+
+/* IMAGE */
+
+.hero-card img{
+    width:100%;
+    height:160px;
+
+    object-fit:cover;
+
+    border-radius:12px;
+
+    margin-top:12px;
+}
+
+/* LOGO */
+
+.logo-img{
+    width:90px !important;
+    height:90px !important;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    margin-top:12px;
 }
 
 /* BUTTON GROUP */
@@ -1747,6 +1790,22 @@ textarea{
     class="input-box"
     placeholder="Hero Description"></textarea>
 
+    <!-- LOGO INPUT -->
+
+    <input
+    type="file"
+    id="logoInput"
+    class="file-input"
+    accept="image/*">
+
+    <!-- BANNER INPUT -->
+
+    <input
+    type="file"
+    id="bannerInput"
+    class="file-input"
+    accept="image/*">
+
     <!-- SAVE BUTTON -->
 
     <button
@@ -1795,6 +1854,14 @@ function saveHero(){
     document.getElementById(
     "descInput").value;
 
+    const logoFile =
+    document.getElementById(
+    "logoInput").files[0];
+
+    const bannerFile =
+    document.getElementById(
+    "bannerInput").files[0];
+
     const status =
     document.getElementById(
     "status");
@@ -1807,57 +1874,118 @@ function saveHero(){
         return;
     }
 
-    const hero = {
+    const logoReader =
+    new FileReader();
 
-        title,
-        desc
+    const bannerReader =
+    new FileReader();
 
-    };
+    logoReader.onload = function(e){
 
-    let heroes =
-    JSON.parse(
-    localStorage.getItem(
-    "heroes")) || [];
+        const logoURL =
+        logoFile ?
+        e.target.result :
+        "";
 
-    /* EDIT */
+        bannerReader.onload =
+        function(ev){
 
-    if(editIndex >= 0){
+            const bannerURL =
+            bannerFile ?
+            ev.target.result :
+            "";
 
-        heroes[editIndex] =
-        hero;
+            const hero = {
 
-        editIndex = -1;
+                title,
+                desc,
+                logoURL,
+                bannerURL
+
+            };
+
+            let heroes =
+            JSON.parse(
+            localStorage.getItem(
+            "heroes")) || [];
+
+            /* EDIT */
+
+            if(editIndex >= 0){
+
+                heroes[editIndex] =
+                hero;
+
+                editIndex = -1;
+
+            }
+
+            /* ADD */
+
+            else{
+
+                heroes.push(hero);
+
+            }
+
+            localStorage.setItem(
+            "heroes",
+            JSON.stringify(heroes)
+            );
+
+            localStorage.setItem(
+            "heroData",
+            JSON.stringify(hero)
+            );
+
+            status.innerText =
+            "✅ Hero Saved";
+
+            clearForm();
+
+            renderHeroes();
+
+        }
+
+        if(bannerFile){
+
+            bannerReader.readAsDataURL(
+            bannerFile);
+
+        }
+
+        else{
+
+            bannerReader.onload({
+                target:{
+                    result:""
+                }
+            });
+
+        }
 
     }
 
-    /* ADD */
+    if(logoFile){
+
+        logoReader.readAsDataURL(
+        logoFile);
+
+    }
 
     else{
 
-        heroes.push(hero);
+        logoReader.onload({
+            target:{
+                result:""
+            }
+        });
 
     }
 
-    localStorage.setItem(
-    "heroes",
-    JSON.stringify(heroes)
-    );
-
-    localStorage.setItem(
-    "heroData",
-    JSON.stringify(hero)
-    );
-
-    status.innerText =
-    "✅ Hero Saved";
-
-    clearForm();
-
-    renderHeroes();
-
 }
 
-/* RENDER HEROES */
+/* RENDER */
 
 function renderHeroes(){
 
@@ -1885,6 +2013,28 @@ function renderHeroes(){
             <p>
                 ${hero.desc}
             </p>
+
+            ${
+                hero.logoURL ?
+
+                `<img src="${hero.logoURL}" class="logo-img">`
+
+                :
+
+                ""
+
+            }
+
+            ${
+                hero.bannerURL ?
+
+                `<img src="${hero.bannerURL}">`
+
+                :
+
+                ""
+
+            }
 
             <div class="btn-group">
 
@@ -1992,6 +2142,12 @@ function clearForm(){
 
     document.getElementById(
     "descInput").value = "";
+
+    document.getElementById(
+    "logoInput").value = "";
+
+    document.getElementById(
+    "bannerInput").value = "";
 
 }
 
