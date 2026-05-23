@@ -1,664 +1,25 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-    <meta charset="UTF-8">
-
-    <meta name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-    <title>G & S Coaching</title>
-
-    <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
-
-    <style>
-
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:'Poppins',sans-serif;
-        }
-
-        body{
-            background:#eef2ff;
-            overflow-x:hidden;
-        }
-
-        /* ================= NAVBAR ================= */
-
-        .navbar{
-
-            width:100%;
-            height:75px;
-
-            background:rgba(0,0,0,0.75);
-
-            backdrop-filter:blur(10px);
-
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-
-            padding:0 25px;
-
-            position:sticky;
-            top:0;
-            z-index:1000;
-
-            box-shadow:0 5px 20px rgba(0,0,0,0.2);
-        }
-
-        .logo{
-
-            color:white;
-            font-size:30px;
-            font-weight:bold;
-
-            letter-spacing:2px;
-        }
-
-        .menu{
-
-            display:flex;
-            align-items:center;
-            gap:15px;
-        }
-
-        .menu a{
-
-            color:white;
-            text-decoration:none;
-
-            padding:12px 18px;
-
-            border-radius:12px;
-
-            font-size:15px;
-
-            transition:0.3s;
-        }
-
-        .menu a:hover{
-
-            background:white;
-            color:#111827;
-
-            transform:translateY(-2px);
-        }
-
-        /* ================= HAMBURGER ================= */
-
-        .hamburger{
-
-            width:45px;
-            height:45px;
-
-            background:rgba(255,255,255,0.15);
-
-            border-radius:12px;
-
-            display:none;
-
-            justify-content:center;
-            align-items:center;
-
-            cursor:pointer;
-
-            transition:0.3s;
-        }
-
-        .hamburger:hover{
-
-            background:white;
-        }
-
-        .hamburger:hover i{
-
-            color:#111827;
-        }
-
-        .hamburger i{
-
-            color:white;
-            font-size:22px;
-
-            transition:0.3s;
-        }
-
-        /* ================= MOBILE MENU ================= */
-
-        @media(max-width:768px){
-
-            .hamburger{
-                display:flex;
-            }
-
-            .menu{
-
-                position:absolute;
-
-                top:85px;
-                right:20px;
-
-                width:260px;
-
-                background:white;
-
-                border-radius:20px;
-
-                padding:20px;
-
-                display:flex;
-                flex-direction:column;
-
-                gap:12px;
-
-                box-shadow:0 10px 30px rgba(0,0,0,0.2);
-
-                opacity:0;
-                visibility:hidden;
-
-                transform:translateY(-20px);
-
-                transition:0.4s;
-            }
-
-            .menu.active{
-
-                opacity:1;
-                visibility:visible;
-
-                transform:translateY(0);
-            }
-
-            .menu a{
-
-                color:#111827;
-
-                background:#f3f4f6;
-
-                font-weight:bold;
-
-                text-align:center;
-            }
-
-            .menu a:hover{
-
-                background:#111827;
-                color:white;
-            }
-        }
-
-        /* ================= HERO ================= */
-
-        .hero{
-
-            width:92%;
-            max-width:1150px;
-
-            margin:40px auto;
-
-            background:white;
-
-            border-radius:30px;
-
-            padding:70px 35px;
-
-            text-align:center;
-
-            box-shadow:0 15px 35px rgba(0,0,0,0.08);
-
-            position:relative;
-
-            overflow:hidden;
-        }
-
-        .hero::before{
-
-            content:"";
-
-            position:absolute;
-
-            width:300px;
-            height:300px;
-
-            background:#6366f1;
-
-            border-radius:50%;
-
-            top:-120px;
-            right:-100px;
-
-            opacity:0.1;
-        }
-
-        .hero::after{
-
-            content:"";
-
-            position:absolute;
-
-            width:250px;
-            height:250px;
-
-            background:#3b82f6;
-
-            border-radius:50%;
-
-            bottom:-120px;
-            left:-100px;
-
-            opacity:0.1;
-        }
-
-        .hero h1{
-
-            font-size:48px;
-
-            color:#111827;
-
-            margin-bottom:20px;
-
-            position:relative;
-        }
-
-        .hero p{
-
-            font-size:18px;
-
-            color:#6b7280;
-
-            line-height:1.8;
-
-            margin-bottom:40px;
-
-            position:relative;
-        }
-
-        /* ================= BUTTONS ================= */
-
-        .buttons{
-
-            display:flex;
-
-            justify-content:center;
-
-            flex-wrap:wrap;
-
-            gap:18px;
-
-            position:relative;
-        }
-
-        .btn{
-
-            text-decoration:none;
-
-            background:linear-gradient(135deg,#2563eb,#1e3a8a);
-
-            color:white;
-
-            padding:15px 28px;
-
-            border-radius:15px;
-
-            font-size:15px;
-
-            font-weight:bold;
-
-            transition:0.3s;
-
-            box-shadow:0 6px 18px rgba(37,99,235,0.3);
-        }
-
-        .btn:hover{
-
-            transform:translateY(-4px) scale(1.03);
-
-            opacity:0.95;
-        }
-
-        /* ================= FEATURES ================= */
-
-        .features{
-
-            width:92%;
-            max-width:1150px;
-
-            margin:auto;
-
-            display:grid;
-
-            grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-
-            gap:25px;
-
-            margin-bottom:50px;
-        }
-
-        .card{
-
-            background:white;
-
-            padding:35px;
-
-            border-radius:25px;
-
-            text-align:center;
-
-            box-shadow:0 10px 25px rgba(0,0,0,0.07);
-
-            transition:0.3s;
-
-            position:relative;
-
-            overflow:hidden;
-        }
-
-        .card:hover{
-
-            transform:translateY(-8px);
-        }
-
-        .card::before{
-
-            content:"";
-
-            position:absolute;
-
-            width:120px;
-            height:120px;
-
-            background:#2563eb;
-
-            border-radius:50%;
-
-            top:-50px;
-            right:-40px;
-
-            opacity:0.08;
-        }
-
-        .card i{
-
-            font-size:45px;
-
-            color:#2563eb;
-
-            margin-bottom:18px;
-
-            position:relative;
-        }
-
-        .card h3{
-
-            font-size:22px;
-
-            margin-bottom:12px;
-
-            color:#111827;
-
-            position:relative;
-        }
-
-        .card p{
-
-            color:#6b7280;
-
-            line-height:1.7;
-
-            position:relative;
-        }
-
-    </style>
-
-</head>
-
-<body>
-
-    <!-- ================= NAVBAR ================= --
-
-   <div class="navbar">
-   <div class="navbar">
-    <div class="logo-container">
-        <div class="main-logo">
-            <span class="black-text">GLOBAL</span><span class="red-text">SERVICES</span>
-        </div>
-
-        <div class="tagline">
-            <span class="line"></span>
-            <span class="tagline-text">SAFE & SECURE</span>
-            <span class="line"></span>
-        </div>
-    </div>
-</div>
-
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@800;900&family=Montserrat:wght@400;700&display=swap');
-
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-}
-
-/* NAVBAR FIX */
-.navbar {
-    height: 70px;
-    display: flex;
-    align-items: center;
-    padding: 0 20px;
-    background: #fff;
-    border-bottom: 1px solid #e5e5e5;
-}
-
-/* IMPORTANT FIX: prevents header distortion */
-.logo-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start; /* LEFT aligned (fixes center issue) */
-    line-height: 1;
-}
-
-/* Main Logo */
-.main-logo {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 18px; /* reduced to fit navbar */
-    font-weight: 900;
-    letter-spacing: 1px;
-}
-
-.black-text { color: #0d0d0d; }
-.red-text { color: #e50006; }
-
-/* Tagline */
-.tagline {
-    display: flex;
-    align-items: center;
-    margin-top: 2px;
-}
-
-.tagline-text {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 8px; /* smaller to avoid overflow */
-    font-weight: 700;
-    letter-spacing: 2px;
-    padding: 0 6px;
-    color: #0d0d0d;
-}
-
-/* lines */
-.line {
-    width: 15px;
-    height: 1px;
-    background: #e50006;
-}
-
-/* hover */
-.logo-container:hover {
-    opacity: 0.8;
-    cursor: pointer;
-}
-</style>
-
-        <div class="hamburger" onclick="toggleMenu()">
-
-            <i class="fa-solid fa-bars" id="menu-icon"></i>
-
-        </div>
-
-        <div class="menu" id="menu">
-
-            <a href="/">Home</a>
-
-            <a href="/student">Student</a>
-
-            <a href="/customer">Customer</a>
-
-            <a href="/admin">Admin</a>
-
-            <a href="/gs">G & S</a>
-
-        </div>
-
-    </div>
-
-    <!-- ================= HERO ================= -
-
-    <div class="hero">
-
-        <h1>🎓 G & S Coaching Management</h1>
-
-        <p>
-
-            Professional Coaching ERP Using
-            Node.js, Express, MongoDB and EJS
-
-        </p>
-
-        <div class="buttons">
-
-            <a href="/student" class="btn">
-
-                Student Login
-
-            </a>
-
-            <a href="/customer" class="btn">
-
-                Customer
-
-            </a>
-
-            <a href="/admin" class="btn">
-
-                Admin Panel
-
-            </a>
-
-            <a href="/dashboard" class="btn">
-
-                Dashboard
-
-            </a>
-
-        </div>
-
-    </div>
-
-    <!-- ================= FEATURES ================= 
-
-    <div class="features">
-
-        <div class="card">
-
-            <i class="fa-solid fa-user-graduate"></i>
-
-            <h3>Student Panel</h3>
-
-            <p>
-                Manage students, attendance and courses professionally.
-            </p>
-
-        </div>
-
-        <div class="card">
-
-            <i class="fa-solid fa-file-lines"></i>
-
-            <h3>Notes System</h3>
-
-            <p>
-                Upload and manage notes, PDFs and study materials online.
-            </p>
-
-        </div>
-
-        <div class="card">
-
-            <i class="fa-solid fa-chart-line"></i>
-
-            <h3>Dashboard</h3>
-
-            <p>
-                Professional dashboard with live student and coaching data.
-            </p>
-
-        </div>
-
-    </div>
-
-    <!-- ================= SCRIPT ================= -
-
-    <script>
-
-        function toggleMenu(){
-
-            const menu =
-            document.getElementById("menu");
-
-            const icon =
-            document.getElementById("menu-icon");
-
-            menu.classList.toggle("active");
-
-            if(menu.classList.contains("active")){
-
-                icon.classList.remove("fa-bars");
-
-                icon.classList.add("fa-xmark");
-
-            }else{
-
-                icon.classList.remove("fa-xmark");
-
-                icon.classList.add("fa-bars");
-            }
-        }
-
-    </script>
-
-</body>
-
-</html> -->
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<title>G & S Coaching</title>
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+<title>GLOBAL SERVICES</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
 
 <style>
 
 /* ================= BASE ================= */
+
 *{
     margin:0;
     padding:0;
@@ -667,15 +28,21 @@ body {
 }
 
 body{
-    background:#eef2ff;
+    background:#050816;
+    overflow-x:hidden;
+    color:white;
 }
 
 /* ================= NAVBAR ================= */
+
 .navbar{
     width:100%;
-    height:70px;
-    background:rgba(0,0,0,0.85);
-    backdrop-filter:blur(10px);
+    height:72px;
+
+    background:
+    rgba(5,8,22,0.82);
+
+    backdrop-filter:blur(16px);
 
     display:flex;
     justify-content:space-between;
@@ -686,75 +53,70 @@ body{
     position:sticky;
     top:0;
     z-index:1000;
+
+    border-bottom:
+    1px solid rgba(255,255,255,0.06);
 }
 
-/* ================= LOGO (SMALL + CLEAN) ================= */
+/* ================= LOGO ================= */
+
 .logo-container{
     display:flex;
     flex-direction:column;
-    justify-content:center;
     align-items:center;
-
-    line-height:1;
-    cursor:pointer;
-
-    padding:0;
-    margin:0;
+    justify-content:center;
 }
 
-/* main text smaller */
 .main-logo{
     font-family:'Orbitron',sans-serif;
-    font-size:16px;
-    font-weight:900;
+    font-size:18px;
+    font-weight:800;
     letter-spacing:1px;
 }
 
-.black-text{color:#fff;}
-.red-text{color:#e50006;}
+.black-text{
+    color:white;
+}
 
-/* tagline */
+.red-text{
+    color:#ff2b2b;
+}
+
 .tagline{
     display:flex;
     align-items:center;
-    justify-content:center;
+    gap:5px;
     margin-top:2px;
 }
 
-/* safe & secure text */
+.line{
+    width:14px;
+    height:1px;
+    background:#ff2b2b;
+}
+
 .tagline-text{
     font-size:8px;
-    font-weight:700;
     letter-spacing:2px;
-    color:#fff;
-    padding:0 5px;
-}
-
-/* lines smaller */
-.line{
-    width:12px;
-    height:1px;
-    background:#e50006;
-}
-
-/* remove hover effect */
-.logo-container:hover{
-    opacity:1;
+    color:#d1d5db;
 }
 
 /* ================= MENU ================= */
+
 .menu{
     display:flex;
     align-items:center;
-    gap:15px;
+    gap:12px;
 }
 
 .menu a{
-    color:white;
     text-decoration:none;
-    padding:10px 16px;
-    border-radius:10px;
+    color:white;
+    padding:10px 18px;
+    border-radius:12px;
     transition:0.3s;
+    font-size:14px;
+    font-weight:500;
 }
 
 .menu a:hover{
@@ -762,216 +124,577 @@ body{
     color:#111827;
 }
 
-/* ================= HAMBURGER ================= */
-.hamburger{
-    width:40px;
-    height:40px;
-    background:rgba(255,255,255,0.15);
-    border-radius:10px;
-
-    display:none;
-    justify-content:center;
-    align-items:center;
-    cursor:pointer;
-}
-
-.hamburger i{
-    color:white;
-    font-size:20px;
-}
-
-/* ================= MOBILE ================= */
-@media(max-width:768px){
-
-    .hamburger{display:flex;}
-
-    .menu{
-        position:absolute;
-        top:80px;
-        right:15px;
-
-        width:240px;
-        background:white;
-        border-radius:15px;
-        padding:15px;
-
-        flex-direction:column;
-        gap:10px;
-
-        opacity:0;
-        visibility:hidden;
-        transform:translateY(-15px);
-        transition:0.3s;
-    }
-
-    .menu.active{
-        opacity:1;
-        visibility:visible;
-        transform:translateY(0);
-    }
-
-    .menu a{
-        color:#111827;
-        background:#f3f4f6;
-        text-align:center;
-        font-weight:bold;
-    }
-}
-
 /* ================= HERO ================= */
-.hero{
-    width:92%;
-    max-width:1100px;
-    margin:35px auto;
 
-    background:white;
-    border-radius:25px;
-    padding:60px 30px;
+.hero{
+    width:calc(100% - 24px);
+
+    margin:22px auto;
+
+    min-height:520px;
+
+    border-radius:36px;
+
+    overflow:hidden;
+
+    position:relative;
+
+    padding:28px;
+
+    background:
+    linear-gradient(
+    135deg,
+    #0f172a,
+    #111827,
+    #1e1b4b
+    );
+
+    box-shadow:
+    0 25px 80px rgba(0,0,0,0.5);
+}
+
+/* GLOW */
+
+.hero::before{
+    content:'';
+
+    position:absolute;
+
+    width:450px;
+    height:450px;
+
+    background:#4f46e5;
+
+    opacity:0.2;
+
+    filter:blur(140px);
+
+    border-radius:50%;
+
+    top:-140px;
+    right:-120px;
+}
+
+/* ================= TOP BANNER ================= */
+
+.top-banner{
+    width:100%;
+
+    min-height:220px;
+
+    border-radius:30px;
+
+    overflow:visible;
+
+    position:relative;
+
+    background:
+    linear-gradient(
+    rgba(0,0,0,0.4),
+    rgba(0,0,0,0.5)
+    ),
+
+    url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1600&auto=format&fit=crop');
+
+    background-size:cover;
+    background-position:center;
+
+    display:flex;
+    align-items:center;
+
+    padding:35px;
+}
+
+/* OVERLAY */
+
+.top-banner::before{
+    content:'';
+
+    position:absolute;
+    inset:0;
+
+    border-radius:30px;
+
+    background:
+    linear-gradient(
+    to right,
+    rgba(2,6,23,0.85),
+    rgba(15,23,42,0.2)
+    );
+}
+
+/* TEXT */
+
+.banner-content{
+    position:relative;
+    z-index:5;
+    width:65%;
+}
+
+.banner-content h1{
+    font-size:48px;
+    font-weight:800;
+    line-height:1.1;
+}
+
+.banner-content p{
+    margin-top:14px;
+    color:#dbe4ff;
+    line-height:1.8;
+    font-size:16px;
+}
+
+/* ================= PVC CARD ================= */
+
+.photo-box{
+    position:absolute;
+
+    right:40px;
+    bottom:-55px;
+
+    width:160px;
+    height:230px;
+
+    border-radius:26px;
+
+    overflow:hidden;
+
+    border:
+    3px solid rgba(255,255,255,0.15);
+
+    background:
+    rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(12px);
+
+    z-index:10;
+
+    box-shadow:
+    0 20px 50px rgba(0,0,0,0.5);
+}
+
+.photo-box img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+/* ================= CONTENT ================= */
+
+.content{
+    position:relative;
+    z-index:5;
+
+    margin-top:90px;
 
     text-align:center;
 }
 
-.hero h1{
-    font-size:42px;
-    color:#111827;
-    margin-bottom:15px;
+.hero-title{
+    font-size:46px;
+    font-weight:800;
 }
 
-.hero p{
-    font-size:17px;
-    color:#6b7280;
+.hero-text{
+    margin-top:16px;
+
+    color:#dbe4ff;
+
+    line-height:1.9;
+
+    font-size:16px;
+
+    max-width:760px;
+
+    margin-left:auto;
+    margin-right:auto;
 }
 
 /* ================= BUTTONS ================= */
+
 .buttons{
     display:flex;
     justify-content:center;
     flex-wrap:wrap;
-    gap:15px;
-    margin-top:25px;
+    gap:16px;
+    margin-top:30px;
 }
 
 .btn{
     text-decoration:none;
-    background:linear-gradient(135deg,#2563eb,#1e3a8a);
+
+    background:
+    linear-gradient(
+    135deg,
+    #2563eb,
+    #1e40af
+    );
+
     color:white;
-    padding:12px 22px;
-    border-radius:12px;
-    font-weight:bold;
+
+    padding:14px 28px;
+
+    border-radius:16px;
+
+    font-weight:600;
+
+    transition:0.3s;
+
+    box-shadow:
+    0 10px 25px rgba(37,99,235,0.3);
+}
+
+.btn:hover{
+    transform:translateY(-4px);
 }
 
 /* ================= FEATURES ================= */
+
 .features{
-    width:92%;
-    max-width:1100px;
-    margin:40px auto;
+    width:calc(100% - 24px);
+
+    margin:28px auto;
 
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(240px,1fr));
+
     gap:20px;
 }
 
+/* CARD */
+
 .card{
-    background:white;
-    padding:30px;
-    border-radius:20px;
+    background:
+    rgba(255,255,255,0.05);
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    padding:34px;
+
+    border-radius:26px;
+
     text-align:center;
+
+    backdrop-filter:blur(12px);
+
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-6px);
 }
 
 .card i{
-    font-size:40px;
-    color:#2563eb;
+    font-size:42px;
+    color:#3b82f6;
+    margin-bottom:14px;
+}
+
+.card h3{
+    font-size:22px;
     margin-bottom:10px;
 }
 
+.card p{
+    color:#cbd5e1;
+    font-size:14px;
+    line-height:1.8;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:768px){
+
+    .menu{
+        gap:6px;
+    }
+
+    .menu a{
+        padding:8px 12px;
+        font-size:12px;
+    }
+
+    .hero{
+        padding:18px;
+        border-radius:26px;
+    }
+
+    .top-banner{
+        min-height:170px;
+        padding:22px;
+    }
+
+    .banner-content{
+        width:100%;
+    }
+
+    .banner-content h1{
+        font-size:30px;
+    }
+
+    .banner-content p{
+        font-size:13px;
+    }
+
+    .photo-box{
+        width:105px;
+        height:150px;
+
+        right:16px;
+        bottom:-38px;
+
+        border-radius:18px;
+    }
+
+    .content{
+        margin-top:65px;
+    }
+
+    .hero-title{
+        font-size:30px;
+    }
+
+    .hero-text{
+        font-size:14px;
+    }
+
+    .buttons{
+        flex-direction:column;
+    }
+
+    .btn{
+        width:100%;
+        text-align:center;
+    }
+
+}
+
 </style>
+
 </head>
 
 <body>
 
 <!-- ================= NAVBAR ================= -->
+
 <div class="navbar">
 
-    <!-- LOGO -->
     <div class="logo-container">
 
         <div class="main-logo">
-            <span class="black-text">GLOBAL</span>
-            <span class="red-text">SERVICES</span>
+
+            <span class="black-text">
+                GLOBAL
+            </span>
+
+            <span class="red-text">
+                SERVICES
+            </span>
+
         </div>
 
         <div class="tagline">
+
             <span class="line"></span>
-            <span class="tagline-text">SAFE & SECURE</span>
+
+            <span class="tagline-text">
+                SAFE & SECURE
+            </span>
+
             <span class="line"></span>
+
         </div>
 
     </div>
 
     <!-- MENU -->
-    <div class="menu" id="menu">
+
+    <div class="menu">
+
         <a href="/">Home</a>
+
         <a href="/student">Student</a>
+
         <a href="/customer">Customer</a>
+
         <a href="/admin">Admin</a>
+
         <a href="/gs">G & S</a>
-    </div>
 
-    <!-- HAMBURGER -->
-    <div class="hamburger" onclick="toggleMenu()">
-        <i class="fa-solid fa-bars" id="menu-icon"></i>
     </div>
 
 </div>
 
-<!-- ================= HERO ================= -->
-<div class="hero">
-    <h1>🎓 G & S Coaching Management</h1>
-    <p>Professional Coaching ERP Using Node.js, Express, MongoDB and EJS</p>
+<!-- ================= HERO ROOT ================= -->
 
-    <div class="buttons">
-        <a href="/student" class="btn">Student Login</a>
-        <a href="/customer" class="btn">Customer</a>
-        <a href="/admin" class="btn">Admin Panel</a>
-        <a href="/dashboard" class="btn">Dashboard</a>
-    </div>
-</div>
+<div id="heroRoot"></div>
 
 <!-- ================= FEATURES ================= -->
+
 <div class="features">
 
     <div class="card">
+
         <i class="fa-solid fa-user-graduate"></i>
-        <h3>Student Panel</h3>
+
+        <h3>
+            Student Panel
+        </h3>
+
+        <p>
+            Manage students, attendance and performance with modern dashboard.
+        </p>
+
     </div>
 
     <div class="card">
+
         <i class="fa-solid fa-file-lines"></i>
-        <h3>Notes System</h3>
+
+        <h3>
+            Notes System
+        </h3>
+
+        <p>
+            Upload and access coaching notes easily from anywhere.
+        </p>
+
     </div>
 
     <div class="card">
+
         <i class="fa-solid fa-chart-line"></i>
-        <h3>Dashboard</h3>
+
+        <h3>
+            Dashboard
+        </h3>
+
+        <p>
+            Track payments, student records and analytics in real time.
+        </p>
+
     </div>
 
 </div>
 
 <!-- ================= SCRIPT ================= -->
+
 <script>
-function toggleMenu(){
-    const menu = document.getElementById("menu");
-    const icon = document.getElementById("menu-icon");
 
-    menu.classList.toggle("active");
+/* ================= LOAD HERO ================= */
 
-    if(menu.classList.contains("active")){
-        icon.classList.replace("fa-bars","fa-xmark");
-    }else{
-        icon.classList.replace("fa-xmark","fa-bars");
-    }
+const heroData =
+JSON.parse(
+localStorage.getItem("heroData")
+);
+
+const heroRoot =
+document.getElementById("heroRoot");
+
+/* ================= IF HERO AVAILABLE ================= */
+
+if(heroData){
+
+heroRoot.innerHTML = `
+
+<div class="hero">
+
+    <!-- TOP BANNER -->
+
+    <div class="top-banner"
+
+    style="
+    background:
+    linear-gradient(
+    rgba(0,0,0,0.45),
+    rgba(0,0,0,0.55)
+    ),
+
+    url('${heroData.bannerURL}');
+    background-size:cover;
+    background-position:center;
+    ">
+
+        <!-- TEXT -->
+
+        <div class="banner-content">
+
+            <h1>
+                ${heroData.title}
+            </h1>
+
+            <p>
+                ${heroData.desc}
+            </p>
+
+        </div>
+
+        <!-- PVC PHOTO -->
+
+        <div class="photo-box">
+
+            <img
+            src="${heroData.logoURL}"
+            alt="logo">
+
+        </div>
+
+    </div>
+
+    <!-- CONTENT -->
+
+    <div class="content">
+
+        <h2 class="hero-title">
+            ${heroData.title}
+        </h2>
+
+        <p class="hero-text">
+            ${heroData.desc}
+        </p>
+
+        <!-- BUTTONS -->
+
+        <div class="buttons">
+
+            <a href="/student"
+            class="btn">
+                Student Panel
+            </a>
+
+            <a href="/admin"
+            class="btn">
+                Admin Panel
+            </a>
+
+            <a href="/customer"
+            class="btn">
+                Customer Panel
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+`;
+
 }
+
+/* ================= HERO EMPTY ================= */
+
+else{
+
+heroRoot.innerHTML = ``;
+
+}
+
 </script>
 
 </body>
+
 </html>

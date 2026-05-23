@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -187,4 +187,1816 @@ function editStudent(id){
 </script>
 
 </body>
+</html> -->
+
+<!-- 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Admin Panel + Hero Section</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Outfit',sans-serif;
+    background:#0b1120;
+    color:white;
+}
+
+/* HEADER */
+
+.header{
+    width:100%;
+    padding:18px;
+    text-align:center;
+    background:#111827;
+    font-size:26px;
+    font-weight:700;
+    box-shadow:0 5px 20px rgba(0,0,0,0.3);
+}
+
+/* MAIN */
+
+.main{
+    display:grid;
+    grid-template-columns:370px 1fr;
+    gap:20px;
+    padding:20px;
+}
+
+/* ADMIN PANEL */
+
+.admin-panel{
+    background:rgba(255,255,255,0.05);
+    border-radius:28px;
+    padding:22px;
+    border:1px solid rgba(255,255,255,0.08);
+    backdrop-filter:blur(12px);
+    height:fit-content;
+}
+
+.admin-panel h2{
+    text-align:center;
+    margin-bottom:18px;
+    font-size:28px;
+}
+
+.admin-panel input,
+.admin-panel textarea{
+    width:100%;
+    margin-top:14px;
+    padding:14px;
+    border:none;
+    outline:none;
+    border-radius:16px;
+    background:rgba(255,255,255,0.06);
+    color:white;
+    border:1px solid rgba(255,255,255,0.08);
+}
+
+.admin-panel textarea{
+    resize:none;
+    height:100px;
+}
+
+.admin-panel label{
+    display:block;
+    margin-top:15px;
+    font-size:14px;
+}
+
+.admin-panel button{
+    width:100%;
+    margin-top:18px;
+    padding:15px;
+    border:none;
+    border-radius:16px;
+    background:linear-gradient(135deg,#7c3aed,#2563eb);
+    color:white;
+    font-size:17px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+/* HERO */
+
+.hero{
+    width:100%;
+    min-height:480px;
+    padding:28px;
+    border-radius:32px;
+    overflow:hidden;
+    position:relative;
+    background:
+    linear-gradient(135deg,
+    #0f172a,
+    #111827,
+    #1e1b4b);
+    box-shadow:0 20px 60px rgba(0,0,0,0.45);
+}
+
+/* BANNER */
+
+.top-banner{
+    width:100%;
+    min-height:180px;
+    border-radius:28px;
+    overflow:visible;
+    position:relative;
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    align-items:center;
+    padding:25px 35px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.4);
+}
+
+.top-banner::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    border-radius:28px;
+    background:
+    linear-gradient(to right,
+    rgba(2,6,23,0.78),
+    rgba(15,23,42,0.18));
+}
+
+/* TEXT */
+
+.banner-content{
+    position:relative;
+    z-index:5;
+    width:65%;
+}
+
+.banner-content h2{
+    font-size:38px;
+    line-height:1.1;
+    font-weight:800;
+}
+
+.banner-content p{
+    margin-top:12px;
+    color:#dbe4ff;
+    font-size:15px;
+    line-height:1.7;
+}
+
+/* PVC CARD */
+
+.logo-card{
+    position:absolute;
+    right:35px;
+    bottom:-45px;
+    width:140px;
+    height:200px;
+    border-radius:22px;
+    overflow:hidden;
+    z-index:10;
+    border:2px solid rgba(255,255,255,0.12);
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(12px);
+    box-shadow:0 18px 45px rgba(0,0,0,0.45);
+}
+
+.logo-card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+/* CONTENT */
+
+.content{
+    position:relative;
+    z-index:5;
+    margin-top:75px;
+    text-align:center;
+}
+
+.hero-title{
+    font-size:42px;
+    font-weight:800;
+}
+
+.hero-text{
+    margin-top:14px;
+    color:#dbe4ff;
+    font-size:16px;
+    line-height:1.8;
+}
+
+/* HERO LIST */
+
+.list-box{
+    margin-top:28px;
+}
+
+.hero-list{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.hero-item{
+    background:rgba(255,255,255,0.05);
+    padding:14px;
+    border-radius:16px;
+    border:1px solid rgba(255,255,255,0.08);
+    cursor:pointer;
+}
+
+.hero-item h4{
+    font-size:17px;
+}
+
+.hero-item p{
+    margin-top:5px;
+    color:#cbd5e1;
+    font-size:13px;
+}
+
+/* TABLE */
+
+.table-box{
+    margin-top:30px;
+    overflow:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    border-radius:16px;
+    overflow:hidden;
+}
+
+th,td{
+    padding:12px;
+    text-align:center;
+    border-bottom:1px solid #eee;
+    color:black;
+}
+
+th{
+    background:#2563eb;
+    color:white;
+}
+
+.edit{
+    background:#f59e0b;
+    color:white;
+}
+
+.delete{
+    background:#ef4444;
+    color:white;
+}
+
+.action-btn{
+    padding:7px 12px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.status-paid{
+    color:green;
+    font-weight:bold;
+}
+
+.status-unpaid{
+    color:red;
+    font-weight:bold;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+    .main{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:768px){
+
+    .hero{
+        padding:18px;
+        border-radius:24px;
+    }
+
+    .top-banner{
+        min-height:150px;
+        padding:20px;
+    }
+
+    .banner-content{
+        width:100%;
+    }
+
+    .banner-content h2{
+        font-size:26px;
+    }
+
+    .banner-content p{
+        font-size:13px;
+    }
+
+    .logo-card{
+        width:95px;
+        height:140px;
+        right:15px;
+        bottom:-35px;
+    }
+
+    .content{
+        margin-top:60px;
+    }
+
+    .hero-title{
+        font-size:28px;
+    }
+
+    .hero-text{
+        font-size:14px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- HEADER --
+
+<div class="header">
+    🛠 Admin Panel + Hero Section
+</div>
+
+<!-- MAIN --
+
+<div class="main">
+
+    <!-- ADMIN PANEL --
+
+    <div class="admin-panel">
+
+        <h2>Create Hero</h2>
+
+        <input type="text"
+        id="titleInput"
+        placeholder="Hero Title">
+
+        <textarea
+        id="descInput"
+        placeholder="Hero Description"></textarea>
+
+        <label>
+            Upload PVC Image
+        </label>
+
+        <input type="file"
+        id="logoInput"
+        accept="image/*">
+
+        <label>
+            Upload Banner Image
+        </label>
+
+        <input type="file"
+        id="bannerInput"
+        accept="image/*">
+
+        <button onclick="addHero()">
+            Add Hero
+        </button>
+
+        <!-- HERO LIST --
+
+        <div class="list-box">
+
+            <h2 style="margin-top:25px;">
+                Hero List
+            </h2>
+
+            <div class="hero-list"
+            id="heroList"></div>
+
+        </div>
+
+    </div>
+
+    <!-- RIGHT SECTION -->
+
+    <div>
+
+        <!-- HERO --
+
+        <div class="hero">
+
+            <div class="top-banner"
+            id="topBanner">
+
+                <div class="banner-content">
+
+                    <h2 id="heroBannerTitle">
+                        Premium Hero Banner
+                    </h2>
+
+                    <p>
+                        Responsive premium hero with floating PVC portrait card.
+                    </p>
+
+                </div>
+
+                <!-- PVC --
+
+                <div class="logo-card">
+
+                    <img
+                    id="heroLogo"
+                    src="https://via.placeholder.com/400x600">
+
+                </div>
+
+            </div>
+
+            <!-- CONTENT --
+
+            <div class="content">
+
+                <h1 class="hero-title"
+                id="heroTitle">
+
+                    Small Premium Hero
+
+                </h1>
+
+                <p class="hero-text"
+                id="heroParagraph">
+
+                    Modern compact hero section with elegant premium UI.
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- STUDENT TABLE --
+
+        <div class="table-box">
+
+            <table>
+
+                <thead>
+
+                <tr>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Class</th>
+                    <th>Email</th>
+                    <th>Payment</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+
+                </thead>
+
+                <tbody id="tableData"></tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+/* HERO DATA */
+
+let heroData = [];
+
+/* ADD HERO */
+
+function addHero(){
+
+    const title =
+    document.getElementById('titleInput').value;
+
+    const desc =
+    document.getElementById('descInput').value;
+
+    const logoFile =
+    document.getElementById('logoInput').files[0];
+
+    const bannerFile =
+    document.getElementById('bannerInput').files[0];
+
+    let logoURL = '';
+    let bannerURL = '';
+
+    if(logoFile){
+        logoURL =
+        URL.createObjectURL(logoFile);
+    }
+
+    if(bannerFile){
+        bannerURL =
+        URL.createObjectURL(bannerFile);
+    }
+
+    const hero = {
+        title,
+        desc,
+        logoURL,
+        bannerURL
+    };
+
+    heroData.push(hero);
+
+    renderList();
+
+    showHero(hero);
+
+}
+
+/* RENDER HERO LIST */
+
+function renderList(){
+
+    const heroList =
+    document.getElementById('heroList');
+
+    heroList.innerHTML = '';
+
+    heroData.forEach((item,index)=>{
+
+        heroList.innerHTML += `
+        <div class="hero-item"
+        onclick="showHero(heroData[${index}])">
+
+            <h4>${item.title}</h4>
+
+            <p>${item.desc}</p>
+
+        </div>
+        `;
+
+    });
+
+}
+
+/* SHOW HERO */
+
+function showHero(item){
+
+    document.getElementById('heroTitle')
+    .innerText = item.title;
+
+    document.getElementById('heroBannerTitle')
+    .innerText = item.title;
+
+    document.getElementById('heroParagraph')
+    .innerText = item.desc;
+
+    if(item.logoURL){
+
+        document.getElementById('heroLogo')
+        .src = item.logoURL;
+
+    }
+
+    if(item.bannerURL){
+
+        document.getElementById('topBanner')
+        .style.backgroundImage =
+        `url(${item.bannerURL})`;
+
+    }
+
+}
+
+/* LOAD STUDENTS */
+
+function loadStudents(){
+
+fetch("/api/students")
+
+.then(res => res.json())
+
+.then(data => {
+
+    let html = "";
+
+    data.forEach(s => {
+
+        let paymentStatus = s.paymentId ?
+        `<span class="status-paid">Paid</span>` :
+        `<span class="status-unpaid">Pending</span>`;
+
+        html += `
+        <tr>
+
+            <td>${s.name || "-"}</td>
+
+            <td>${s.phone || "-"}</td>
+
+            <td>${s.className || "-"}</td>
+
+            <td>${s.email || "-"}</td>
+
+            <td>${paymentStatus}</td>
+
+            <td>${s.status || "active"}</td>
+
+            <td>
+
+                <button
+                class="action-btn edit"
+                onclick="editStudent('${s._id}')">
+
+                    Edit
+
+                </button>
+
+                <button
+                class="action-btn delete"
+                onclick="deleteStudent('${s._id}')">
+
+                    Delete
+
+                </button>
+
+            </td>
+
+        </tr>`;
+
+    });
+
+    document.getElementById("tableData")
+    .innerHTML = html;
+
+});
+
+}
+
+loadStudents();
+
+/* DELETE */
+
+function deleteStudent(id){
+
+    if(!confirm("Delete Student?")) return;
+
+    fetch("/api/student/" + id, {
+
+        method:"DELETE"
+
+    })
+
+    .then(() => loadStudents());
+
+}
+
+/* EDIT */
+
+function editStudent(id){
+
+    let name =
+    prompt("Enter new name:");
+
+    let phone =
+    prompt("Enter new phone:");
+
+    if(!name || !phone){
+
+        alert("Invalid Input");
+
+        return;
+
+    }
+
+    fetch("/api/student/" + id, {
+
+        method:"PUT",
+
+        headers:{
+            "Content-Type":"application/json"
+        },
+
+        body:JSON.stringify({
+            name,
+            phone
+        })
+
+    })
+
+    .then(() => loadStudents());
+
+}
+
+</script>
+
+</body>
+
+</html> -->
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Hero Admin Panel</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Outfit',sans-serif;
+
+    background:
+    linear-gradient(135deg,#020617,#0f172a,#1e1b4b);
+
+    color:white;
+
+    padding:20px;
+}
+
+/* PANEL */
+
+.admin-panel{
+    width:100%;
+    max-width:700px;
+
+    margin:auto;
+
+    background:
+    rgba(255,255,255,0.06);
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(16px);
+
+    border-radius:30px;
+
+    padding:28px;
+
+    box-shadow:
+    0 20px 60px rgba(0,0,0,0.45);
+}
+
+/* TITLE */
+
+.admin-panel h2{
+    text-align:center;
+    font-size:34px;
+    margin-bottom:25px;
+}
+
+/* INPUT */
+
+.admin-panel input,
+.admin-panel textarea{
+    width:100%;
+
+    margin-top:14px;
+
+    padding:16px;
+
+    border:none;
+    outline:none;
+
+    border-radius:18px;
+
+    background:
+    rgba(255,255,255,0.07);
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    color:white;
+
+    font-size:15px;
+}
+
+/* TEXTAREA */
+
+.admin-panel textarea{
+    resize:none;
+    height:120px;
+}
+
+/* LABEL */
+
+.admin-panel label{
+    display:block;
+
+    margin-top:18px;
+    margin-bottom:8px;
+
+    color:#dbe4ff;
+}
+
+/* BUTTON */
+
+.admin-panel button{
+    width:100%;
+
+    margin-top:24px;
+
+    padding:16px;
+
+    border:none;
+
+    border-radius:18px;
+
+    background:
+    linear-gradient(135deg,#7c3aed,#2563eb);
+
+    color:white;
+
+    font-size:17px;
+    font-weight:700;
+
+    cursor:pointer;
+}
+
+/* HERO LIST */
+
+.hero-list{
+    margin-top:30px;
+
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+}
+
+/* ITEM */
+
+.hero-item{
+    background:
+    rgba(255,255,255,0.05);
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    border-radius:20px;
+
+    padding:18px;
+}
+
+/* IMAGE */
+
+.hero-item img{
+    width:100%;
+    height:170px;
+
+    object-fit:cover;
+
+    border-radius:16px;
+
+    margin-top:10px;
+}
+
+/* ACTIONS */
+
+.actions{
+    display:flex;
+    gap:10px;
+    margin-top:15px;
+}
+
+/* ACTION BUTTON */
+
+.action-btn{
+    flex:1;
+
+    padding:12px;
+
+    border:none;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    color:white;
+
+    font-weight:700;
+}
+
+.edit-btn{
+    background:#f59e0b;
+}
+
+.delete-btn{
+    background:#ef4444;
+}
+
+.status{
+    margin-top:16px;
+    text-align:center;
+    color:#86efac;
+}
+
+@media(max-width:768px){
+
+    .admin-panel{
+        padding:22px;
+    }
+
+    .admin-panel h2{
+        font-size:28px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="admin-panel">
+
+    <h2>
+        Hero Admin Panel
+    </h2>
+
+    <!-- TITLE -
+
+    <input
+    type="text"
+    id="titleInput"
+    placeholder="Hero Title">
+
+    <!-- DESCRIPTION -
+
+    <textarea
+    id="descInput"
+    placeholder="Hero Description"></textarea>
+
+    <!-- PVC IMAGE -
+
+    <label>
+        Upload PVC Image
+    </label>
+
+    <input
+    type="file"
+    id="logoInput"
+    accept="image/*">
+
+    <!-- BANNER IMAGE -
+
+    <label>
+        Upload Banner Image
+    </label>
+
+    <input
+    type="file"
+    id="bannerInput"
+    accept="image/*">
+
+    <!-- BUTTON -
+
+    <button onclick="saveHero()">
+
+        Save Hero
+
+    </button>
+
+    <!-- STATUS -
+
+    <div class="status"
+    id="status"></div>
+
+    <!-- HERO LIST -
+
+    <div class="hero-list"
+    id="heroList"></div>
+
+</div>
+
+<script>
+
+let editIndex = -1;
+
+/* ================= LOAD ================= */
+
+window.onload = function(){
+
+    renderHeroes();
+
+}
+
+/* ================= SAVE HERO ================= */
+
+function saveHero(){
+
+    const title =
+    document.getElementById(
+    "titleInput").value;
+
+    const desc =
+    document.getElementById(
+    "descInput").value;
+
+    const logoFile =
+    document.getElementById(
+    "logoInput").files[0];
+
+    const bannerFile =
+    document.getElementById(
+    "bannerInput").files[0];
+
+    const status =
+    document.getElementById(
+    "status");
+
+    if(!title || !desc){
+
+        status.innerText =
+        "❌ Fill all fields";
+
+        return;
+    }
+
+    const logoReader =
+    new FileReader();
+
+    const bannerReader =
+    new FileReader();
+
+    logoReader.onload = function(e){
+
+        const logoBase64 =
+        logoFile ?
+        e.target.result :
+        "";
+
+        bannerReader.onload =
+        function(ev){
+
+            const bannerBase64 =
+            bannerFile ?
+            ev.target.result :
+            "";
+
+            const hero = {
+
+                title,
+                desc,
+
+                logoURL:
+                logoBase64,
+
+                bannerURL:
+                bannerBase64
+
+            };
+
+            let heroes =
+            JSON.parse(
+            localStorage.getItem(
+            "heroes")) || [];
+
+            /* EDIT */
+
+            if(editIndex >= 0){
+
+                heroes[editIndex] =
+                hero;
+
+                editIndex = -1;
+
+            }else{
+
+                heroes.push(hero);
+
+            }
+
+            /* SAVE HERO LIST */
+
+            localStorage.setItem(
+            "heroes",
+            JSON.stringify(heroes)
+            );
+
+            /* SAVE ACTIVE HERO */
+
+            localStorage.setItem(
+            "heroData",
+            JSON.stringify(hero)
+            );
+
+            status.innerText =
+            "✅ Hero Saved Successfully";
+
+            clearForm();
+
+            renderHeroes();
+
+        }
+
+        if(bannerFile){
+
+            bannerReader.readAsDataURL(
+            bannerFile);
+
+        }else{
+
+            bannerReader.onload({
+                target:{
+                    result:""
+                }
+            });
+
+        }
+
+    }
+
+    if(logoFile){
+
+        logoReader.readAsDataURL(
+        logoFile);
+
+    }else{
+
+        logoReader.onload({
+            target:{
+                result:""
+            }
+        });
+
+    }
+
+}
+
+/* ================= RENDER HEROES ================= */
+
+function renderHeroes(){
+
+    const heroList =
+    document.getElementById(
+    "heroList");
+
+    let heroes =
+    JSON.parse(
+    localStorage.getItem(
+    "heroes")) || [];
+
+    heroList.innerHTML = "";
+
+    heroes.forEach((hero,index)=>{
+
+        heroList.innerHTML += `
+
+        <div class="hero-item">
+
+            <h3>
+                ${hero.title}
+            </h3>
+
+            <p style="margin-top:8px;color:#cbd5e1;">
+                ${hero.desc}
+            </p>
+
+            ${
+                hero.bannerURL ?
+
+                `<img src="${hero.bannerURL}">`
+
+                :
+
+                ""
+
+            }
+
+            <div class="actions">
+
+                <button
+                class="action-btn edit-btn"
+                onclick="editHero(${index})">
+
+                    Edit
+
+                </button>
+
+                <button
+                class="action-btn delete-btn"
+                onclick="deleteHero(${index})">
+
+                    Delete
+
+                </button>
+
+            </div>
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+/* ================= EDIT ================= */
+
+function editHero(index){
+
+    let heroes =
+    JSON.parse(
+    localStorage.getItem(
+    "heroes")) || [];
+
+    const hero =
+    heroes[index];
+
+    document.getElementById(
+    "titleInput").value =
+    hero.title;
+
+    document.getElementById(
+    "descInput").value =
+    hero.desc;
+
+    editIndex = index;
+
+    document.getElementById(
+    "status").innerText =
+    "✏️ Edit Mode Enabled";
+
+}
+
+/* ================= DELETE ================= */
+
+function deleteHero(index){
+
+    let heroes =
+    JSON.parse(
+    localStorage.getItem(
+    "heroes")) || [];
+
+    /* DELETE */
+
+    heroes.splice(index,1);
+
+    /* UPDATE STORAGE */
+
+    localStorage.setItem(
+    "heroes",
+    JSON.stringify(heroes)
+    );
+
+    /* UPDATE HOME PAGE HERO */
+
+    if(heroes.length > 0){
+
+        localStorage.setItem(
+        "heroData",
+        JSON.stringify(
+        heroes[heroes.length - 1]
+        )
+        );
+
+    }else{
+
+        localStorage.removeItem(
+        "heroData"
+        );
+
+    }
+
+    renderHeroes();
+
+    document.getElementById(
+    "status").innerText =
+    "🗑 Hero Deleted Successfully";
+
+}
+
+/* ================= CLEAR ================= */
+
+function clearForm(){
+
+    document.getElementById(
+    "titleInput").value = "";
+
+    document.getElementById(
+    "descInput").value = "";
+
+    document.getElementById(
+    "logoInput").value = "";
+
+    document.getElementById(
+    "bannerInput").value = "";
+
+}
+
+</script>
+
+</body>
+
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Hero Admin Panel</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#0f172a;
+    color:white;
+    padding:20px;
+}
+
+/* PANEL */
+
+.panel{
+    max-width:650px;
+    margin:auto;
+
+    background:#111827;
+
+    padding:25px;
+
+    border-radius:20px;
+}
+
+/* TITLE */
+
+.panel h2{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+/* INPUT */
+
+.input-box{
+    width:100%;
+
+    padding:14px;
+
+    margin-top:14px;
+
+    border:none;
+    outline:none;
+
+    border-radius:10px;
+
+    background:#1e293b;
+
+    color:white;
+}
+
+/* TEXTAREA */
+
+textarea{
+    resize:none;
+    height:100px;
+}
+
+/* SAVE BUTTON */
+
+.save-btn{
+    width:100%;
+
+    padding:14px;
+
+    margin-top:18px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#2563eb;
+
+    color:white;
+
+    font-weight:600;
+
+    cursor:pointer;
+}
+
+/* STATUS */
+
+.status{
+    margin-top:15px;
+    text-align:center;
+    color:#86efac;
+}
+
+/* HERO LIST */
+
+.hero-list{
+    margin-top:25px;
+
+    display:flex;
+    flex-direction:column;
+
+    gap:15px;
+}
+
+/* CARD */
+
+.hero-card{
+    background:#1e293b;
+
+    padding:18px;
+
+    border-radius:15px;
+}
+
+.hero-card h3{
+    margin-bottom:8px;
+}
+
+.hero-card p{
+    color:#cbd5e1;
+}
+
+/* BUTTON GROUP */
+
+.btn-group{
+    display:flex;
+    gap:10px;
+
+    margin-top:15px;
+}
+
+/* EDIT BUTTON */
+
+.edit-btn{
+    flex:1;
+
+    padding:12px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#f59e0b;
+
+    color:white;
+
+    font-weight:600;
+
+    cursor:pointer;
+}
+
+/* DELETE BUTTON */
+
+.delete-btn{
+    flex:1;
+
+    padding:12px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#ef4444;
+
+    color:white;
+
+    font-weight:600;
+
+    cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="panel">
+
+    <h2>
+        Hero Admin Panel
+    </h2>
+
+    <!-- TITLE -->
+
+    <input
+    type="text"
+    id="titleInput"
+    class="input-box"
+    placeholder="Hero Title">
+
+    <!-- DESCRIPTION -->
+
+    <textarea
+    id="descInput"
+    class="input-box"
+    placeholder="Hero Description"></textarea>
+
+    <!-- SAVE BUTTON -->
+
+    <button
+    class="save-btn"
+    onclick="saveHero()">
+
+        Save Hero
+
+    </button>
+
+    <!-- STATUS -->
+
+    <div
+    class="status"
+    id="status"></div>
+
+    <!-- HERO LIST -->
+
+    <div
+    class="hero-list"
+    id="heroList"></div>
+
+</div>
+
+<script>
+
+let editIndex = -1;
+
+/* LOAD */
+
+window.onload = function(){
+
+    renderHeroes();
+
+}
+
+/* SAVE HERO */
+
+function saveHero(){
+
+    const title =
+    document.getElementById(
+    "titleInput").value;
+
+    const desc =
+    document.getElementById(
+    "descInput").value;
+
+    const status =
+    document.getElementById(
+    "status");
+
+    if(!title || !desc){
+
+        status.innerText =
+        "❌ Fill all fields";
+
+        return;
+    }
+
+    const hero = {
+
+        title,
+        desc
+
+    };
+
+    let heroes =
+    JSON.parse(
+    localStorage.getItem(
+    "heroes")) || [];
+
+    /* EDIT */
+
+    if(editIndex >= 0){
+
+        heroes[editIndex] =
+        hero;
+
+        editIndex = -1;
+
+    }
+
+    /* ADD */
+
+    else{
+
+        heroes.push(hero);
+
+    }
+
+    localStorage.setItem(
+    "heroes",
+    JSON.stringify(heroes)
+    );
+
+    localStorage.setItem(
+    "heroData",
+    JSON.stringify(hero)
+    );
+
+    status.innerText =
+    "✅ Hero Saved";
+
+    clearForm();
+
+    renderHeroes();
+
+}
+
+/* RENDER HEROES */
+
+function renderHeroes(){
+
+    const heroList =
+    document.getElementById(
+    "heroList");
+
+    let heroes =
+    JSON.parse(
+    localStorage.getItem(
+    "heroes")) || [];
+
+    heroList.innerHTML = "";
+
+    heroes.forEach((hero,index)=>{
+
+        heroList.innerHTML += `
+
+        <div class="hero-card">
+
+            <h3>
+                ${hero.title}
+            </h3>
+
+            <p>
+                ${hero.desc}
+            </p>
+
+            <div class="btn-group">
+
+                <button
+                class="edit-btn"
+                onclick="editHero(${index})">
+
+                    Edit
+
+                </button>
+
+                <button
+                class="delete-btn"
+                onclick="deleteHero(${index})">
+
+                    Delete
+
+                </button>
+
+            </div>
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+/* EDIT */
+
+function editHero(index){
+
+    let heroes =
+    JSON.parse(
+    localStorage.getItem(
+    "heroes")) || [];
+
+    const hero =
+    heroes[index];
+
+    document.getElementById(
+    "titleInput").value =
+    hero.title;
+
+    document.getElementById(
+    "descInput").value =
+    hero.desc;
+
+    editIndex = index;
+
+    document.getElementById(
+    "status").innerText =
+    "✏️ Edit Mode";
+
+}
+
+/* DELETE */
+
+function deleteHero(index){
+
+    let heroes =
+    JSON.parse(
+    localStorage.getItem(
+    "heroes")) || [];
+
+    heroes.splice(index,1);
+
+    localStorage.setItem(
+    "heroes",
+    JSON.stringify(heroes)
+    );
+
+    if(heroes.length > 0){
+
+        localStorage.setItem(
+        "heroData",
+        JSON.stringify(
+        heroes[heroes.length - 1]
+        )
+        );
+
+    }else{
+
+        localStorage.removeItem(
+        "heroData"
+        );
+
+    }
+
+    renderHeroes();
+
+    document.getElementById(
+    "status").innerText =
+    "🗑 Hero Deleted";
+
+}
+
+/* CLEAR */
+
+function clearForm(){
+
+    document.getElementById(
+    "titleInput").value = "";
+
+    document.getElementById(
+    "descInput").value = "";
+
+}
+
+</script>
+
+</body>
+
 </html>
