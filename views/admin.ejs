@@ -1568,7 +1568,7 @@ body{
 /* PANEL */
 
 .panel{
-    max-width:650px;
+    max-width:700px;
     margin:auto;
 
     background:#111827;
@@ -1613,20 +1613,8 @@ textarea{
 
 /* FILE INPUT */
 
-.file-input{
-    width:100%;
-
+.file-box{
     margin-top:14px;
-
-    padding:12px;
-
-    border-radius:10px;
-
-    background:#1e293b;
-
-    color:white;
-
-    border:none;
 }
 
 /* SAVE BUTTON */
@@ -1649,6 +1637,8 @@ textarea{
     font-weight:600;
 
     cursor:pointer;
+
+    font-size:16px;
 }
 
 /* STATUS */
@@ -1686,19 +1676,20 @@ textarea{
 
 .hero-card p{
     color:#cbd5e1;
+    margin-bottom:10px;
 }
 
 /* IMAGE */
 
 .hero-card img{
     width:100%;
-    height:160px;
+    height:180px;
 
     object-fit:cover;
 
-    border-radius:12px;
+    border-radius:10px;
 
-    margin-top:12px;
+    margin-top:10px;
 }
 
 /* LOGO */
@@ -1710,8 +1701,6 @@ textarea{
     border-radius:50%;
 
     object-fit:cover;
-
-    margin-top:12px;
 }
 
 /* BUTTON GROUP */
@@ -1723,28 +1712,9 @@ textarea{
     margin-top:15px;
 }
 
-/* EDIT BUTTON */
+/* BUTTONS */
 
-.edit-btn{
-    flex:1;
-
-    padding:12px;
-
-    border:none;
-
-    border-radius:10px;
-
-    background:#f59e0b;
-
-    color:white;
-
-    font-weight:600;
-
-    cursor:pointer;
-}
-
-/* DELETE BUTTON */
-
+.edit-btn,
 .delete-btn{
     flex:1;
 
@@ -1754,13 +1724,19 @@ textarea{
 
     border-radius:10px;
 
-    background:#ef4444;
-
     color:white;
 
     font-weight:600;
 
     cursor:pointer;
+}
+
+.edit-btn{
+    background:#f59e0b;
+}
+
+.delete-btn{
+    background:#ef4444;
 }
 
 </style>
@@ -1790,20 +1766,20 @@ textarea{
     class="input-box"
     placeholder="Hero Description"></textarea>
 
-    <!-- LOGO INPUT -->
+    <!-- LOGO -->
 
     <input
     type="file"
     id="logoInput"
-    class="file-input"
+    class="input-box file-box"
     accept="image/*">
 
-    <!-- BANNER INPUT -->
+    <!-- BANNER -->
 
     <input
     type="file"
     id="bannerInput"
-    class="file-input"
+    class="input-box file-box"
     accept="image/*">
 
     <!-- SAVE BUTTON -->
@@ -1874,76 +1850,35 @@ function saveHero(){
         return;
     }
 
-    const logoReader =
-    new FileReader();
+    const hero = {
+        title,
+        desc,
+        logoURL:"",
+        bannerURL:""
+    };
 
-    const bannerReader =
+    /* LOGO READER */
+
+    const logoReader =
     new FileReader();
 
     logoReader.onload = function(e){
 
-        const logoURL =
-        logoFile ?
-        e.target.result :
-        "";
+        hero.logoURL =
+        e.target.result;
+
+        /* BANNER READER */
+
+        const bannerReader =
+        new FileReader();
 
         bannerReader.onload =
         function(ev){
 
-            const bannerURL =
-            bannerFile ?
-            ev.target.result :
-            "";
+            hero.bannerURL =
+            ev.target.result;
 
-            const hero = {
-
-                title,
-                desc,
-                logoURL,
-                bannerURL
-
-            };
-
-            let heroes =
-            JSON.parse(
-            localStorage.getItem(
-            "heroes")) || [];
-
-            /* EDIT */
-
-            if(editIndex >= 0){
-
-                heroes[editIndex] =
-                hero;
-
-                editIndex = -1;
-
-            }
-
-            /* ADD */
-
-            else{
-
-                heroes.push(hero);
-
-            }
-
-            localStorage.setItem(
-            "heroes",
-            JSON.stringify(heroes)
-            );
-
-            localStorage.setItem(
-            "heroData",
-            JSON.stringify(hero)
-            );
-
-            status.innerText =
-            "✅ Hero Saved";
-
-            clearForm();
-
-            renderHeroes();
+            saveToLocal(hero);
 
         }
 
@@ -1952,15 +1887,9 @@ function saveHero(){
             bannerReader.readAsDataURL(
             bannerFile);
 
-        }
+        }else{
 
-        else{
-
-            bannerReader.onload({
-                target:{
-                    result:""
-                }
-            });
+            saveToLocal(hero);
 
         }
 
@@ -1971,21 +1900,85 @@ function saveHero(){
         logoReader.readAsDataURL(
         logoFile);
 
-    }
+    }else{
 
-    else{
+        if(bannerFile){
 
-        logoReader.onload({
-            target:{
-                result:""
+            const bannerReader =
+            new FileReader();
+
+            bannerReader.onload =
+            function(ev){
+
+                hero.bannerURL =
+                ev.target.result;
+
+                saveToLocal(hero);
+
             }
-        });
+
+            bannerReader.readAsDataURL(
+            bannerFile);
+
+        }else{
+
+            saveToLocal(hero);
+
+        }
 
     }
 
 }
 
-/* RENDER */
+/* SAVE LOCAL */
+
+function saveToLocal(hero){
+
+    let heroes =
+    JSON.parse(
+    localStorage.getItem(
+    "heroes")) || [];
+
+    /* EDIT */
+
+    if(editIndex >= 0){
+
+        heroes[editIndex] =
+        hero;
+
+        editIndex = -1;
+
+    }
+
+    /* ADD */
+
+    else{
+
+        heroes.push(hero);
+
+    }
+
+    localStorage.setItem(
+    "heroes",
+    JSON.stringify(heroes)
+    );
+
+    localStorage.setItem(
+    "heroData",
+    JSON.stringify(hero)
+    );
+
+    document.getElementById(
+    "status").innerText =
+    "✅ Hero Saved";
+
+    clearForm();
+
+    renderHeroes();
+
+}
+
+/* RENDER HEROES */
 
 function renderHeroes(){
 
@@ -2017,12 +2010,12 @@ function renderHeroes(){
             ${
                 hero.logoURL ?
 
-                `<img src="${hero.logoURL}" class="logo-img">`
+                `<img src="${hero.logoURL}"
+                class="logo-img">`
 
                 :
 
                 ""
-
             }
 
             ${
@@ -2033,7 +2026,6 @@ function renderHeroes(){
                 :
 
                 ""
-
             }
 
             <div class="btn-group">
