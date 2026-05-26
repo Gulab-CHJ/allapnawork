@@ -1494,6 +1494,26 @@ app.delete(
     }
 );
 
+app.get("/api/hero", async (req, res) => {
+
+    try {
+
+        const hero =
+        await Hero.findOne();
+
+        res.json(hero);
+
+    } catch (err) {
+
+        res.status(500).json({
+
+            success:false,
+
+            message:"Hero Load Failed"
+        });
+    }
+});
+
 /* ================= SERVER ================= */
 
 const PORT =

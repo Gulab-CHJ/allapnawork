@@ -819,7 +819,6 @@ body{
 
 
 <!-- ================= SCRIPT ================= -->
-
 <script>
 
 /* ================= MOBILE MENU ================= */
@@ -831,100 +830,116 @@ const menu =
 document.getElementById("menu");
 
 hamburger.onclick = () => {
+
     menu.classList.toggle("active");
 };
 
-/* ================= LOAD HERO ================= */
-
-const heroData =
-JSON.parse(
-localStorage.getItem("heroData")
-);
+/* ================= HERO LOAD ================= */
 
 const heroRoot =
 document.getElementById("heroRoot");
 
-/* ================= IF HERO AVAILABLE ================= */
+async function loadHero(){
 
-if(heroData){
+    try{
 
-heroRoot.innerHTML = `
+        const res =
+        await fetch("/api/hero");
 
-<div class="hero">
+        const heroData =
+        await res.json();
 
-    <div class="top-banner"
+        if(!heroData){
 
-    style="
-    background:
-    linear-gradient(
-    rgba(0,0,0,0.45),
-    rgba(0,0,0,0.55)
-    ),
+            heroRoot.innerHTML =
+            "<h2>No Hero Data</h2>";
 
-    url('${heroData.bannerURL}');
+            return;
+        }
 
-    background-size:cover;
-    background-position:center;
-    ">
+        heroRoot.innerHTML = `
 
-        <div class="banner-content">
+        <div class="hero">
 
-            <h1>
-                ${heroData.title}
-            </h1>
+            <div class="top-banner"
 
-            <p>
-                ${heroData.desc}
-            </p>
+            style="
+            background:
+            linear-gradient(
+            rgba(0,0,0,0.45),
+            rgba(0,0,0,0.55)
+            ),
+
+            url('${heroData.bannerURL}');
+
+            background-size:cover;
+            background-position:center;
+            ">
+
+                <div class="banner-content">
+
+                    <h1>
+                        ${heroData.title}
+                    </h1>
+
+                    <p>
+                        ${heroData.desc}
+                    </p>
+
+                </div>
+
+                <div class="photo-box">
+
+                    <img
+                    src="${heroData.logoURL}"
+                    alt="logo">
+
+                </div>
+
+            </div>
+
+            <div class="content">
+
+                <h2 class="hero-title">
+                    ${heroData.title}
+                </h2>
+
+                <p class="hero-text">
+                    ${heroData.desc}
+                </p>
+
+                <div class="buttons">
+
+                    <a href="/student"
+                    class="btn">
+                        Student Panel
+                    </a>
+
+                    <a href="/admin"
+                    class="btn">
+                        Admin Panel
+                    </a>
+
+                    <a href="/customer"
+                    class="btn">
+                        Customer Panel
+                    </a>
+
+                </div>
+
+            </div>
 
         </div>
 
-        <div class="photo-box">
+        `;
 
-            <img
-            src="${heroData.logoURL}"
-            alt="logo">
+    }catch(err){
 
-        </div>
-
-    </div>
-
-    <div class="content">
-
-        <h2 class="hero-title">
-            ${heroData.title}
-        </h2>
-
-        <p class="hero-text">
-            ${heroData.desc}
-        </p>
-
-        <div class="buttons">
-
-            <a href="/student"
-            class="btn">
-                Student Panel
-            </a>
-
-            <a href="/admin"
-            class="btn">
-                Admin Panel
-            </a>
-
-            <a href="/customer"
-            class="btn">
-                Customer Panel
-            </a>
-
-        </div>
-
-    </div>
-
-</div>
-
-`;
-
+        console.log("Hero Error:", err);
+    }
 }
+
+loadHero();
 
 </script>
 
