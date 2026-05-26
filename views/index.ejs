@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>GLOBAL SERVICES</title>
 
@@ -28,9 +25,9 @@ rel="stylesheet">
 }
 
 body{
-    background:#050816;
+    background:#f3f7ff;
     overflow-x:hidden;
-    color:white;
+    color:#111827;
 }
 
 /* ================= NAVBAR ================= */
@@ -39,8 +36,7 @@ body{
     width:100%;
     height:72px;
 
-    background:
-    rgba(5,8,22,0.82);
+    background:rgba(255,255,255,0.9);
 
     backdrop-filter:blur(16px);
 
@@ -55,7 +51,7 @@ body{
     z-index:1000;
 
     border-bottom:
-    1px solid rgba(255,255,255,0.06);
+    1px solid rgba(0,0,0,0.08);
 }
 
 /* ================= LOGO ================= */
@@ -63,7 +59,7 @@ body{
 .logo-container{
     display:flex;
     flex-direction:column;
-    align-items:center;
+    align-items:flex-start;
     justify-content:center;
 }
 
@@ -75,11 +71,11 @@ body{
 }
 
 .black-text{
-    color:white;
+    color:#111827;
 }
 
 .red-text{
-    color:#ff2b2b;
+    color:#2563eb;
 }
 
 .tagline{
@@ -92,13 +88,13 @@ body{
 .line{
     width:14px;
     height:1px;
-    background:#ff2b2b;
+    background:#2563eb;
 }
 
 .tagline-text{
     font-size:8px;
     letter-spacing:2px;
-    color:#d1d5db;
+    color:#6b7280;
 }
 
 /* ================= MENU ================= */
@@ -111,16 +107,25 @@ body{
 
 .menu a{
     text-decoration:none;
-    color:white;
+    color:#111827;
     padding:10px 18px;
     border-radius:12px;
     transition:0.3s;
     font-size:14px;
-    font-weight:500;
+    font-weight:600;
 }
 
 .menu a:hover{
-    background:white;
+    background:#2563eb;
+    color:white;
+}
+
+/* ================= HAMBURGER ================= */
+
+.hamburger{
+    display:none;
+    font-size:24px;
+    cursor:pointer;
     color:#111827;
 }
 
@@ -144,35 +149,13 @@ body{
     background:
     linear-gradient(
     135deg,
-    #0f172a,
-    #111827,
-    #1e1b4b
+    #ffffff,
+    #e0ecff,
+    #dbeafe
     );
 
     box-shadow:
-    0 25px 80px rgba(0,0,0,0.5);
-}
-
-/* GLOW */
-
-.hero::before{
-    content:'';
-
-    position:absolute;
-
-    width:450px;
-    height:450px;
-
-    background:#4f46e5;
-
-    opacity:0.2;
-
-    filter:blur(140px);
-
-    border-radius:50%;
-
-    top:-140px;
-    right:-120px;
+    0 20px 60px rgba(0,0,0,0.1);
 }
 
 /* ================= TOP BANNER ================= */
@@ -190,8 +173,8 @@ body{
 
     background:
     linear-gradient(
-    rgba(0,0,0,0.4),
-    rgba(0,0,0,0.5)
+    rgba(0,0,0,0.3),
+    rgba(0,0,0,0.4)
     ),
 
     url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1600&auto=format&fit=crop');
@@ -218,8 +201,8 @@ body{
     background:
     linear-gradient(
     to right,
-    rgba(2,6,23,0.85),
-    rgba(15,23,42,0.2)
+    rgba(0,0,0,0.6),
+    rgba(0,0,0,0.1)
     );
 }
 
@@ -235,11 +218,12 @@ body{
     font-size:48px;
     font-weight:800;
     line-height:1.1;
+    color:white;
 }
 
 .banner-content p{
     margin-top:14px;
-    color:#dbe4ff;
+    color:#f3f4f6;
     line-height:1.8;
     font-size:16px;
 }
@@ -260,17 +244,17 @@ body{
     overflow:hidden;
 
     border:
-    3px solid rgba(255,255,255,0.15);
+    3px solid rgba(255,255,255,0.2);
 
     background:
-    rgba(255,255,255,0.08);
+    rgba(255,255,255,0.1);
 
     backdrop-filter:blur(12px);
 
     z-index:10;
 
     box-shadow:
-    0 20px 50px rgba(0,0,0,0.5);
+    0 20px 50px rgba(0,0,0,0.25);
 }
 
 .photo-box img{
@@ -293,12 +277,13 @@ body{
 .hero-title{
     font-size:46px;
     font-weight:800;
+    color:#111827;
 }
 
 .hero-text{
     margin-top:16px;
 
-    color:#dbe4ff;
+    color:#374151;
 
     line-height:1.9;
 
@@ -327,7 +312,7 @@ body{
     linear-gradient(
     135deg,
     #2563eb,
-    #1e40af
+    #1d4ed8
     );
 
     color:white;
@@ -341,7 +326,7 @@ body{
     transition:0.3s;
 
     box-shadow:
-    0 10px 25px rgba(37,99,235,0.3);
+    0 10px 25px rgba(37,99,235,0.2);
 }
 
 .btn:hover{
@@ -366,11 +351,10 @@ body{
 /* CARD */
 
 .card{
-    background:
-    rgba(255,255,255,0.05);
+    background:white;
 
     border:
-    1px solid rgba(255,255,255,0.08);
+    1px solid rgba(0,0,0,0.06);
 
     padding:34px;
 
@@ -378,9 +362,10 @@ body{
 
     text-align:center;
 
-    backdrop-filter:blur(12px);
-
     transition:0.3s;
+
+    box-shadow:
+    0 10px 30px rgba(0,0,0,0.06);
 }
 
 .card:hover{
@@ -389,7 +374,7 @@ body{
 
 .card i{
     font-size:42px;
-    color:#3b82f6;
+    color:#2563eb;
     margin-bottom:14px;
 }
 
@@ -399,7 +384,7 @@ body{
 }
 
 .card p{
-    color:#cbd5e1;
+    color:#6b7280;
     font-size:14px;
     line-height:1.8;
 }
@@ -408,13 +393,35 @@ body{
 
 @media(max-width:768px){
 
+    .hamburger{
+        display:block;
+    }
+
     .menu{
-        gap:6px;
+        position:absolute;
+        top:72px;
+        left:0;
+        width:100%;
+
+        background:white;
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        padding:15px;
+
+        display:none;
+
+        box-shadow:0 10px 20px rgba(0,0,0,0.08);
+    }
+
+    .menu.active{
+        display:flex;
     }
 
     .menu a{
-        padding:8px 12px;
-        font-size:12px;
+        width:100%;
     }
 
     .hero{
@@ -510,9 +517,15 @@ body{
 
     </div>
 
+    <!-- HAMBURGER -->
+
+    <div class="hamburger" id="hamburger">
+        <i class="fa-solid fa-bars"></i>
+    </div>
+
     <!-- MENU -->
 
-    <div class="menu">
+    <div class="menu" id="menu">
 
         <a href="/">Home</a>
 
@@ -584,6 +597,18 @@ body{
 
 <script>
 
+/* ================= MOBILE MENU ================= */
+
+const hamburger =
+document.getElementById("hamburger");
+
+const menu =
+document.getElementById("menu");
+
+hamburger.onclick = () => {
+    menu.classList.toggle("active");
+};
+
 /* ================= LOAD HERO ================= */
 
 const heroData =
@@ -602,8 +627,6 @@ heroRoot.innerHTML = `
 
 <div class="hero">
 
-    <!-- TOP BANNER -->
-
     <div class="top-banner"
 
     style="
@@ -613,14 +636,11 @@ heroRoot.innerHTML = `
     rgba(0,0,0,0.55)
     ),
 
-    
     url('${heroData.bannerURL}');
-    
+
     background-size:cover;
     background-position:center;
     ">
-
-        <!-- TEXT -->
 
         <div class="banner-content">
 
@@ -634,8 +654,6 @@ heroRoot.innerHTML = `
 
         </div>
 
-        <!-- PVC PHOTO -->
-
         <div class="photo-box">
 
             <img
@@ -646,8 +664,6 @@ heroRoot.innerHTML = `
 
     </div>
 
-    <!-- CONTENT -->
-
     <div class="content">
 
         <h2 class="hero-title">
@@ -657,8 +673,6 @@ heroRoot.innerHTML = `
         <p class="hero-text">
             ${heroData.desc}
         </p>
-
-        <!-- BUTTONS -->
 
         <div class="buttons">
 
@@ -687,16 +701,7 @@ heroRoot.innerHTML = `
 
 }
 
-/* ================= HERO EMPTY ================= */
-
-else{
-
-heroRoot.innerHTML = ``;
-
-}
-
 </script>
 
 </body>
-
 </html>
