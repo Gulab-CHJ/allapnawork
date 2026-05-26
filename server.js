@@ -979,7 +979,7 @@ const session = require("express-session");
 const nodemailer = require("nodemailer");
 const multer = require("multer");
 const Razorpay = require("razorpay");
-const Hero = require("./models/hero");
+
 
 const app = express();
 
