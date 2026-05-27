@@ -1028,6 +1028,7 @@ mongoose.connect(process.env.MONGO_URL)
 
 const Student =
 require("./models/student");
+const Hero = require("./models/hero");
 
 /* ================= OTP MODEL ================= */
 
@@ -1514,7 +1515,6 @@ app.get("/api/hero", async (req, res) => {
     }
 });
 /* ================= HERO API ================= */
-const Hero = require("./models/hero");
 
 app.get("/add-hero", async (req, res) => {
 
