@@ -1514,6 +1514,7 @@ app.get("/api/hero", async (req, res) => {
     }
 });
 /* ================= HERO API ================= */
+const Hero = require("./models/hero");
 
 app.get("/add-hero", async (req, res) => {
 
@@ -1543,6 +1544,8 @@ app.get("/api/hero", async (req, res) => {
         res.json(hero);
 
     } catch (err) {
+
+        console.log(err);
 
         res.status(500).json({
             success: false,
