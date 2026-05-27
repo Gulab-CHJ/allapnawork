@@ -1494,45 +1494,34 @@ app.delete(
         });
     }
 );
-
-app.get("/api/hero", async (req, res) => {
-
-    try {
-
-        const hero =
-        await Hero.findOne();
-
-        res.json(hero);
-
-    } catch (err) {
-
-        res.status(500).json({
-
-            success:false,
-
-            message:"Hero Load Failed"
-        });
-    }
-});
 /* ================= HERO API ================= */
 
 app.get("/add-hero", async (req, res) => {
 
-    await Hero.deleteMany();
+    try {
 
-    await Hero.create({
+        await Hero.deleteMany();
 
-        title: "GLOBAL SERVICES",
+        await Hero.create({
 
-        desc: "Digital Services Platform",
+            title: "GLOBAL SERVICES",
 
-        logoURL: "/images/logo.png",
+            desc: "Digital Services Platform",
 
-        bannerURL: "/images/bgs.png"
+            logoURL: "/images/logo.png",
 
-    });
+            bannerURL: "/images/bgs.png"
 
-    res.send("✅ Hero Added");
+        });
+
+        res.send("✅ Hero Added");
+
+    } catch (err) {
+
+        console.log(err);
+
+        res.status(500).send("Hero Add Failed");
+    }
 });
 
 app.get("/api/hero", async (req, res) => {
@@ -1541,6 +1530,16 @@ app.get("/api/hero", async (req, res) => {
 
         const hero = await Hero.findOne();
 
+        if (!hero) {
+
+            return res.status(404).json({
+
+                success: false,
+
+                message: "No Hero Data Found"
+            });
+        }
+
         res.json(hero);
 
     } catch (err) {
@@ -1548,12 +1547,13 @@ app.get("/api/hero", async (req, res) => {
         console.log(err);
 
         res.status(500).json({
+
             success: false,
+
             message: "Hero Load Failed"
         });
     }
 });
-
 /* ================= SERVER ================= */
 
 const PORT =
