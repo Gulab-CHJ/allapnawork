@@ -1514,7 +1514,43 @@ app.get("/api/hero", async (req, res) => {
         });
     }
 });
+/* ================= HERO API ================= */
 
+app.get("/add-hero", async (req, res) => {
+
+    await Hero.deleteMany();
+
+    await Hero.create({
+
+        title: "GLOBAL SERVICES",
+
+        desc: "Digital Services Platform",
+
+        logoURL: "/images/logo.png",
+
+        bannerURL: "/images/bgs.png"
+
+    });
+
+    res.send("✅ Hero Added");
+});
+
+app.get("/api/hero", async (req, res) => {
+
+    try {
+
+        const hero = await Hero.findOne();
+
+        res.json(hero);
+
+    } catch (err) {
+
+        res.status(500).json({
+            success: false,
+            message: "Hero Load Failed"
+        });
+    }
+});
 
 /* ================= SERVER ================= */
 

@@ -1,15 +1,12 @@
 const mongoose = require("mongoose");
 
 const heroSchema = new mongoose.Schema({
-
-    title:String,
-
-    desc:String,
-
-    logoURL:String,
-
-    bannerURL:String
+    title: String,
+    desc: String,
+    logoURL: String,
+    bannerURL: String
 });
 
 module.exports =
-mongoose.model("hero", heroSchema);
+mongoose.models.Hero ||
+mongoose.model("Hero", heroSchema);
