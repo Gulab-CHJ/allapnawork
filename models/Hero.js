@@ -4,13 +4,12 @@ const heroSchema = new mongoose.Schema({
 
     title: String,
 
-    desc: String,
+    subtitle: String,
 
-    bannerURL: String,
+    logo: String,
 
-    logoURL: String
+    buttonText: String
 
 });
 
-module.exports =
-mongoose.model("Hero", heroSchema);
+module.exports = mongoose.model("Hero", heroSchema);
