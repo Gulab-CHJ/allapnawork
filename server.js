@@ -1028,7 +1028,7 @@ mongoose.connect(process.env.MONGO_URL)
 
 const Student =
 require("./models/student");
-const Hero = require("./models/hero");
+
 
 /* ================= OTP MODEL ================= */
 
