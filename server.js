@@ -1516,24 +1516,7 @@ app.get("/api/hero", async (req, res) => {
     }
 });
 
-app.get("/add-hero", async (req, res) => {
 
-    await Hero.deleteMany();
-
-    await Hero.create({
-
-        title: "GLOBAL SERVICES",
-
-        desc: "Digital Services Platform",
-
-        logoURL: "/images/logo.png",
-
-        bannerURL: "/images/bgs.png"
-
-    });
-
-    res.send("✅ Hero Added");
-});
 /* ================= SERVER ================= */
 
 const PORT =
