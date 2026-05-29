@@ -1529,31 +1529,37 @@ app.get("/api/hero", async (req, res) => {
 
     try {
 
-        const hero = await Hero.findOne();
+        const hero =
+        await Hero.findOne()
+        .sort({ _id: -1 });
 
         if (!hero) {
 
             return res.status(404).json({
 
                 success: false,
+                message: "No Hero Found"
 
-                message: "No Hero Data Found"
             });
+
         }
 
         res.json(hero);
 
-    } catch (err) {
+    }
+
+    catch (err) {
 
         console.log(err);
 
         res.status(500).json({
 
-            success: false,
+            success: false
 
-            message: "Hero Load Failed"
         });
+
     }
+
 });
 /* ================= SERVER ================= */
 

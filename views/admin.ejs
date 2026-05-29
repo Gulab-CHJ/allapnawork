@@ -2096,8 +2096,7 @@ window.onload = function(){
 }
 
 /* SAVE HERO */
-
-function saveHero(){
+async function saveHero(){
 
     const title =
     document.getElementById(
@@ -2107,11 +2106,11 @@ function saveHero(){
     document.getElementById(
     "descInput").value;
 
-    const logoFile =
+    const logo =
     document.getElementById(
     "logoInput").files[0];
 
-    const bannerFile =
+    const banner =
     document.getElementById(
     "bannerInput").files[0];
 
@@ -2125,82 +2124,88 @@ function saveHero(){
         "❌ Fill All Fields";
 
         return;
-    }
-
-    const hero = {
-
-        title,
-        desc,
-        logoURL:"",
-        bannerURL:""
-
-    };
-
-    if(!logoFile && !bannerFile){
-
-        saveLocal(hero);
-
-        return;
-    }
-
-    if(logoFile){
-
-        const logoReader =
-        new FileReader();
-
-        logoReader.onload =
-        function(e){
-
-            hero.logoURL =
-            e.target.result;
-
-            loadBanner();
-
-        }
-
-        logoReader.readAsDataURL(
-        logoFile);
 
     }
 
-    else{
+    const formData =
+    new FormData();
 
-        loadBanner();
+    formData.append(
+    "title",
+    title
+    );
+
+    formData.append(
+    "desc",
+    desc
+    );
+
+    if(logo){
+
+        formData.append(
+        "logo",
+        logo
+        );
 
     }
 
-    function loadBanner(){
+    if(banner){
 
-        if(bannerFile){
+        formData.append(
+        "banner",
+        banner
+        );
 
-            const bannerReader =
-            new FileReader();
+    }
 
-            bannerReader.onload =
-            function(ev){
+    try{
 
-                hero.bannerURL =
-                ev.target.result;
+        const res =
+        await fetch(
 
-                saveLocal(hero);
+        "/api/heroes",
 
-            }
+        {
 
-            bannerReader.readAsDataURL(
-            bannerFile);
+            method:"POST",
+
+            body:formData
+
+        });
+
+        const data =
+        await res.json();
+
+        if(data.success){
+
+            status.innerText =
+            "✅ Hero Saved";
+
+            renderHeroes();
+
+            clearForm();
 
         }
 
         else{
 
-            saveLocal(hero);
+            status.innerText =
+            "❌ Save Failed";
 
         }
 
     }
 
-}
+    catch(err){
 
+        console.log(err);
+
+        status.innerText =
+        "❌ Server Error";
+
+    }
+
+}
 /* SAVE LOCAL */
 
 function saveLocal(hero){
@@ -2247,55 +2252,45 @@ function saveLocal(hero){
 
 /* RENDER HEROES */
 
-function renderHeroes(){
+async function renderHeroes(){
 
     const heroList =
-    document
-    .getElementById(
-    "heroList");
+    document.getElementById(
+    "heroList"
+    );
 
-    let heroes =
-    JSON.parse(
-    localStorage.getItem(
-    "heroes")) || [];
+    heroList.innerHTML =
+    "Loading...";
 
-    heroList.innerHTML = "";
+    try{
 
-    heroes.forEach((hero,index)=>{
+        const res =
+        await fetch(
+        "/api/heroes"
+        );
 
-        heroList.innerHTML += `
+        const heroes =
+        await res.json();
 
-        <div class="hero-card">
+        heroList.innerHTML = "";
 
-            ${
-                hero.bannerURL ?
+        heroes.forEach((hero)=>{
 
-                `<img
+            heroList.innerHTML += `
+
+            <div class="hero-card">
+
+                <img
                 src="${hero.bannerURL}"
-                class="banner">`
+                class="banner">
 
-                :
+                <div class="hero-content">
 
-                ""
-            }
+                    <div class="hero-top">
 
-            <div class="hero-content">
-
-                <div class="hero-top">
-
-                    ${
-                        hero.logoURL ?
-
-                        `<img
+                        <img
                         src="${hero.logoURL}"
-                        class="logo-img">`
-
-                        :
-
-                        ""
-                    }
-
-                    <div>
+                        class="logo-img">
 
                         <div
                         class="hero-title">
@@ -2306,45 +2301,30 @@ function renderHeroes(){
 
                     </div>
 
-                </div>
+                    <div
+                    class="hero-desc">
 
-                <div
-                class="hero-desc">
+                        ${hero.desc}
 
-                    ${hero.desc}
-
-                </div>
-
-                <div class="btn-group">
-
-                    <button
-                    class="action-btn edit-btn"
-                    onclick="editHero(${index})">
-
-                        Edit
-
-                    </button>
-
-                    <button
-                    class="action-btn delete-btn"
-                    onclick="deleteHero(${index})">
-
-                        Delete
-
-                    </button>
+                    </div>
 
                 </div>
 
             </div>
 
-        </div>
+            `;
 
-        `;
+        });
 
-    });
+    }
+
+    catch(err){
+
+        console.log(err);
+
+    }
 
 }
-
 /* EDIT */
 
 function editHero(index){
