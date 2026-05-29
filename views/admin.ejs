@@ -1534,7 +1534,6 @@ function clearForm(){
 
 </html> -->
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -1545,9 +1544,16 @@ function clearForm(){
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>Hero Admin Panel</title>
+<title>Premium Hero Admin</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
 rel="stylesheet">
 
 <style>
@@ -1560,183 +1566,386 @@ rel="stylesheet">
 }
 
 body{
-    background:#0f172a;
+
+    background:
+    linear-gradient(
+    135deg,
+    #020617,
+    #0f172a,
+    #111827);
+
+    min-height:100vh;
+
     color:white;
-    padding:20px;
+
+    display:flex;
 }
 
-/* PANEL */
+/* SIDEBAR */
 
-.panel{
-    max-width:700px;
-    margin:auto;
+.sidebar{
 
-    background:#111827;
+    width:260px;
+
+    background:
+    rgba(15,23,42,.95);
+
+    border-right:
+    1px solid rgba(255,255,255,.08);
 
     padding:25px;
 
-    border-radius:20px;
+    position:fixed;
+
+    top:0;
+    left:0;
+    bottom:0;
+
+    backdrop-filter:blur(12px);
 }
 
-/* TITLE */
+.logo{
 
-.panel h2{
-    text-align:center;
-    margin-bottom:20px;
+    font-size:28px;
+
+    font-weight:800;
+
+    color:#3b82f6;
+
+    margin-bottom:35px;
 }
 
-/* INPUT */
+.menu{
 
-.input-box{
-    width:100%;
+    display:flex;
 
-    padding:14px;
+    flex-direction:column;
 
-    margin-top:14px;
-
-    border:none;
-    outline:none;
-
-    border-radius:10px;
-
-    background:#1e293b;
-
-    color:white;
+    gap:12px;
 }
 
-/* TEXTAREA */
+.menu button{
 
-textarea{
-    resize:none;
-    height:100px;
-}
-
-/* FILE INPUT */
-
-.file-box{
-    margin-top:14px;
-}
-
-/* SAVE BUTTON */
-
-.save-btn{
-    width:100%;
-
-    padding:14px;
-
-    margin-top:18px;
+    padding:15px;
 
     border:none;
 
-    border-radius:10px;
+    border-radius:14px;
 
-    background:#2563eb;
+    background:#111827;
 
     color:white;
+
+    font-size:15px;
 
     font-weight:600;
 
     cursor:pointer;
 
-    font-size:16px;
+    transition:.3s;
+}
+
+.menu button:hover{
+
+    background:#2563eb;
+
+    transform:translateX(5px);
+}
+
+.active{
+
+    background:#2563eb !important;
+}
+
+/* MAIN */
+
+.main{
+
+    margin-left:260px;
+
+    width:100%;
+
+    padding:30px;
+}
+
+/* PAGE */
+
+.page{
+
+    display:none;
+}
+
+.show{
+
+    display:block;
+}
+
+/* CARD */
+
+.card{
+
+    background:
+    rgba(17,24,39,.75);
+
+    border:
+    1px solid rgba(255,255,255,.06);
+
+    border-radius:25px;
+
+    padding:28px;
+
+    backdrop-filter:blur(10px);
+
+    box-shadow:
+    0 10px 40px rgba(0,0,0,.35);
+}
+
+/* TITLE */
+
+.heading{
+
+    font-size:30px;
+
+    font-weight:700;
+
+    margin-bottom:25px;
+}
+
+/* INPUTS */
+
+.input-box{
+
+    width:100%;
+
+    margin-top:16px;
+
+    padding:16px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:14px;
+
+    background:#1e293b;
+
+    color:white;
+
+    font-size:15px;
+}
+
+textarea{
+
+    resize:none;
+
+    height:130px;
+}
+
+/* BUTTON */
+
+.save-btn{
+
+    width:100%;
+
+    margin-top:22px;
+
+    padding:16px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:
+    linear-gradient(
+    135deg,
+    #2563eb,
+    #1d4ed8);
+
+    color:white;
+
+    font-size:17px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.save-btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+    0 10px 25px rgba(37,99,235,.35);
 }
 
 /* STATUS */
 
 .status{
+
     margin-top:15px;
+
     text-align:center;
+
     color:#86efac;
+
+    font-weight:600;
 }
 
-/* HERO LIST */
+/* HERO GRID */
 
-.hero-list{
-    margin-top:25px;
+.hero-grid{
 
-    display:flex;
-    flex-direction:column;
+    display:grid;
 
-    gap:15px;
+    grid-template-columns:
+    repeat(auto-fit,minmax(320px,1fr));
+
+    gap:22px;
 }
 
-/* CARD */
+/* HERO CARD */
 
 .hero-card{
-    background:#1e293b;
 
-    padding:18px;
+    background:
+    rgba(17,24,39,.9);
 
-    border-radius:15px;
+    border:
+    1px solid rgba(255,255,255,.06);
+
+    border-radius:22px;
+
+    overflow:hidden;
+
+    transition:.3s;
 }
 
-.hero-card h3{
-    margin-bottom:8px;
+.hero-card:hover{
+
+    transform:translateY(-5px);
 }
 
-.hero-card p{
-    color:#cbd5e1;
-    margin-bottom:10px;
-}
+.banner{
 
-/* IMAGE */
-
-.hero-card img{
     width:100%;
-    height:180px;
+
+    height:220px;
 
     object-fit:cover;
-
-    border-radius:10px;
-
-    margin-top:10px;
 }
 
-/* LOGO */
+/* CONTENT */
+
+.hero-content{
+
+    padding:20px;
+}
+
+.hero-top{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    margin-bottom:15px;
+}
 
 .logo-img{
-    width:90px !important;
-    height:90px !important;
+
+    width:75px;
+
+    height:75px;
 
     border-radius:50%;
 
     object-fit:cover;
+
+    border:4px solid #2563eb;
+}
+
+.hero-title{
+
+    font-size:22px;
+
+    font-weight:700;
+}
+
+.hero-desc{
+
+    color:#cbd5e1;
+
+    line-height:1.7;
+
+    margin-top:12px;
 }
 
 /* BUTTON GROUP */
 
 .btn-group{
-    display:flex;
-    gap:10px;
 
-    margin-top:15px;
+    display:flex;
+
+    gap:12px;
+
+    margin-top:20px;
 }
 
-/* BUTTONS */
+/* ACTION BUTTON */
 
-.edit-btn,
-.delete-btn{
+.action-btn{
+
     flex:1;
-
-    padding:12px;
 
     border:none;
 
-    border-radius:10px;
+    padding:13px;
+
+    border-radius:12px;
 
     color:white;
 
-    font-weight:600;
+    font-weight:700;
 
     cursor:pointer;
 }
 
 .edit-btn{
+
     background:#f59e0b;
 }
 
 .delete-btn{
+
     background:#ef4444;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+    .sidebar{
+
+        width:100%;
+
+        height:auto;
+
+        position:relative;
+    }
+
+    body{
+
+        flex-direction:column;
+    }
+
+    .main{
+
+        margin-left:0;
+    }
+
 }
 
 </style>
@@ -1745,70 +1954,139 @@ textarea{
 
 <body>
 
-<div class="panel">
+<!-- SIDEBAR -->
 
-    <h2>
-        Hero Admin Panel
-    </h2>
+<div class="sidebar">
 
-    <!-- TITLE -->
+    <div class="logo">
+        HERO ADMIN
+    </div>
 
-    <input
-    type="text"
-    id="titleInput"
-    class="input-box"
-    placeholder="Hero Title">
+    <div class="menu">
 
-    <!-- DESCRIPTION -->
+        <button
+        class="active"
+        onclick="showPage('addPage',this)">
 
-    <textarea
-    id="descInput"
-    class="input-box"
-    placeholder="Hero Description"></textarea>
+            Add Hero
 
-    <!-- LOGO -->
+        </button>
 
-    <input
-    type="file"
-    id="logoInput"
-    class="input-box file-box"
-    accept="image/*">
+        <button
+        onclick="showPage('listPage',this)">
 
-    <!-- BANNER -->
+            Hero Listings
 
-    <input
-    type="file"
-    id="bannerInput"
-    class="input-box file-box"
-    accept="image/*">
+        </button>
 
-    <!-- SAVE BUTTON -->
+    </div>
 
-    <button
-    class="save-btn"
-    onclick="saveHero()">
+</div>
 
-        Save Hero
+<!-- MAIN -->
 
-    </button>
+<div class="main">
 
-    <!-- STATUS -->
+    <!-- ADD PAGE -->
 
     <div
-    class="status"
-    id="status"></div>
+    class="page show"
+    id="addPage">
 
-    <!-- HERO LIST -->
+        <div class="card">
+
+            <div class="heading">
+                Create Premium Hero
+            </div>
+
+            <input
+            type="text"
+            id="titleInput"
+            class="input-box"
+            placeholder="Hero Title">
+
+            <textarea
+            id="descInput"
+            class="input-box"
+            placeholder="Hero Description"></textarea>
+
+            <input
+            type="file"
+            id="logoInput"
+            class="input-box"
+            accept="image/*">
+
+            <input
+            type="file"
+            id="bannerInput"
+            class="input-box"
+            accept="image/*">
+
+            <button
+            class="save-btn"
+            onclick="saveHero()">
+
+                Save Hero
+
+            </button>
+
+            <div
+            class="status"
+            id="status"></div>
+
+        </div>
+
+    </div>
+
+    <!-- LIST PAGE -->
 
     <div
-    class="hero-list"
-    id="heroList"></div>
+    class="page"
+    id="listPage">
+
+        <div class="heading">
+            Hero Listings
+        </div>
+
+        <div
+        class="hero-grid"
+        id="heroList"></div>
+
+    </div>
 
 </div>
 
 <script>
 
 let editIndex = -1;
+
+/* PAGE SWITCH */
+
+function showPage(pageId,btn){
+
+    document
+    .querySelectorAll(".page")
+    .forEach(page=>{
+
+        page.classList.remove("show");
+
+    });
+
+    document
+    .getElementById(pageId)
+    .classList.add("show");
+
+    document
+    .querySelectorAll(".menu button")
+    .forEach(button=>{
+
+        button.classList.remove("active");
+
+    });
+
+    btn.classList.add("active");
+
+}
 
 /* LOAD */
 
@@ -1818,56 +2096,60 @@ window.onload = function(){
 
 }
 
-/* SAVE HERO */
+/* SAVE */
 
 function saveHero(){
 
     const title =
-    document.getElementById(
+    document
+    .getElementById(
     "titleInput").value;
 
     const desc =
-    document.getElementById(
+    document
+    .getElementById(
     "descInput").value;
 
     const logoFile =
-    document.getElementById(
+    document
+    .getElementById(
     "logoInput").files[0];
 
     const bannerFile =
-    document.getElementById(
+    document
+    .getElementById(
     "bannerInput").files[0];
 
     const status =
-    document.getElementById(
+    document
+    .getElementById(
     "status");
 
     if(!title || !desc){
 
         status.innerText =
-        "❌ Fill all fields";
+        "❌ Fill All Fields";
 
         return;
     }
 
     const hero = {
+
         title,
         desc,
         logoURL:"",
         bannerURL:""
-    };
 
-    /* LOGO READER */
+    };
 
     const logoReader =
     new FileReader();
 
-    logoReader.onload = function(e){
+    logoReader.onload =
+    function(e){
 
         hero.logoURL =
         e.target.result;
-
-        /* BANNER READER */
 
         const bannerReader =
         new FileReader();
@@ -1878,18 +2160,19 @@ function saveHero(){
             hero.bannerURL =
             ev.target.result;
 
-            saveToLocal(hero);
+            saveLocal(hero);
 
         }
 
         if(bannerFile){
 
-            bannerReader.readAsDataURL(
+            bannerReader
+            .readAsDataURL(
             bannerFile);
 
         }else{
 
-            saveToLocal(hero);
+            saveLocal(hero);
 
         }
 
@@ -1897,34 +2180,13 @@ function saveHero(){
 
     if(logoFile){
 
-        logoReader.readAsDataURL(
+        logoReader
+        .readAsDataURL(
         logoFile);
 
     }else{
 
-        if(bannerFile){
-
-            const bannerReader =
-            new FileReader();
-
-            bannerReader.onload =
-            function(ev){
-
-                hero.bannerURL =
-                ev.target.result;
-
-                saveToLocal(hero);
-
-            }
-
-            bannerReader.readAsDataURL(
-            bannerFile);
-
-        }else{
-
-            saveToLocal(hero);
-
-        }
+        saveLocal(hero);
 
     }
 
@@ -1932,14 +2194,12 @@ function saveHero(){
 
 /* SAVE LOCAL */
 
-function saveToLocal(hero){
+function saveLocal(hero){
 
     let heroes =
     JSON.parse(
     localStorage.getItem(
     "heroes")) || [];
-
-    /* EDIT */
 
     if(editIndex >= 0){
 
@@ -1948,11 +2208,7 @@ function saveToLocal(hero){
 
         editIndex = -1;
 
-    }
-
-    /* ADD */
-
-    else{
+    }else{
 
         heroes.push(hero);
 
@@ -1963,27 +2219,24 @@ function saveToLocal(hero){
     JSON.stringify(heroes)
     );
 
-    localStorage.setItem(
-    "heroData",
-    JSON.stringify(hero)
-    );
-
-    document.getElementById(
-    "status").innerText =
-    "✅ Hero Saved";
+    renderHeroes();
 
     clearForm();
 
-    renderHeroes();
+    document
+    .getElementById(
+    "status").innerText =
+    "✅ Hero Saved";
 
 }
 
-/* RENDER HEROES */
+/* RENDER */
 
 function renderHeroes(){
 
     const heroList =
-    document.getElementById(
+    document
+    .getElementById(
     "heroList");
 
     let heroes =
@@ -1999,52 +2252,73 @@ function renderHeroes(){
 
         <div class="hero-card">
 
-            <h3>
-                ${hero.title}
-            </h3>
-
-            <p>
-                ${hero.desc}
-            </p>
-
-            ${
-                hero.logoURL ?
-
-                `<img src="${hero.logoURL}"
-                class="logo-img">`
-
-                :
-
-                ""
-            }
-
             ${
                 hero.bannerURL ?
 
-                `<img src="${hero.bannerURL}">`
+                `<img
+                src="${hero.bannerURL}"
+                class="banner">`
 
                 :
 
                 ""
             }
 
-            <div class="btn-group">
+            <div class="hero-content">
 
-                <button
-                class="edit-btn"
-                onclick="editHero(${index})">
+                <div class="hero-top">
 
-                    Edit
+                    ${
+                        hero.logoURL ?
 
-                </button>
+                        `<img
+                        src="${hero.logoURL}"
+                        class="logo-img">`
 
-                <button
-                class="delete-btn"
-                onclick="deleteHero(${index})">
+                        :
 
-                    Delete
+                        ""
+                    }
 
-                </button>
+                    <div>
+
+                        <div
+                        class="hero-title">
+
+                            ${hero.title}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div
+                class="hero-desc">
+
+                    ${hero.desc}
+
+                </div>
+
+                <div class="btn-group">
+
+                    <button
+                    class="action-btn edit-btn"
+                    onclick="editHero(${index})">
+
+                        Edit
+
+                    </button>
+
+                    <button
+                    class="action-btn delete-btn"
+                    onclick="deleteHero(${index})">
+
+                        Delete
+
+                    </button>
+
+                </div>
 
             </div>
 
@@ -2068,17 +2342,25 @@ function editHero(index){
     const hero =
     heroes[index];
 
-    document.getElementById(
+    document
+    .getElementById(
     "titleInput").value =
     hero.title;
 
-    document.getElementById(
+    document
+    .getElementById(
     "descInput").value =
     hero.desc;
 
     editIndex = index;
 
-    document.getElementById(
+    showPage(
+    "addPage",
+    document.querySelectorAll(
+    ".menu button")[0]);
+
+    document
+    .getElementById(
     "status").innerText =
     "✏️ Edit Mode";
 
@@ -2100,28 +2382,7 @@ function deleteHero(index){
     JSON.stringify(heroes)
     );
 
-    if(heroes.length > 0){
-
-        localStorage.setItem(
-        "heroData",
-        JSON.stringify(
-        heroes[heroes.length - 1]
-        )
-        );
-
-    }else{
-
-        localStorage.removeItem(
-        "heroData"
-        );
-
-    }
-
     renderHeroes();
-
-    document.getElementById(
-    "status").innerText =
-    "🗑 Hero Deleted";
 
 }
 
@@ -2129,16 +2390,20 @@ function deleteHero(index){
 
 function clearForm(){
 
-    document.getElementById(
+    document
+    .getElementById(
     "titleInput").value = "";
 
-    document.getElementById(
+    document
+    .getElementById(
     "descInput").value = "";
 
-    document.getElementById(
+    document
+    .getElementById(
     "logoInput").value = "";
 
-    document.getElementById(
+    document
+    .getElementById(
     "bannerInput").value = "";
 
 }
