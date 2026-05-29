@@ -1533,7 +1533,6 @@ function clearForm(){
 </body>
 
 </html> -->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -2096,33 +2095,28 @@ window.onload = function(){
 
 }
 
-/* SAVE */
+/* SAVE HERO */
 
 function saveHero(){
 
     const title =
-    document
-    .getElementById(
+    document.getElementById(
     "titleInput").value;
 
     const desc =
-    document
-    .getElementById(
+    document.getElementById(
     "descInput").value;
 
     const logoFile =
-    document
-    .getElementById(
+    document.getElementById(
     "logoInput").files[0];
 
     const bannerFile =
-    document
-    .getElementById(
+    document.getElementById(
     "bannerInput").files[0];
 
     const status =
-    document
-    .getElementById(
+    document.getElementById(
     "status");
 
     if(!title || !desc){
@@ -2142,51 +2136,66 @@ function saveHero(){
 
     };
 
-    const logoReader =
-    new FileReader();
+    if(!logoFile && !bannerFile){
 
-    logoReader.onload =
-    function(e){
+        saveLocal(hero);
 
-        hero.logoURL =
-        e.target.result;
-
-        const bannerReader =
-        new FileReader();
-
-        bannerReader.onload =
-        function(ev){
-
-            hero.bannerURL =
-            ev.target.result;
-
-            saveLocal(hero);
-
-        }
-
-        if(bannerFile){
-
-            bannerReader
-            .readAsDataURL(
-            bannerFile);
-
-        }else{
-
-            saveLocal(hero);
-
-        }
-
+        return;
     }
 
     if(logoFile){
 
-        logoReader
-        .readAsDataURL(
+        const logoReader =
+        new FileReader();
+
+        logoReader.onload =
+        function(e){
+
+            hero.logoURL =
+            e.target.result;
+
+            loadBanner();
+
+        }
+
+        logoReader.readAsDataURL(
         logoFile);
 
-    }else{
+    }
 
-        saveLocal(hero);
+    else{
+
+        loadBanner();
+
+    }
+
+    function loadBanner(){
+
+        if(bannerFile){
+
+            const bannerReader =
+            new FileReader();
+
+            bannerReader.onload =
+            function(ev){
+
+                hero.bannerURL =
+                ev.target.result;
+
+                saveLocal(hero);
+
+            }
+
+            bannerReader.readAsDataURL(
+            bannerFile);
+
+        }
+
+        else{
+
+            saveLocal(hero);
+
+        }
 
     }
 
@@ -2203,12 +2212,18 @@ function saveLocal(hero){
 
     if(editIndex >= 0){
 
-        heroes[editIndex] =
-        hero;
+        heroes[editIndex] = {
+
+            ...heroes[editIndex],
+            ...hero
+
+        };
 
         editIndex = -1;
 
-    }else{
+    }
+
+    else{
 
         heroes.push(hero);
 
@@ -2226,11 +2241,11 @@ function saveLocal(hero){
     document
     .getElementById(
     "status").innerText =
-    "✅ Hero Saved";
+    "✅ Hero Saved Successfully";
 
 }
 
-/* RENDER */
+/* RENDER HEROES */
 
 function renderHeroes(){
 
@@ -2384,9 +2399,14 @@ function deleteHero(index){
 
     renderHeroes();
 
+    document
+    .getElementById(
+    "status").innerText =
+    "🗑 Hero Deleted";
+
 }
 
-/* CLEAR */
+/* CLEAR FORM */
 
 function clearForm(){
 
