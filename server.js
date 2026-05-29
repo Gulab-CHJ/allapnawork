@@ -969,7 +969,7 @@
 // });
 
 
-
+const Hero = require("./models/Hero");
 require("dotenv").config();
 
 const express = require("express");
