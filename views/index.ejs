@@ -829,9 +829,7 @@ body{
 const heroRoot = document.getElementById("heroRoot");
 
 async function loadHero() {
-
     try {
-
         const res = await fetch("/api/hero");
         if (!res.ok) throw new Error("API Failed");
 
@@ -839,12 +837,7 @@ async function loadHero() {
 
         if (!heroData || !heroData.title) {
             heroRoot.innerHTML = `
-                <div style="
-                    text-align:center;
-                    color:red;
-                    padding:40px;
-                    font-size:18px;
-                ">
+                <div style="text-align:center;color:red;padding:40px;">
                     No Hero Found
                 </div>
             `;
@@ -852,7 +845,6 @@ async function loadHero() {
         }
 
         heroRoot.innerHTML = `
-
         <style>
 
         *{
@@ -866,121 +858,133 @@ async function loadHero() {
             background:#0b1220;
         }
 
-        /* OUTER */
+        /* WRAP */
         .hero-wrap{
             width:100%;
             min-height:100vh;
             display:flex;
             align-items:center;
             justify-content:center;
-            padding:30px;
+            padding:25px;
         }
 
-        /* PREMIUM CARD */
+        /* CARD */
         .hero-card{
             width:100%;
-            max-width:1100px;
+            max-width:1200px;
             background:rgba(255,255,255,0.05);
             border:1px solid rgba(255,255,255,0.08);
             border-radius:30px;
             overflow:hidden;
-            backdrop-filter:blur(15px);
-            box-shadow:0 25px 70px rgba(0,0,0,0.6);
             display:flex;
-            flex-direction:column;
+            backdrop-filter:blur(15px);
+            box-shadow:0 25px 80px rgba(0,0,0,0.6);
         }
 
-        /* BANNER (NO CROP FIX) */
-        .banner-box{
-            width:100%;
-            height:420px;
-            background:#000;
+        /* LEFT BANNER */
+        .banner{
+            flex:1;
+            min-height:500px;
+            background:#0a0f1c;
             display:flex;
             align-items:center;
             justify-content:center;
+            padding:20px;
         }
 
-        .banner-box img{
+        .banner img{
             width:100%;
             height:100%;
-            object-fit:contain; /* 🔥 NO CUT, FULL IMAGE */
-            background:#0b1220;
+            max-height:500px;
+            object-fit:contain; /* NO CUT */
+            animation:float 4s ease-in-out infinite;
         }
 
-        /* CONTENT */
+        @keyframes float{
+            0%,100%{transform:translateY(0px);}
+            50%{transform:translateY(-10px);}
+        }
+
+        /* RIGHT CONTENT */
         .content{
-            padding:40px;
+            flex:1;
+            padding:50px;
             display:flex;
-            justify-content:space-between;
-            gap:30px;
+            flex-direction:column;
+            justify-content:center;
+        }
+
+        .content h1{
+            font-size:40px;
+            color:#fff;
+            font-weight:800;
+        }
+
+        .content p{
+            margin-top:15px;
+            color:#cbd5e1;
+            font-size:16px;
+            line-height:1.8;
+        }
+
+        .follow{
+            margin-top:25px;
+            color:#94a3b8;
+        }
+
+        /* SOCIAL */
+        .social{
+            margin-top:20px;
+            display:flex;
+            gap:12px;
             flex-wrap:wrap;
         }
 
-        /* LEFT */
-        .left{
-            flex:1;
-            min-width:280px;
-        }
-
-        .left h1{
-            font-size:38px;
-            font-weight:800;
-            color:white;
-        }
-
-        .left p{
-            margin-top:15px;
-            color:#cbd5e1;
-            line-height:1.8;
-            font-size:16px;
-        }
-
-        /* RIGHT SOCIAL */
-        .social{
-            display:flex;
-            flex-direction:column;
-            gap:12px;
-            min-width:80px;
-        }
-
         .social a{
-            width:48px;
-            height:48px;
+            width:50px;
+            height:50px;
+            border-radius:50%;
+            background:rgba(255,255,255,0.08);
             display:flex;
             align-items:center;
             justify-content:center;
-            border-radius:50%;
-            background:rgba(255,255,255,0.08);
-            color:white;
-            text-decoration:none;
-            font-weight:700;
             transition:0.3s;
+            text-decoration:none;
+            position:relative;
         }
 
         .social a:hover{
+            transform:translateY(-6px) scale(1.1);
             background:#2563eb;
-            transform:translateY(-5px);
+        }
+
+        .social svg{
+            width:22px;
+            height:22px;
+            fill:white;
         }
 
         /* MOBILE */
-        @media(max-width:768px){
+        @media(max-width:900px){
+            .hero-card{
+                flex-direction:column;
+            }
 
             .content{
-                flex-direction:column;
+                padding:30px;
                 text-align:center;
                 align-items:center;
             }
 
             .social{
-                flex-direction:row;
                 justify-content:center;
             }
 
-            .banner-box{
-                height:250px;
+            .banner{
+                min-height:280px;
             }
 
-            .left h1{
+            .content h1{
                 font-size:28px;
             }
         }
@@ -991,28 +995,52 @@ async function loadHero() {
 
             <div class="hero-card">
 
-                <!-- BANNER -->
-                <div class="banner-box">
+                <!-- LEFT BANNER -->
+                <div class="banner">
                     <img src="${heroData.bannerURL}" alt="banner">
                 </div>
 
-                <!-- CONTENT -->
+                <!-- RIGHT CONTENT -->
                 <div class="content">
 
-                    <!-- LEFT TEXT -->
-                    <div class="left">
-                        <h1>${heroData.title}</h1>
-                        <p>${heroData.desc}</p>
+                    <h1>${heroData.title}</h1>
+
+                    <p>${heroData.desc}</p>
+
+                    <div class="follow">
+                        Follow us on social media platforms for latest updates.
                     </div>
 
-                    <!-- RIGHT SOCIAL -->
+                    <!-- SOCIAL ICONS (REAL SVG) -->
                     <div class="social">
 
-                        <a href="#">F</a>
-                        <a href="#">I</a>
-                        <a href="#">Y</a>
-                        <a href="#">W</a>
-                        <a href="#">T</a>
+                        <!-- Facebook -->
+                        <a href="#">
+                        <svg viewBox="0 0 24 24">
+                        <path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8v-3h2.5V9.5C10.5 7 12 5.5 14.8 5.5c1.2 0 2.2.1 2.2.1v2.4H16c-1.2 0-1.6.7-1.6 1.5V12H17l-.5 3h-2.1v7A10 10 0 0 0 22 12z"/>
+                        </svg>
+                        </a>
+
+                        <!-- Instagram -->
+                        <a href="#">
+                        <svg viewBox="0 0 24 24">
+                        <path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm10 2a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3h10zm-5 3.5A4.5 4.5 0 1 0 16.5 12 4.5 4.5 0 0 0 12 7.5zm0 2A2.5 2.5 0 1 1 9.5 12 2.5 2.5 0 0 1 12 9.5zM17 6.8a1 1 0 1 0 1 1 1 1 0 0 0-1-1z"/>
+                        </svg>
+                        </a>
+
+                        <!-- YouTube -->
+                        <a href="#">
+                        <svg viewBox="0 0 24 24">
+                        <path d="M23 12s0-3.6-.5-5.3a3 3 0 0 0-2.1-2.1C18.7 4 12 4 12 4s-6.7 0-8.4.6A3 3 0 0 0 1.5 6.7C1 8.4 1 12 1 12s0 3.6.5 5.3a3 3 0 0 0 2.1 2.1C5.3 20 12 20 12 20s6.7 0 8.4-.6a3 3 0 0 0 2.1-2.1C23 15.6 23 12 23 12zM10 15V9l6 3-6 3z"/>
+                        </svg>
+                        </a>
+
+                        <!-- WhatsApp -->
+                        <a href="#">
+                        <svg viewBox="0 0 24 24">
+                        <path d="M20.5 3.5A11.8 11.8 0 0 0 12 0 12 12 0 0 0 2 18l-2 6 6-2A12 12 0 0 0 24 12a11.8 11.8 0 0 0-3.5-8.5z"/>
+                        </svg>
+                        </a>
 
                     </div>
 
@@ -1021,7 +1049,6 @@ async function loadHero() {
             </div>
 
         </div>
-
         `;
 
     } catch (err) {
