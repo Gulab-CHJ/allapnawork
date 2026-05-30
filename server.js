@@ -1483,29 +1483,6 @@ app.put(
     }
 );
 
-app.delete("/api/heroes/:id", async(req,res)=>{
-
-    try{
-
-        await Hero.findByIdAndDelete(
-            req.params.id
-        );
-
-        res.json({
-            success:true
-        });
-
-    }
-
-    catch(err){
-
-        res.status(500).json({
-            success:false
-        });
-
-    }
-
-});
 app.post("/api/heroes", upload.fields([
     { name: "logo", maxCount: 1 },
     { name: "banner", maxCount: 1 }
@@ -1610,29 +1587,28 @@ app.get("/api/heroes", async (req, res) => {
     res.json(heroes);
 
 });
+/* ================= HERO DELETE ================= */
 
-app.delete("/api/heroes/:id", async (req,res)=>{
+app.delete("/api/heroes/:id", async (req, res) => {
 
-    try{
+    try {
 
         await Hero.findByIdAndDelete(
             req.params.id
         );
 
         res.json({
-            success:true
+            success: true
         });
 
-    }
+    } catch (err) {
 
-    catch(err){
+        console.log(err);
 
         res.status(500).json({
-            success:false
+            success: false
         });
-
     }
-
 });
 
 async function deleteHero(id){
