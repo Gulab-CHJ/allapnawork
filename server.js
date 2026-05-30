@@ -969,6 +969,670 @@
 // });
 
 
+// const Hero = require("./models/Hero");
+// require("dotenv").config();
+
+// const express = require("express");
+// const path = require("path");
+// const mongoose = require("mongoose");
+// const session = require("express-session");
+// const nodemailer = require("nodemailer");
+// const multer = require("multer");
+// const Razorpay = require("razorpay");
+
+// const app = express();
+
+// /* ================= MIDDLEWARE ================= */
+// app.use(
+//     "/uploads",
+//     express.static("uploads")
+// );
+
+// app.use(express.urlencoded({ extended: true }));
+// app.use(express.json());
+
+// app.use(express.static(
+//     path.join(__dirname, "public")
+// ));
+
+// /* ================= SESSION ================= */
+
+// app.use(session({
+
+//     secret:
+//     process.env.SESSION_SECRET || "secret",
+
+//     resave: false,
+
+//     saveUninitialized: false
+// }));
+
+// /* ================= VIEW ENGINE ================= */
+
+// app.set("view engine", "ejs");
+
+// app.set(
+//     "views",
+//     path.join(__dirname, "views")
+// );
+
+// /* ================= DB ================= */
+
+// mongoose.connect(process.env.MONGO_URL)
+
+// .then(() =>
+//     console.log("✅ MongoDB Connected")
+// )
+
+// .catch(err =>
+//     console.log(err)
+// );
+
+// /* ================= MODEL ================= */
+
+// const Student =
+// require("./models/student");
+
+
+
+// /* ================= OTP MODEL ================= */
+
+// const otpSchema =
+// new mongoose.Schema({
+
+//     email: String,
+
+//     otp: String,
+
+//     createdAt: {
+//         type: Date,
+//         default: Date.now,
+//         expires: 300
+//     }
+// });
+
+// const OTP =
+// mongoose.model("OTP", otpSchema);
+
+// /* ================= MULTER ================= */
+
+// const storage =
+// multer.diskStorage({
+
+//     destination: (req, file, cb) => {
+
+//         cb(
+//             null,
+//             "public/uploads"
+//         );
+//     },
+
+//     filename: (req, file, cb) => {
+
+//         cb(
+//             null,
+//             Date.now() +
+//             "-" +
+//             file.originalname
+//         );
+//     }
+// });
+
+// const upload =
+// multer({ storage });
+
+// /* ================= EMAIL ================= */
+
+// const transporter =
+// nodemailer.createTransport({
+
+//     host: "smtp.gmail.com",
+
+//     port: 465,
+
+//     secure: true,
+
+//     auth: {
+
+//         user:
+//         process.env.EMAIL_USER,
+
+//         pass:
+//         process.env.EMAIL_PASS
+//     }
+// });
+
+// /* ================= RAZORPAY ================= */
+
+// const razorpay =
+// new Razorpay({
+
+//     key_id:
+//     process.env.RAZORPAY_KEY_ID,
+
+//     key_secret:
+//     process.env.RAZORPAY_KEY_SECRET
+// });
+
+// /* ================= ROUTES ================= */
+
+// app.get("/", (req, res) => {
+//     res.render("index");
+// });
+
+// app.get("/student", (req, res) => {
+//     res.render("student-register");
+// });
+
+// app.get("/payment-success", (req, res) => {
+
+//     res.send(
+//         "🎉 Registration Complete"
+//     );
+// });
+
+// /* ================= SEND OTP ================= */
+
+// app.post("/send-otp", async (req, res) => {
+
+//     try {
+
+//         const { email } = req.body;
+
+//         const otp =
+//         Math.floor(
+//             100000 +
+//             Math.random() * 900000
+//         ).toString();
+
+//         await OTP.deleteMany({ email });
+
+//         await OTP.create({
+//             email,
+//             otp
+//         });
+
+//         await transporter.sendMail({
+
+//             from:
+//             process.env.EMAIL_USER,
+
+//             to: email,
+
+//             subject:
+//             "OTP Verification",
+
+//             html:
+//             `<h1>Your OTP: ${otp}</h1>`
+//         });
+
+//         res.json({
+
+//             success: true,
+
+//             message: "OTP Sent"
+//         });
+
+//     } catch (err) {
+
+//         console.log(err);
+
+//         res.json({
+
+//             success: false,
+
+//             message: "OTP Failed"
+//         });
+//     }
+// });
+
+// /* ================= VERIFY OTP ================= */
+
+// app.post("/verify-otp", async (req, res) => {
+
+//     try {
+
+//         const { email, otp } =
+//         req.body;
+
+//         const data =
+//         await OTP.findOne({
+//             email,
+//             otp
+//         });
+
+//         if (!data) {
+
+//             return res.json({
+
+//                 success: false,
+
+//                 message:
+//                 "Invalid OTP"
+//             });
+//         }
+
+//         req.session.verifiedEmail =
+//         email;
+
+//         res.json({
+
+//             success: true,
+
+//             message:
+//             "OTP Verified"
+//         });
+
+//     } catch (err) {
+
+//         console.log(err);
+
+//         res.json({
+
+//             success: false,
+
+//             message:
+//             "Verification Failed"
+//         });
+//     }
+// });
+
+// /* ================= CREATE ORDER ================= */
+
+// app.post("/create-order", async (req, res) => {
+
+//     try {
+
+//         const options = {
+
+//             amount: 299 * 100,
+
+//             currency: "INR",
+
+//             receipt:
+//             "receipt_" + Date.now()
+//         };
+
+//         const order =
+//         await razorpay.orders.create(
+//             options
+//         );
+
+//         res.json({
+
+//             success: true,
+
+//             id: order.id,
+
+//             amount: order.amount,
+
+//             currency: order.currency
+//         });
+
+//     } catch (err) {
+
+//         console.log(err);
+
+//         res.status(500).json({
+
+//             success: false,
+
+//             message:
+//             "Order Failed"
+//         });
+//     }
+// });
+
+// /* ================= REGISTER STUDENT ================= */
+
+// app.post(
+//     "/student-register",
+
+//     upload.single("photo"),
+
+//     async (req, res) => {
+
+//         try {
+
+//             console.log(
+//                 "BODY:",
+//                 req.body
+//             );
+
+//             console.log(
+//                 "FILE:",
+//                 req.file
+//             );
+
+//             const {
+
+//                 name,
+//                 father,
+//                 dob,
+//                 className,
+//                 phone,
+//                 email,
+//                 password,
+//                 paymentId,
+//                 orderId
+
+//             } = req.body;
+
+//             /* ================= CHECK ================= */
+
+//             if (
+//                 !name ||
+//                 !email ||
+//                 !paymentId
+//             ) {
+
+//                 return res.json({
+
+//                     success: false,
+
+//                     message:
+//                     "Payment Required"
+//                 });
+//             }
+
+//             /* ================= PHOTO ================= */
+
+//             const photo =
+//             req.file
+//             ? "/uploads/" +
+//               req.file.filename
+//             : "";
+
+//             /* ================= SAVE ================= */
+
+//             await Student.create({
+
+//                 name,
+//                 father,
+//                 dob,
+//                 className,
+//                 phone,
+//                 email,
+//                 password,
+
+//                 photo,
+
+//                 paymentId,
+
+//                 orderId
+//             });
+
+//             return res.json({
+
+//                 success: true,
+
+//                 message:
+//                 "Registration Successful",
+
+//                 redirect:
+//                 "/payment-success"
+//             });
+
+//         } catch (err) {
+
+//             console.log(
+//                 "REGISTER ERROR:",
+//                 err
+//             );
+
+//             return res.json({
+
+//                 success: false,
+
+//                 message:
+//                 err.message
+//             });
+//         }
+//     }
+// );
+
+// /* ================= ADMIN LOGIN ================= */
+
+// const ADMIN_ID = "admin";
+
+// const ADMIN_PASS = "12345";
+
+// app.get("/admin-login", (req, res) => {
+
+//     res.render("admin-login");
+// });
+
+// app.post("/admin-login", (req, res) => {
+
+//     const {
+//         username,
+//         password
+//     } = req.body;
+
+//     if (
+//         username === ADMIN_ID &&
+//         password === ADMIN_PASS
+//     ) {
+
+//         req.session.isAdmin =
+//         true;
+
+//         return res.redirect(
+//             "/admin"
+//         );
+//     }
+
+//     res.send("❌ Wrong Login");
+// });
+
+// /* ================= ADMIN AUTH ================= */
+
+// function isAdmin(
+//     req,
+//     res,
+//     next
+// ) {
+
+//     if (req.session.isAdmin) {
+
+//         return next();
+//     }
+
+//     res.redirect("/admin-login");
+// }
+
+// /* ================= ADMIN PANEL ================= */
+
+// app.get(
+//     "/admin",
+//     isAdmin,
+//     (req, res) => {
+
+//         res.render("admin");
+//     }
+// );
+
+// app.get(
+//     "/api/students",
+//     isAdmin,
+
+//     async (req, res) => {
+
+//         const data =
+//         await Student.find();
+
+//         res.json(data);
+//     }
+// );
+
+// app.put(
+//     "/api/student/:id",
+
+//     isAdmin,
+
+//     async (req, res) => {
+
+//         await Student.findByIdAndUpdate(
+//             req.params.id,
+//             req.body
+//         );
+
+//         res.json({
+//             message: "Updated"
+//         });
+//     }
+// );
+
+// app.post("/api/heroes", upload.fields([
+//     { name: "logo", maxCount: 1 },
+//     { name: "banner", maxCount: 1 }
+// ]), async (req, res) => {
+
+//     try {
+
+//         const hero = new Hero({
+
+//             title: req.body.title,
+//             desc: req.body.desc,
+
+//             logoURL: req.files.logo
+//                 ? "/uploads/" + req.files.logo[0].filename
+//                 : "",
+
+//             bannerURL: req.files.banner
+//                 ? "/uploads/" + req.files.banner[0].filename
+//                 : ""
+
+//         });
+
+//         await hero.save();
+
+//         res.json({
+//             success: true
+//         });
+
+//     } catch (err) {
+
+//         console.log(err);
+
+//         res.status(500).json({
+//             success: false
+//         });
+
+//     }
+
+// });
+
+// /* ================= HERO API ================= */
+
+// app.get("/add-hero", async (req, res) => {
+
+//     try {
+
+//         await Hero.deleteMany();
+
+//         await Hero.create({
+
+//             title: "GLOBAL SERVICES",
+
+//             desc: "Digital Services Platform",
+
+//             logoURL: "/images/logo.png",
+
+//             bannerURL: "/images/bgs.png"
+
+//         });
+
+//         res.send("✅ Hero Added");
+
+//     } catch (err) {
+
+//         console.log(err);
+
+//         res.status(500).send("Hero Add Failed");
+//     }
+// });
+// app.get("/api/hero", async (req, res) => {
+//     try {
+
+//         const hero = await Hero.findOne()
+//         .sort({ createdAt: -1 });
+
+//         if (!hero) {
+//             return res.status(404).json({
+//                 success:false,
+//                 message:"No Hero Found"
+//             });
+//         }
+
+//         res.json(hero);
+
+//     } catch(err) {
+
+//         console.log(err);
+
+//         res.status(500).json({
+//             success:false,
+//             message:"Server Error"
+//         });
+//     }
+// });
+
+// app.get("/api/heroes", async (req, res) => {
+
+//     const heroes =
+//     await Hero.find()
+//     .sort({ createdAt: -1 });
+
+//     res.json(heroes);
+
+// });
+// /* ================= HERO DELETE ================= */
+
+// app.delete("/api/heroes/:id", async (req, res) => {
+
+//     try {
+
+//         await Hero.findByIdAndDelete(
+//             req.params.id
+//         );
+
+//         res.json({
+//             success: true
+//         });
+
+//     } catch (err) {
+
+//         console.log(err);
+
+//         res.status(500).json({
+//             success: false
+//         });
+//     }
+// });
+
+// /* ================= SERVER ================= */
+
+// const PORT =
+// process.env.PORT || 3000;
+
+// app.listen(PORT, () => {
+
+//     console.log(
+//         "🚀 Server Running On " + PORT
+//     );
+// });
+
+// /* ================= 404 ================= */
+
+// app.use((req, res) => {
+
+//     res.status(404).send(
+//         "❌ 404 Page Not Found"
+//     );
+// });
+
+
 const Hero = require("./models/Hero");
 require("dotenv").config();
 
@@ -983,9 +1647,11 @@ const Razorpay = require("razorpay");
 const app = express();
 
 /* ================= MIDDLEWARE ================= */
+
+/* ✅ FIX: uploads correct static path */
 app.use(
     "/uploads",
-    express.static("uploads")
+    express.static(path.join(__dirname, "public/uploads"))
 );
 
 app.use(express.urlencoded({ extended: true }));
@@ -998,52 +1664,31 @@ app.use(express.static(
 /* ================= SESSION ================= */
 
 app.use(session({
-
-    secret:
-    process.env.SESSION_SECRET || "secret",
-
+    secret: process.env.SESSION_SECRET || "secret",
     resave: false,
-
     saveUninitialized: false
 }));
 
 /* ================= VIEW ENGINE ================= */
 
 app.set("view engine", "ejs");
-
-app.set(
-    "views",
-    path.join(__dirname, "views")
-);
+app.set("views", path.join(__dirname, "views"));
 
 /* ================= DB ================= */
 
 mongoose.connect(process.env.MONGO_URL)
-
-.then(() =>
-    console.log("✅ MongoDB Connected")
-)
-
-.catch(err =>
-    console.log(err)
-);
+.then(() => console.log("✅ MongoDB Connected"))
+.catch(err => console.log(err));
 
 /* ================= MODEL ================= */
 
-const Student =
-require("./models/student");
-
-
+const Student = require("./models/student");
 
 /* ================= OTP MODEL ================= */
 
-const otpSchema =
-new mongoose.Schema({
-
+const otpSchema = new mongoose.Schema({
     email: String,
-
     otp: String,
-
     createdAt: {
         type: Date,
         default: Date.now,
@@ -1051,67 +1696,38 @@ new mongoose.Schema({
     }
 });
 
-const OTP =
-mongoose.model("OTP", otpSchema);
+const OTP = mongoose.model("OTP", otpSchema);
 
 /* ================= MULTER ================= */
 
-const storage =
-multer.diskStorage({
-
+const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-
-        cb(
-            null,
-            "public/uploads"
-        );
+        cb(null, "public/uploads");
     },
-
     filename: (req, file, cb) => {
-
-        cb(
-            null,
-            Date.now() +
-            "-" +
-            file.originalname
-        );
+        cb(null, Date.now() + "-" + file.originalname);
     }
 });
 
-const upload =
-multer({ storage });
+const upload = multer({ storage });
 
 /* ================= EMAIL ================= */
 
-const transporter =
-nodemailer.createTransport({
-
+const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
-
     port: 465,
-
     secure: true,
-
     auth: {
-
-        user:
-        process.env.EMAIL_USER,
-
-        pass:
-        process.env.EMAIL_PASS
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
     }
 });
 
 /* ================= RAZORPAY ================= */
 
-const razorpay =
-new Razorpay({
-
-    key_id:
-    process.env.RAZORPAY_KEY_ID,
-
-    key_secret:
-    process.env.RAZORPAY_KEY_SECRET
+const razorpay = new Razorpay({
+    key_id: process.env.RAZORPAY_KEY_ID,
+    key_secret: process.env.RAZORPAY_KEY_SECRET
 });
 
 /* ================= ROUTES ================= */
@@ -1125,373 +1741,192 @@ app.get("/student", (req, res) => {
 });
 
 app.get("/payment-success", (req, res) => {
-
-    res.send(
-        "🎉 Registration Complete"
-    );
+    res.send("🎉 Registration Complete");
 });
 
 /* ================= SEND OTP ================= */
 
 app.post("/send-otp", async (req, res) => {
-
     try {
-
         const { email } = req.body;
 
-        const otp =
-        Math.floor(
-            100000 +
-            Math.random() * 900000
-        ).toString();
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
         await OTP.deleteMany({ email });
 
-        await OTP.create({
-            email,
-            otp
-        });
+        await OTP.create({ email, otp });
 
         await transporter.sendMail({
-
-            from:
-            process.env.EMAIL_USER,
-
+            from: process.env.EMAIL_USER,
             to: email,
-
-            subject:
-            "OTP Verification",
-
-            html:
-            `<h1>Your OTP: ${otp}</h1>`
+            subject: "OTP Verification",
+            html: `<h1>Your OTP: ${otp}</h1>`
         });
 
-        res.json({
-
-            success: true,
-
-            message: "OTP Sent"
-        });
+        res.json({ success: true, message: "OTP Sent" });
 
     } catch (err) {
-
         console.log(err);
-
-        res.json({
-
-            success: false,
-
-            message: "OTP Failed"
-        });
+        res.json({ success: false, message: "OTP Failed" });
     }
 });
 
 /* ================= VERIFY OTP ================= */
 
 app.post("/verify-otp", async (req, res) => {
-
     try {
+        const { email, otp } = req.body;
 
-        const { email, otp } =
-        req.body;
-
-        const data =
-        await OTP.findOne({
-            email,
-            otp
-        });
+        const data = await OTP.findOne({ email, otp });
 
         if (!data) {
-
-            return res.json({
-
-                success: false,
-
-                message:
-                "Invalid OTP"
-            });
+            return res.json({ success: false, message: "Invalid OTP" });
         }
 
-        req.session.verifiedEmail =
-        email;
+        req.session.verifiedEmail = email;
 
-        res.json({
-
-            success: true,
-
-            message:
-            "OTP Verified"
-        });
+        res.json({ success: true, message: "OTP Verified" });
 
     } catch (err) {
-
         console.log(err);
-
-        res.json({
-
-            success: false,
-
-            message:
-            "Verification Failed"
-        });
+        res.json({ success: false, message: "Verification Failed" });
     }
 });
 
 /* ================= CREATE ORDER ================= */
 
 app.post("/create-order", async (req, res) => {
-
     try {
-
         const options = {
-
             amount: 299 * 100,
-
             currency: "INR",
-
-            receipt:
-            "receipt_" + Date.now()
+            receipt: "receipt_" + Date.now()
         };
 
-        const order =
-        await razorpay.orders.create(
-            options
-        );
+        const order = await razorpay.orders.create(options);
 
         res.json({
-
             success: true,
-
             id: order.id,
-
             amount: order.amount,
-
             currency: order.currency
         });
 
     } catch (err) {
-
         console.log(err);
 
         res.status(500).json({
-
             success: false,
-
-            message:
-            "Order Failed"
+            message: "Order Failed"
         });
     }
 });
 
 /* ================= REGISTER STUDENT ================= */
 
-app.post(
-    "/student-register",
+app.post("/student-register", upload.single("photo"), async (req, res) => {
+    try {
 
-    upload.single("photo"),
+        const {
+            name,
+            father,
+            dob,
+            className,
+            phone,
+            email,
+            password,
+            paymentId,
+            orderId
+        } = req.body;
 
-    async (req, res) => {
-
-        try {
-
-            console.log(
-                "BODY:",
-                req.body
-            );
-
-            console.log(
-                "FILE:",
-                req.file
-            );
-
-            const {
-
-                name,
-                father,
-                dob,
-                className,
-                phone,
-                email,
-                password,
-                paymentId,
-                orderId
-
-            } = req.body;
-
-            /* ================= CHECK ================= */
-
-            if (
-                !name ||
-                !email ||
-                !paymentId
-            ) {
-
-                return res.json({
-
-                    success: false,
-
-                    message:
-                    "Payment Required"
-                });
-            }
-
-            /* ================= PHOTO ================= */
-
-            const photo =
-            req.file
-            ? "/uploads/" +
-              req.file.filename
-            : "";
-
-            /* ================= SAVE ================= */
-
-            await Student.create({
-
-                name,
-                father,
-                dob,
-                className,
-                phone,
-                email,
-                password,
-
-                photo,
-
-                paymentId,
-
-                orderId
-            });
-
+        if (!name || !email || !paymentId) {
             return res.json({
-
-                success: true,
-
-                message:
-                "Registration Successful",
-
-                redirect:
-                "/payment-success"
-            });
-
-        } catch (err) {
-
-            console.log(
-                "REGISTER ERROR:",
-                err
-            );
-
-            return res.json({
-
                 success: false,
-
-                message:
-                err.message
+                message: "Payment Required"
             });
         }
-    }
-);
 
-/* ================= ADMIN LOGIN ================= */
+        const photo = req.file
+            ? "/uploads/" + req.file.filename
+            : "";
+
+        await Student.create({
+            name,
+            father,
+            dob,
+            className,
+            phone,
+            email,
+            password,
+            photo,
+            paymentId,
+            orderId
+        });
+
+        return res.json({
+            success: true,
+            message: "Registration Successful",
+            redirect: "/payment-success"
+        });
+
+    } catch (err) {
+        console.log(err);
+
+        return res.json({
+            success: false,
+            message: err.message
+        });
+    }
+});
+
+/* ================= ADMIN ================= */
 
 const ADMIN_ID = "admin";
-
 const ADMIN_PASS = "12345";
 
 app.get("/admin-login", (req, res) => {
-
     res.render("admin-login");
 });
 
 app.post("/admin-login", (req, res) => {
+    const { username, password } = req.body;
 
-    const {
-        username,
-        password
-    } = req.body;
-
-    if (
-        username === ADMIN_ID &&
-        password === ADMIN_PASS
-    ) {
-
-        req.session.isAdmin =
-        true;
-
-        return res.redirect(
-            "/admin"
-        );
+    if (username === ADMIN_ID && password === ADMIN_PASS) {
+        req.session.isAdmin = true;
+        return res.redirect("/admin");
     }
 
     res.send("❌ Wrong Login");
 });
 
-/* ================= ADMIN AUTH ================= */
-
-function isAdmin(
-    req,
-    res,
-    next
-) {
-
-    if (req.session.isAdmin) {
-
-        return next();
-    }
-
+function isAdmin(req, res, next) {
+    if (req.session.isAdmin) return next();
     res.redirect("/admin-login");
 }
 
-/* ================= ADMIN PANEL ================= */
+app.get("/admin", isAdmin, (req, res) => {
+    res.render("admin");
+});
 
-app.get(
-    "/admin",
-    isAdmin,
-    (req, res) => {
+app.get("/api/students", isAdmin, async (req, res) => {
+    const data = await Student.find();
+    res.json(data);
+});
 
-        res.render("admin");
-    }
-);
+app.put("/api/student/:id", isAdmin, async (req, res) => {
+    await Student.findByIdAndUpdate(req.params.id, req.body);
+    res.json({ message: "Updated" });
+});
 
-app.get(
-    "/api/students",
-    isAdmin,
-
-    async (req, res) => {
-
-        const data =
-        await Student.find();
-
-        res.json(data);
-    }
-);
-
-app.put(
-    "/api/student/:id",
-
-    isAdmin,
-
-    async (req, res) => {
-
-        await Student.findByIdAndUpdate(
-            req.params.id,
-            req.body
-        );
-
-        res.json({
-            message: "Updated"
-        });
-    }
-);
+/* ================= HERO ================= */
 
 app.post("/api/heroes", upload.fields([
     { name: "logo", maxCount: 1 },
     { name: "banner", maxCount: 1 }
 ]), async (req, res) => {
-
     try {
 
         const hero = new Hero({
-
             title: req.body.title,
             desc: req.body.desc,
 
@@ -1502,132 +1937,72 @@ app.post("/api/heroes", upload.fields([
             bannerURL: req.files.banner
                 ? "/uploads/" + req.files.banner[0].filename
                 : ""
-
         });
 
         await hero.save();
 
-        res.json({
-            success: true
-        });
+        res.json({ success: true });
 
     } catch (err) {
-
         console.log(err);
-
-        res.status(500).json({
-            success: false
-        });
-
-    }
-
-});
-
-/* ================= HERO API ================= */
-
-app.get("/add-hero", async (req, res) => {
-
-    try {
-
-        await Hero.deleteMany();
-
-        await Hero.create({
-
-            title: "GLOBAL SERVICES",
-
-            desc: "Digital Services Platform",
-
-            logoURL: "/images/logo.png",
-
-            bannerURL: "/images/bgs.png"
-
-        });
-
-        res.send("✅ Hero Added");
-
-    } catch (err) {
-
-        console.log(err);
-
-        res.status(500).send("Hero Add Failed");
+        res.status(500).json({ success: false });
     }
 });
+
+/* ================= HERO GET ================= */
+
 app.get("/api/hero", async (req, res) => {
     try {
-
-        const hero = await Hero.findOne()
-        .sort({ createdAt: -1 });
+        const hero = await Hero.findOne().sort({ createdAt: -1 });
 
         if (!hero) {
             return res.status(404).json({
-                success:false,
-                message:"No Hero Found"
+                success: false,
+                message: "No Hero Found"
             });
         }
 
         res.json(hero);
 
-    } catch(err) {
-
+    } catch (err) {
         console.log(err);
-
         res.status(500).json({
-            success:false,
-            message:"Server Error"
+            success: false,
+            message: "Server Error"
         });
     }
 });
 
+/* ================= HERO LIST ================= */
+
 app.get("/api/heroes", async (req, res) => {
-
-    const heroes =
-    await Hero.find()
-    .sort({ createdAt: -1 });
-
+    const heroes = await Hero.find().sort({ createdAt: -1 });
     res.json(heroes);
-
 });
+
 /* ================= HERO DELETE ================= */
 
 app.delete("/api/heroes/:id", async (req, res) => {
-
     try {
-
-        await Hero.findByIdAndDelete(
-            req.params.id
-        );
-
-        res.json({
-            success: true
-        });
+        await Hero.findByIdAndDelete(req.params.id);
+        res.json({ success: true });
 
     } catch (err) {
-
         console.log(err);
-
-        res.status(500).json({
-            success: false
-        });
+        res.status(500).json({ success: false });
     }
 });
 
 /* ================= SERVER ================= */
 
-const PORT =
-process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-
-    console.log(
-        "🚀 Server Running On " + PORT
-    );
+    console.log("🚀 Server Running On " + PORT);
 });
 
 /* ================= 404 ================= */
 
 app.use((req, res) => {
-
-    res.status(404).send(
-        "❌ 404 Page Not Found"
-    );
+    res.status(404).send("❌ 404 Page Not Found");
 });
