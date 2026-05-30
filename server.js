@@ -1611,48 +1611,6 @@ app.delete("/api/heroes/:id", async (req, res) => {
     }
 });
 
-async function deleteHero(id){
-
-    if(!confirm("Delete this hero?")){
-        return;
-    }
-
-    try{
-
-        const res = await fetch(
-            "/api/heroes/" + id,
-            {
-                method:"DELETE"
-            }
-        );
-
-        const data = await res.json();
-
-        if(data.success){
-
-            document.getElementById(
-            "status").innerText =
-            "🗑 Hero Deleted Successfully";
-
-            renderHeroes();
-
-        }else{
-
-            alert("Delete Failed");
-
-        }
-
-    }
-
-    catch(err){
-
-        console.log(err);
-
-        alert("Server Error");
-
-    }
-
-}
 /* ================= SERVER ================= */
 
 const PORT =

@@ -2388,26 +2388,47 @@ function editHero(index){
 
 /* DELETE */
 
-function deleteHero(index){
 
-    let heroes =
-    JSON.parse(
-    localStorage.getItem(
-    "heroes")) || [];
+async function deleteHero(id){
 
-    heroes.splice(index,1);
+    if(!confirm("Delete this hero?")){
+        return;
+    }
 
-    localStorage.setItem(
-    "heroes",
-    JSON.stringify(heroes)
-    );
+    try{
 
-    renderHeroes();
+        const res = await fetch(
+            "/api/heroes/" + id,
+            {
+                method:"DELETE"
+            }
+        );
 
-    document
-    .getElementById(
-    "status").innerText =
-    "🗑 Hero Deleted";
+        const data = await res.json();
+
+        if(data.success){
+
+            document.getElementById(
+            "status").innerText =
+            "🗑 Hero Deleted Successfully";
+
+            renderHeroes();
+
+        }else{
+
+            alert("Delete Failed");
+
+        }
+
+    }
+
+    catch(err){
+
+        console.log(err);
+
+        alert("Server Error");
+
+    }
 
 }
 
