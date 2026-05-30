@@ -983,6 +983,10 @@ const Razorpay = require("razorpay");
 const app = express();
 
 /* ================= MIDDLEWARE ================= */
+app.use(
+    "/uploads",
+    express.static("uploads")
+);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -1495,6 +1499,46 @@ app.delete(
         });
     }
 );
+app.post("/api/heroes", upload.fields([
+    { name: "logo", maxCount: 1 },
+    { name: "banner", maxCount: 1 }
+]), async (req, res) => {
+
+    try {
+
+        const hero = new Hero({
+
+            title: req.body.title,
+            desc: req.body.desc,
+
+            logoURL: req.files.logo
+                ? "/uploads/" + req.files.logo[0].filename
+                : "",
+
+            bannerURL: req.files.banner
+                ? "/uploads/" + req.files.banner[0].filename
+                : ""
+
+        });
+
+        await hero.save();
+
+        res.json({
+            success: true
+        });
+
+    } catch (err) {
+
+        console.log(err);
+
+        res.status(500).json({
+            success: false
+        });
+
+    }
+
+});
+
 /* ================= HERO API ================= */
 
 app.get("/add-hero", async (req, res) => {
@@ -1524,41 +1568,39 @@ app.get("/add-hero", async (req, res) => {
         res.status(500).send("Hero Add Failed");
     }
 });
-
 app.get("/api/hero", async (req, res) => {
-
     try {
 
-        const hero =
-        await Hero.findOne()
-        .sort({ _id: -1 });
+        const hero = await Hero.findOne()
+        .sort({ createdAt: -1 });
 
         if (!hero) {
-
             return res.status(404).json({
-
-                success: false,
-                message: "No Hero Found"
-
+                success:false,
+                message:"No Hero Found"
             });
-
         }
 
         res.json(hero);
 
-    }
-
-    catch (err) {
+    } catch(err) {
 
         console.log(err);
 
         res.status(500).json({
-
-            success: false
-
+            success:false,
+            message:"Server Error"
         });
-
     }
+});
+
+app.get("/api/heroes", async (req, res) => {
+
+    const heroes =
+    await Hero.find()
+    .sort({ createdAt: -1 });
+
+    res.json(heroes);
 
 });
 /* ================= SERVER ================= */
