@@ -852,8 +852,6 @@ async function loadHero() {
 
         const heroData = await res.json();
 
-        console.log("Hero Data =>", heroData);
-
         if (!heroData || !heroData.title) {
 
             heroRoot.innerHTML = `
@@ -869,7 +867,7 @@ async function loadHero() {
 
         <div class="hero">
 
-            <div 
+            <div
                 class="top-banner"
                 style="
                     background:
@@ -878,22 +876,17 @@ async function loadHero() {
                         rgba(0,0,0,0.55)
                     ),
                     url('${heroData.bannerURL}');
-
-                    background-size: cover;
-                    background-position: center;
-                    background-repeat: no-repeat;
+                    background-size:cover;
+                    background-position:center;
+                    background-repeat:no-repeat;
                 "
             >
 
                 <div class="banner-content">
 
-                    <h1>
-                        ${heroData.title}
-                    </h1>
+                    <h1>${heroData.title}</h1>
 
-                    <p>
-                        ${heroData.desc}
-                    </p>
+                    <p>${heroData.desc}</p>
 
                 </div>
 
@@ -918,34 +911,33 @@ async function loadHero() {
                     ${heroData.desc}
                 </p>
 
-                 <p>
-                  Follow us on social media platforms for latest updates and services.
-                 </p>
+                <p>
+                    Follow us on social media platforms for latest updates and services.
+                </p>
 
                 <div class="social-icons">
 
-                  <a href="https://www.facebook.com/share/18a3ScvzdC/">
-                   <i class="fa-brands fa-facebook-f"></i>
-                  </a>
+                    <a href="https://www.facebook.com/share/18a3ScvzdC/">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
 
-                  <a href="https://www.instagram.com/gulab_439563?igsh=MXczeTN1Ym9qZGplZQ==">
-                  <i class="fa-brands fa-instagram"></i>
-                  </a>
+                    <a href="https://www.instagram.com/gulab_439563">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
 
-                  <a href="https://youtube.com/@g_s_coder?si=U7izCYU0T8JqB6qu">
-                  <i class="fa-brands fa-youtube"></i>
-                  </a>
+                    <a href="https://youtube.com/@g_s_coder">
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
 
-                  <a href="https://wa.me/919142264714?text=Hello%20GLOBAL%20SERVICES" target="_blank">
-                  <i class="fa-brands fa-whatsapp"></i>
-                  </a>
+                    <a href="https://wa.me/919142264714?text=Hello%20GLOBAL%20SERVICES">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </a>
 
-                  <a href="#">
-                  <i class="fa-brands fa-telegram"></i>
-                  </a>
+                    <a href="#">
+                        <i class="fa-brands fa-telegram"></i>
+                    </a>
 
                 </div>
-
 
             </div>
 
@@ -955,7 +947,7 @@ async function loadHero() {
 
     } catch (err) {
 
-        console.log("Hero Error =>", err);
+        console.log(err);
 
         heroRoot.innerHTML = `
             <h2 style="color:red;">
