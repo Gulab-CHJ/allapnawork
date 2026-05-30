@@ -873,9 +873,16 @@ async function loadHero() {
             padding:20px;
         }
 
-        /* BANNER (NO CROP FULL IMAGE) */
+        /* MAIN SPLIT */
+        .hero-wrapper{
+            display:flex;
+            gap:20px;
+            align-items:center;
+        }
+
+        /* LEFT BANNER */
         .top-banner{
-            width:100%;
+            flex:1;
             height:500px;
             border-radius:30px;
             overflow:hidden;
@@ -888,42 +895,44 @@ async function loadHero() {
         .banner-img{
             max-width:100%;
             max-height:100%;
-            object-fit:contain;   /* 👈 FULL IMAGE NO CROP */
+            object-fit:contain;
         }
 
-        /* CONTENT */
+        /* RIGHT CONTENT */
         .content{
-            margin-top:35px;
-            text-align:center;
+            flex:1;
+            text-align:left;
             padding:20px;
         }
 
         .hero-title{
             font-size:42px;
             font-weight:800;
-            margin-bottom:12px;
+            margin-bottom:10px;
         }
 
         .hero-text{
             font-size:18px;
             line-height:1.8;
-            max-width:900px;
-            margin:auto;
             color:#cbd5e1;
+        }
+
+        .follow-text{
+            margin-top:20px;
+            font-size:15px;
         }
 
         /* SOCIAL */
         .social-icons{
-            margin-top:25px;
+            margin-top:20px;
             display:flex;
-            justify-content:center;
-            gap:15px;
+            gap:12px;
             flex-wrap:wrap;
         }
 
         .social-icons a{
-            width:55px;
-            height:55px;
+            width:50px;
+            height:50px;
             border-radius:50%;
             background:#2563eb;
             color:white;
@@ -931,7 +940,7 @@ async function loadHero() {
             align-items:center;
             justify-content:center;
             text-decoration:none;
-            font-size:22px;
+            font-size:20px;
             transition:.3s;
         }
 
@@ -940,18 +949,22 @@ async function loadHero() {
         }
 
         /* MOBILE */
-        @media(max-width:768px){
+        @media(max-width:900px){
 
-            .top-banner{
-                height:300px;
+            .hero-wrapper{
+                flex-direction:column;
+            }
+
+            .content{
+                text-align:center;
+            }
+
+            .social-icons{
+                justify-content:center;
             }
 
             .hero-title{
                 font-size:28px;
-            }
-
-            .hero-text{
-                font-size:15px;
             }
 
         }
@@ -960,54 +973,47 @@ async function loadHero() {
 
         <div class="hero">
 
-            <!-- BANNER -->
-            <div class="top-banner">
+            <div class="hero-wrapper">
 
-                <img
-                    src="${heroData.bannerURL}"
-                    class="banner-img"
-                    alt="Banner"
-                >
+                <!-- LEFT BANNER -->
+                <div class="top-banner">
 
-            </div>
+                    <img
+                        src="${heroData.bannerURL}"
+                        class="banner-img"
+                        alt="Banner"
+                    >
 
-            <!-- CONTENT -->
-            <div class="content">
+                </div>
 
-                <h2 class="hero-title">
-                    ${heroData.title}
-                </h2>
+                <!-- RIGHT CONTENT -->
+                <div class="content">
 
-                <p class="hero-text">
-                    ${heroData.desc}
-                </p>
+                    <h2 class="hero-title">
+                        ${heroData.title}
+                    </h2>
 
-                <p style="margin-top:20px;">
-                    Follow us on social media platforms for latest updates and services.
-                </p>
+                    <p class="hero-text">
+                        ${heroData.desc}
+                    </p>
 
-                <!-- SOCIAL ICONS -->
-                <div class="social-icons">
+                    <p class="follow-text">
+                        Follow us on social media platforms for latest updates and services.
+                    </p>
 
-                    <a href="https://www.facebook.com/share/18a3ScvzdC/" target="_blank">
-                        <i class="fa-brands fa-facebook-f"></i>
-                    </a>
+                    <div class="social-icons">
 
-                    <a href="https://www.instagram.com/gulab_439563?igsh=MXczeTN1Ym9qZGplZQ==" target="_blank">
-                        <i class="fa-brands fa-instagram"></i>
-                    </a>
+                        <a href="https://www.facebook.com/share/18a3ScvzdC/" target="_blank">F</a>
 
-                    <a href="https://youtube.com/@g_s_coder?si=U7izCYU0T8JqB6qu" target="_blank">
-                        <i class="fa-brands fa-youtube"></i>
-                    </a>
+                        <a href="https://www.instagram.com/gulab_439563" target="_blank">I</a>
 
-                    <a href="https://wa.me/919142264714?text=Hello%20GLOBAL%20SERVICES" target="_blank">
-                        <i class="fa-brands fa-whatsapp"></i>
-                    </a>
+                        <a href="https://youtube.com/@g_s_coder" target="_blank">Y</a>
 
-                    <a href="#">
-                        <i class="fa-brands fa-telegram"></i>
-                    </a>
+                        <a href="https://wa.me/919142264714" target="_blank">W</a>
+
+                        <a href="#">T</a>
+
+                    </div>
 
                 </div>
 
@@ -1019,7 +1025,7 @@ async function loadHero() {
 
     } catch (err) {
 
-        console.log("Hero Error =>", err);
+        console.log(err);
 
         heroRoot.innerHTML = `
             <h2 style="color:red;text-align:center;">
