@@ -853,11 +853,16 @@ async function loadHero() {
         const heroData = await res.json();
 
         if (!heroData || !heroData.title) {
-
             heroRoot.innerHTML = `
-                <h2 style="color:red;text-align:center;">
+                <div style="
+                    color:red;
+                    text-align:center;
+                    padding:40px;
+                    font-size:20px;
+                    font-weight:600;
+                ">
                     No Hero Data Found
-                </h2>
+                </div>
             `;
             return;
         }
@@ -866,86 +871,121 @@ async function loadHero() {
 
         <style>
 
-        .hero{
-            width:100%;
-            max-width:1400px;
-            margin:auto;
-            padding:20px;
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins',sans-serif;
         }
 
-        /* MAIN SPLIT */
-        .hero-wrapper{
+        /* MAIN WRAPPER */
+        .hero{
+            width:100%;
+            min-height:100vh;
             display:flex;
-            gap:20px;
             align-items:center;
+            justify-content:center;
+            background:#0b1220;
+            padding:30px;
+        }
+
+        /* GLASS CARD */
+        .hero-wrapper{
+            width:100%;
+            max-width:1200px;
+            display:flex;
+            gap:30px;
+            background:rgba(255,255,255,0.04);
+            border:1px solid rgba(255,255,255,0.08);
+            border-radius:30px;
+            overflow:hidden;
+            backdrop-filter:blur(15px);
+            box-shadow:0 20px 60px rgba(0,0,0,0.5);
         }
 
         /* LEFT BANNER */
         .top-banner{
             flex:1;
-            height:500px;
-            border-radius:30px;
+            min-height:500px;
+            position:relative;
             overflow:hidden;
-            background:#000;
-            display:flex;
-            align-items:center;
-            justify-content:center;
         }
 
-        .banner-img{
-            max-width:100%;
-            max-height:100%;
-            object-fit:contain;
+        .top-banner img{
+            width:100%;
+            height:100%;
+            object-fit:cover; /* FIX: NO CROP PROBLEM */
+            transform:scale(1.02);
+        }
+
+        /* DARK OVERLAY */
+        .top-banner::after{
+            content:'';
+            position:absolute;
+            inset:0;
+            background:linear-gradient(
+                90deg,
+                rgba(0,0,0,0.6),
+                rgba(0,0,0,0.2)
+            );
         }
 
         /* RIGHT CONTENT */
         .content{
             flex:1;
-            text-align:left;
-            padding:20px;
+            padding:50px 40px;
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
         }
 
         .hero-title{
-            font-size:42px;
+            font-size:44px;
             font-weight:800;
-            margin-bottom:10px;
+            color:#fff;
+            line-height:1.2;
         }
 
         .hero-text{
-            font-size:18px;
+            margin-top:15px;
+            font-size:17px;
             line-height:1.8;
             color:#cbd5e1;
         }
 
         .follow-text{
-            margin-top:20px;
-            font-size:15px;
+            margin-top:25px;
+            font-size:14px;
+            color:#94a3b8;
         }
 
         /* SOCIAL */
         .social-icons{
-            margin-top:20px;
+            margin-top:25px;
             display:flex;
             gap:12px;
             flex-wrap:wrap;
         }
 
         .social-icons a{
-            width:50px;
-            height:50px;
+            width:52px;
+            height:52px;
             border-radius:50%;
-            background:#2563eb;
-            color:white;
             display:flex;
             align-items:center;
             justify-content:center;
             text-decoration:none;
-            font-size:20px;
-            transition:.3s;
+            font-weight:700;
+            color:white;
+            background:rgba(255,255,255,0.08);
+            border:1px solid rgba(255,255,255,0.12);
+            transition:0.3s;
+            backdrop-filter:blur(10px);
         }
 
         .social-icons a:hover{
-            transform:translateY(-5px);
+            transform:translateY(-6px);
+            background:#2563eb;
         }
 
         /* MOBILE */
@@ -955,18 +995,22 @@ async function loadHero() {
                 flex-direction:column;
             }
 
+            .top-banner{
+                min-height:300px;
+            }
+
             .content{
+                padding:30px;
                 text-align:center;
+            }
+
+            .hero-title{
+                font-size:30px;
             }
 
             .social-icons{
                 justify-content:center;
             }
-
-            .hero-title{
-                font-size:28px;
-            }
-
         }
 
         </style>
@@ -978,20 +1022,16 @@ async function loadHero() {
                 <!-- LEFT BANNER -->
                 <div class="top-banner">
 
-                    <img
-                        src="${heroData.bannerURL}"
-                        class="banner-img"
-                        alt="Banner"
-                    >
+                    <img src="${heroData.bannerURL}" alt="banner">
 
                 </div>
 
                 <!-- RIGHT CONTENT -->
                 <div class="content">
 
-                    <h2 class="hero-title">
+                    <h1 class="hero-title">
                         ${heroData.title}
-                    </h2>
+                    </h1>
 
                     <p class="hero-text">
                         ${heroData.desc}
@@ -1003,14 +1043,10 @@ async function loadHero() {
 
                     <div class="social-icons">
 
-                        <a href="https://www.facebook.com/share/18a3ScvzdC/" target="_blank">F</a>
-
-                        <a href="https://www.instagram.com/gulab_439563" target="_blank">I</a>
-
-                        <a href="https://youtube.com/@g_s_coder" target="_blank">Y</a>
-
-                        <a href="https://wa.me/919142264714" target="_blank">W</a>
-
+                        <a href="https://facebook.com">F</a>
+                        <a href="https://instagram.com">I</a>
+                        <a href="https://youtube.com">Y</a>
+                        <a href="https://wa.me/919142264714">W</a>
                         <a href="#">T</a>
 
                     </div>
@@ -1028,9 +1064,14 @@ async function loadHero() {
         console.log(err);
 
         heroRoot.innerHTML = `
-            <h2 style="color:red;text-align:center;">
+            <div style="
+                color:red;
+                text-align:center;
+                padding:40px;
+                font-size:18px;
+            ">
                 Failed To Load Hero Section
-            </h2>
+            </div>
         `;
     }
 }
