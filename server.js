@@ -1483,22 +1483,29 @@ app.put(
     }
 );
 
-app.delete(
-    "/api/student/:id",
+app.delete("/api/heroes/:id", async(req,res)=>{
 
-    isAdmin,
+    try{
 
-    async (req, res) => {
-
-        await Student.findByIdAndDelete(
+        await Hero.findByIdAndDelete(
             req.params.id
         );
 
         res.json({
-            message: "Deleted"
+            success:true
         });
+
     }
-);
+
+    catch(err){
+
+        res.status(500).json({
+            success:false
+        });
+
+    }
+
+});
 app.post("/api/heroes", upload.fields([
     { name: "logo", maxCount: 1 },
     { name: "banner", maxCount: 1 }
@@ -1603,6 +1610,73 @@ app.get("/api/heroes", async (req, res) => {
     res.json(heroes);
 
 });
+
+app.delete("/api/heroes/:id", async (req,res)=>{
+
+    try{
+
+        await Hero.findByIdAndDelete(
+            req.params.id
+        );
+
+        res.json({
+            success:true
+        });
+
+    }
+
+    catch(err){
+
+        res.status(500).json({
+            success:false
+        });
+
+    }
+
+});
+
+async function deleteHero(id){
+
+    if(!confirm("Delete this hero?")){
+        return;
+    }
+
+    try{
+
+        const res = await fetch(
+            "/api/heroes/" + id,
+            {
+                method:"DELETE"
+            }
+        );
+
+        const data = await res.json();
+
+        if(data.success){
+
+            document.getElementById(
+            "status").innerText =
+            "🗑 Hero Deleted Successfully";
+
+            renderHeroes();
+
+        }else{
+
+            alert("Delete Failed");
+
+        }
+
+    }
+
+    catch(err){
+
+        console.log(err);
+
+        alert("Server Error");
+
+    }
+
+}
 /* ================= SERVER ================= */
 
 const PORT =

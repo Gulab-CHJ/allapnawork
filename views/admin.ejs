@@ -2251,7 +2251,6 @@ function saveLocal(hero){
 }
 
 /* RENDER HEROES */
-
 async function renderHeroes(){
 
     const heroList =
@@ -2281,7 +2280,7 @@ async function renderHeroes(){
             <div class="hero-card">
 
                 <img
-                src="${hero.bannerURL}"
+                src="${hero.bannerURL || ''}"
                 class="banner">
 
                 <div class="hero-content">
@@ -2289,7 +2288,7 @@ async function renderHeroes(){
                     <div class="hero-top">
 
                         <img
-                        src="${hero.logoURL}"
+                        src="${hero.logoURL || ''}"
                         class="logo-img">
 
                         <div
@@ -2308,6 +2307,26 @@ async function renderHeroes(){
 
                     </div>
 
+                    <div class="btn-group">
+
+                        <button
+                        class="action-btn edit-btn"
+                        onclick="editHero('${hero._id}')">
+
+                            Edit
+
+                        </button>
+
+                        <button
+                        class="action-btn delete-btn"
+                        onclick="deleteHero('${hero._id}')">
+
+                            Delete
+
+                        </button>
+
+                    </div>
+
                 </div>
 
             </div>
@@ -2321,6 +2340,9 @@ async function renderHeroes(){
     catch(err){
 
         console.log(err);
+
+        heroList.innerHTML =
+        "Failed To Load Heroes";
 
     }
 
