@@ -826,18 +826,6 @@ body{
 
 /* ================= MOBILE MENU ================= */
 
-const hamburger =
-document.getElementById("hamburger");
-
-const menu =
-document.getElementById("menu");
-
-hamburger.onclick = () => {
-
-    menu.classList.toggle("active");
-};
-
-/* ================= HERO LOAD ================= */
 const heroRoot = document.getElementById("heroRoot");
 
 async function loadHero() {
@@ -845,23 +833,19 @@ async function loadHero() {
     try {
 
         const res = await fetch("/api/hero");
-
-        if (!res.ok) {
-            throw new Error("API Failed");
-        }
+        if (!res.ok) throw new Error("API Failed");
 
         const heroData = await res.json();
 
         if (!heroData || !heroData.title) {
             heroRoot.innerHTML = `
                 <div style="
-                    color:red;
                     text-align:center;
+                    color:red;
                     padding:40px;
-                    font-size:20px;
-                    font-weight:600;
+                    font-size:18px;
                 ">
-                    No Hero Data Found
+                    No Hero Found
                 </div>
             `;
             return;
@@ -875,178 +859,159 @@ async function loadHero() {
             margin:0;
             padding:0;
             box-sizing:border-box;
-            font-family:'Poppins',sans-serif;
+            font-family:Poppins, sans-serif;
         }
 
-        /* MAIN WRAPPER */
-        .hero{
+        body{
+            background:#0b1220;
+        }
+
+        /* OUTER */
+        .hero-wrap{
             width:100%;
             min-height:100vh;
             display:flex;
             align-items:center;
             justify-content:center;
-            background:#0b1220;
             padding:30px;
         }
 
-        /* GLASS CARD */
-        .hero-wrapper{
+        /* PREMIUM CARD */
+        .hero-card{
             width:100%;
-            max-width:1200px;
-            display:flex;
-            gap:30px;
-            background:rgba(255,255,255,0.04);
+            max-width:1100px;
+            background:rgba(255,255,255,0.05);
             border:1px solid rgba(255,255,255,0.08);
             border-radius:30px;
             overflow:hidden;
             backdrop-filter:blur(15px);
-            box-shadow:0 20px 60px rgba(0,0,0,0.5);
-        }
-
-        /* LEFT BANNER */
-        .top-banner{
-            flex:1;
-            min-height:500px;
-            position:relative;
-            overflow:hidden;
-        }
-
-        .top-banner img{
-            width:100%;
-            height:100%;
-            object-fit:cover; /* FIX: NO CROP PROBLEM */
-            transform:scale(1.02);
-        }
-
-        /* DARK OVERLAY */
-        .top-banner::after{
-            content:'';
-            position:absolute;
-            inset:0;
-            background:linear-gradient(
-                90deg,
-                rgba(0,0,0,0.6),
-                rgba(0,0,0,0.2)
-            );
-        }
-
-        /* RIGHT CONTENT */
-        .content{
-            flex:1;
-            padding:50px 40px;
+            box-shadow:0 25px 70px rgba(0,0,0,0.6);
             display:flex;
             flex-direction:column;
-            justify-content:center;
         }
 
-        .hero-title{
-            font-size:44px;
-            font-weight:800;
-            color:#fff;
-            line-height:1.2;
-        }
-
-        .hero-text{
-            margin-top:15px;
-            font-size:17px;
-            line-height:1.8;
-            color:#cbd5e1;
-        }
-
-        .follow-text{
-            margin-top:25px;
-            font-size:14px;
-            color:#94a3b8;
-        }
-
-        /* SOCIAL */
-        .social-icons{
-            margin-top:25px;
-            display:flex;
-            gap:12px;
-            flex-wrap:wrap;
-        }
-
-        .social-icons a{
-            width:52px;
-            height:52px;
-            border-radius:50%;
+        /* BANNER (NO CROP FIX) */
+        .banner-box{
+            width:100%;
+            height:420px;
+            background:#000;
             display:flex;
             align-items:center;
             justify-content:center;
-            text-decoration:none;
-            font-weight:700;
-            color:white;
-            background:rgba(255,255,255,0.08);
-            border:1px solid rgba(255,255,255,0.12);
-            transition:0.3s;
-            backdrop-filter:blur(10px);
         }
 
-        .social-icons a:hover{
-            transform:translateY(-6px);
+        .banner-box img{
+            width:100%;
+            height:100%;
+            object-fit:contain; /* 🔥 NO CUT, FULL IMAGE */
+            background:#0b1220;
+        }
+
+        /* CONTENT */
+        .content{
+            padding:40px;
+            display:flex;
+            justify-content:space-between;
+            gap:30px;
+            flex-wrap:wrap;
+        }
+
+        /* LEFT */
+        .left{
+            flex:1;
+            min-width:280px;
+        }
+
+        .left h1{
+            font-size:38px;
+            font-weight:800;
+            color:white;
+        }
+
+        .left p{
+            margin-top:15px;
+            color:#cbd5e1;
+            line-height:1.8;
+            font-size:16px;
+        }
+
+        /* RIGHT SOCIAL */
+        .social{
+            display:flex;
+            flex-direction:column;
+            gap:12px;
+            min-width:80px;
+        }
+
+        .social a{
+            width:48px;
+            height:48px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            border-radius:50%;
+            background:rgba(255,255,255,0.08);
+            color:white;
+            text-decoration:none;
+            font-weight:700;
+            transition:0.3s;
+        }
+
+        .social a:hover{
             background:#2563eb;
+            transform:translateY(-5px);
         }
 
         /* MOBILE */
-        @media(max-width:900px){
-
-            .hero-wrapper{
-                flex-direction:column;
-            }
-
-            .top-banner{
-                min-height:300px;
-            }
+        @media(max-width:768px){
 
             .content{
-                padding:30px;
+                flex-direction:column;
                 text-align:center;
+                align-items:center;
             }
 
-            .hero-title{
-                font-size:30px;
-            }
-
-            .social-icons{
+            .social{
+                flex-direction:row;
                 justify-content:center;
+            }
+
+            .banner-box{
+                height:250px;
+            }
+
+            .left h1{
+                font-size:28px;
             }
         }
 
         </style>
 
-        <div class="hero">
+        <div class="hero-wrap">
 
-            <div class="hero-wrapper">
+            <div class="hero-card">
 
-                <!-- LEFT BANNER -->
-                <div class="top-banner">
-
+                <!-- BANNER -->
+                <div class="banner-box">
                     <img src="${heroData.bannerURL}" alt="banner">
-
                 </div>
 
-                <!-- RIGHT CONTENT -->
+                <!-- CONTENT -->
                 <div class="content">
 
-                    <h1 class="hero-title">
-                        ${heroData.title}
-                    </h1>
+                    <!-- LEFT TEXT -->
+                    <div class="left">
+                        <h1>${heroData.title}</h1>
+                        <p>${heroData.desc}</p>
+                    </div>
 
-                    <p class="hero-text">
-                        ${heroData.desc}
-                    </p>
+                    <!-- RIGHT SOCIAL -->
+                    <div class="social">
 
-                    <p class="follow-text">
-                        Follow us on social media platforms for latest updates and services.
-                    </p>
-
-                    <div class="social-icons">
-
-                        <a href="https://facebook.com">F</a>
-                        <a href="https://instagram.com">I</a>
-                        <a href="https://youtube.com">Y</a>
-                        <a href="https://wa.me/919142264714">W</a>
+                        <a href="#">F</a>
+                        <a href="#">I</a>
+                        <a href="#">Y</a>
+                        <a href="#">W</a>
                         <a href="#">T</a>
 
                     </div>
@@ -1060,17 +1025,11 @@ async function loadHero() {
         `;
 
     } catch (err) {
-
         console.log(err);
 
         heroRoot.innerHTML = `
-            <div style="
-                color:red;
-                text-align:center;
-                padding:40px;
-                font-size:18px;
-            ">
-                Failed To Load Hero Section
+            <div style="color:red;text-align:center;padding:30px;">
+                Failed To Load Hero
             </div>
         `;
     }
