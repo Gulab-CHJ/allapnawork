@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Product</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#0f172a,#2563eb);
+    padding:20px;
+}
+
+.container{
+    width:100%;
+    max-width:800px;
+    background:#fff;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 15px 35px rgba(0,0,0,.2);
+}
+
+h2{
+    text-align:center;
+    color:#0f172a;
+    margin-bottom:25px;
+}
+
+.input-group{
+    margin-bottom:18px;
+}
+
+label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:600;
+    color:#333;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:12px;
+    border:1px solid #d1d5db;
+    border-radius:10px;
+    outline:none;
+    font-size:15px;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+    border-color:#2563eb;
+}
+
+textarea{
+    resize:none;
+    height:100px;
+}
+
+.preview-images{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:15px;
+}
+
+.preview-images img{
+    width:120px;
+    height:120px;
+    object-fit:cover;
+    border-radius:10px;
+    border:2px solid #2563eb;
+}
+
+.preview-video{
+    margin-top:15px;
+}
+
+.preview-video video{
+    width:100%;
+    max-width:350px;
+    border-radius:12px;
+}
+
+.submit-btn{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#10b981;
+    color:white;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.submit-btn:hover{
+    background:#059669;
+}
+
+.back-btn{
+    width:100%;
+    margin-top:10px;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#ef4444;
+    color:white;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.back-btn:hover{
+    background:#dc2626;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h2>📦 Add Product</h2>
+
+<form id="productForm">
+
+    <div class="input-group">
+        <label>Product Name</label>
+        <input type="text"  id="productName" placeholder="Enter Product Name" required>
+    </div>
+
+    <div class="input-group">
+        <label>Category</label>
+        <select id="productCategory" required>
+            <option value="">Select Category</option>
+            <option>Electronics</option>
+            <option>Fashion</option>
+            <option>Mobile</option>
+            <option>Books</option>
+            <option>Grocery</option>
+            <option>Beauty</option>
+            <option>Home & Kitchen</option>
+        </select>
+    </div>
+
+    <div class="input-group">
+        <label>Product Price (₹)</label>
+        <input type="number" id="productPrice" placeholder="Enter Product Price" required>
+    </div>
+
+    <div class="input-group">
+        <label>Stock Quantity</label>
+        <input type="number" id="stockQuantity" placeholder="Enter Stock Quantity" required>
+    </div>
+
+    <div class="input-group">
+        <label>Product Description</label>
+        <textarea id="productDescription" placeholder="Enter Product Description"></textarea>
+    </div>
+
+    <!-- 10 Images Upload -->
+    <div class="input-group">
+        <label>Upload Product Images (Maximum 10)</label>
+
+        <input
+            type="file"
+            id="productImages"
+            accept="image/*"
+            multiple
+            onchange="previewImages(event)">
+    </div>
+
+    <div id="imagePreview" class="preview-images"></div>
+
+    <!-- Video Upload -->
+    <div class="input-group">
+        <label>Upload Short Product Video</label>
+
+        <input
+            type="file"
+            id="productVideo"
+            accept="video/*"
+            onchange="previewVideo(event)">
+    </div>
+
+    <div id="videoPreview" class="preview-video"></div>
+
+    <button type="submit" class="submit-btn">
+        ➕ Add Product
+    </button>
+
+    <button
+        type="button"
+        class="back-btn"
+        onclick="window.location.href='/page/shop-dashboard.html'">
+        ⬅ Back
+    </button>
+
+</form>
+
+</div>
+
+<script>
+
+function previewImages(event){
+
+    const preview =
+    document.getElementById("imagePreview");
+
+    preview.innerHTML = "";
+
+    const files = event.target.files;
+
+    if(files.length > 10){
+
+        alert("Maximum 10 images allowed");
+
+        event.target.value = "";
+
+        return;
+    }
+
+    for(let i=0;i<files.length;i++){
+
+        let img =
+        document.createElement("img");
+
+        img.src =
+        URL.createObjectURL(files[i]);
+
+        preview.appendChild(img);
+    }
+}
+
+function previewVideo(event){
+
+    const preview =
+    document.getElementById("videoPreview");
+
+    preview.innerHTML = "";
+
+    const file =
+    event.target.files[0];
+
+    if(!file) return;
+
+    let video =
+    document.createElement("video");
+
+    video.src =
+    URL.createObjectURL(file);
+
+    video.controls = true;
+
+    preview.appendChild(video);
+}
+
+document.getElementById("productForm").addEventListener("submit", function(e){
+
+    e.preventDefault();
+
+    const productData = {
+        name: document.getElementById("productName").value,
+        category: document.getElementById("productCategory").value,
+        price: document.getElementById("productPrice").value,
+        stock: document.getElementById("stockQuantity").value,
+        description: document.getElementById("productDescription").value
+    };
+
+    console.log(productData);
+
+    alert("Product Added Successfully!");
+});
+
+
+</script>
+
+</body>
+</html>

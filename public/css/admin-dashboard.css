@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:linear-gradient(135deg,#0f172a,#1e293b,#2563eb);
+    display:flex;
+}
+
+/* Sidebar */
+.sidebar{
+    width:220px;
+    background:#0f172a;
+    padding:20px;
+    box-shadow:4px 0 20px rgba(0,0,0,0.3);
+}
+
+.logout-btn{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#ef4444;
+    color:#fff;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.logout-btn:hover{
+    background:#dc2626;
+    transform:translateY(-2px);
+}
+
+/* Main Area */
+.main{
+    flex:1;
+    padding:25px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:20px;
+    align-content:flex-start;
+}
+
+/* Header */
+.header{
+    width:100%;
+    background:white;
+    padding:18px 25px;
+    border-radius:15px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.08);
+}
+
+.header h1{
+    color:#0f172a;
+    font-size:28px;
+    font-weight:700;
+}
+
+/* Small Premium Cards */
+.welcome-card{
+    width:260px;
+    background:white;
+    padding:15px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.08);
+    transition:.3s;
+}
+
+.welcome-card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+/* Dashboard Buttons */
+.student-dashboard-btn,
+.signup-btn,
+.shop-dashbord{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    color:white;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.student-dashboard-btn{
+    background:linear-gradient(135deg,#3b82f6,#2563eb);
+}
+
+.signup-btn{
+    background:linear-gradient(135deg,#10b981,#059669);
+}
+
+.shop-dashbord{
+    background:linear-gradient(135deg,#f59e0b,#d97706);
+}
+
+.student-dashboard-btn:hover,
+.signup-btn:hover,
+.shop-dashbord:hover{
+    transform:scale(1.03);
+}
+
+/* Mobile Responsive */
+@media(max-width:768px){
+
+body{
+    flex-direction:column;
+}
+
+.sidebar{
+    width:100%;
+}
+
+.main{
+    padding:15px;
+    justify-content:center;
+}
+
+.header{
+    text-align:center;
+}
+
+.welcome-card{
+    width:100%;
+    max-width:320px;
+}
+}

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delete Doctor</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#f4f7fc;
+    padding:30px;
+}
+
+.header{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.header h1{
+    color:#0f172a;
+}
+
+.search-box{
+    max-width:700px;
+    margin:0 auto 30px;
+}
+
+.search-box input{
+    width:100%;
+    padding:16px 25px;
+    border:none;
+    border-radius:50px;
+    font-size:16px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.1);
+    outline:none;
+}
+
+.doctor-list{
+    max-width:900px;
+    margin:auto;
+}
+
+.doctor-card{
+    background:#fff;
+    padding:18px 20px;
+    margin-bottom:15px;
+    border-radius:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 4px 15px rgba(0,0,0,0.08);
+}
+
+.doctor-info h3{
+    color:#0f172a;
+}
+
+.doctor-info p{
+    color:#666;
+    font-size:14px;
+}
+
+.delete-btn{
+    background:#ef4444;
+    color:white;
+    border:none;
+    padding:10px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.delete-btn:hover{
+    background:#dc2626;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+    <h1>🗑 Delete Doctor</h1>
+</div>
+
+<div class="search-box">
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="Search doctor like Google..."
+        onkeyup="searchDoctor()">
+</div>
+
+<div class="doctor-list">
+
+    <div class="doctor-card">
+        <div class="doctor-info">
+            <h3>Dr. Rahul Kumar</h3>
+            <p>Phone: 9876543210</p>
+        </div>
+
+        <button class="delete-btn"
+        onclick="deleteDoctor(this)">
+            Delete
+        </button>
+    </div>
+
+    <div class="doctor-card">
+        <div class="doctor-info">
+            <h3>Dr. Priya Singh</h3>
+            <p>Phone: 9876543211</p>
+        </div>
+
+        <button class="delete-btn"
+        onclick="deleteDoctor(this)">
+            Delete
+        </button>
+    </div>
+
+</div>
+
+<script>
+function searchDoctor() {
+
+    let input =
+    document.getElementById("searchInput")
+    .value.toLowerCase();
+
+    let cards =
+    document.querySelectorAll(".doctor-card");
+
+    cards.forEach(card => {
+
+        let name =
+        card.querySelector("h3")
+        .innerText
+        .toLowerCase();
+
+        card.style.display =
+        name.includes(input)
+        ? "flex"
+        : "none";
+    });
+}
+
+function deleteDoctor(btn){
+
+    if(confirm("Delete this doctor?")){
+        btn.parentElement.remove();
+    }
+
+}
+</script>
+
+</body>
+</html>

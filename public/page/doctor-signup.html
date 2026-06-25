@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doctor Signup</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#0f172a,#2563eb);
+    padding:20px;
+}
+
+.container{
+    width:100%;
+    max-width:650px;
+    background:#fff;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+
+h2{
+    text-align:center;
+    margin-bottom:25px;
+    color:#0f172a;
+}
+
+.input-group{
+    margin-bottom:15px;
+}
+
+label{
+    display:block;
+    margin-bottom:6px;
+    font-weight:500;
+    color:#333;
+}
+
+input,
+textarea{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:10px;
+    outline:none;
+    font-size:15px;
+}
+
+input:focus,
+textarea:focus{
+    border-color:#2563eb;
+}
+
+textarea{
+    resize:none;
+    height:90px;
+}
+
+.preview-box{
+    text-align:center;
+    margin-top:15px;
+}
+
+.preview-box img{
+    width:180px;
+    height:140px;
+    object-fit:cover;
+    border-radius:10px;
+    border:2px solid #2563eb;
+    display:none;
+}
+
+.submit-btn{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#2563eb;
+    color:#fff;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.submit-btn:hover{
+    background:#1d4ed8;
+}
+
+.back-btn{
+    width:100%;
+    margin-top:10px;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#ef4444;
+    color:#fff;
+    cursor:pointer;
+}
+
+.back-btn:hover{
+    background:#dc2626;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <h2>🧑‍⚕️ Doctor Signup Form</h2>
+
+    <form>
+
+        <div class="input-group">
+            <label>Doctor Name</label>
+            <input type="text"
+                   placeholder="Enter Doctor Name"
+                   required>
+        </div>
+
+        <div class="input-group">
+            <label>Phone Number</label>
+            <input type="tel"
+                   placeholder="Enter Phone Number"
+                   required>
+        </div>
+
+        <div class="input-group">
+            <label>Alternate Phone Number</label>
+            <input type="tel"
+                   placeholder="Enter Alternate Phone Number">
+        </div>
+
+        <div class="input-group">
+            <label>Address</label>
+            <textarea placeholder="Enter Full Address"
+                      required></textarea>
+        </div>
+
+        <div class="input-group">
+            <label>Shop / Clinic Photo</label>
+            <input type="file"
+                   accept="image/*"
+                   onchange="previewImage(event)"
+                   required>
+        </div>
+
+        <div class="preview-box">
+            <img id="preview">
+        </div>
+
+        <button type="submit"
+                class="submit-btn"
+                onclick="window.location.href='/page/doctor-dashboard.html'">
+            ✅ Register Doctor
+        </button>
+
+        <button type="button"
+                class="back-btn"
+                onclick="window.location.href='/page/admin-dashboard.html'">
+            ⬅ Back
+        </button>
+
+    </form>
+
+</div>
+
+<script>
+function previewImage(event){
+
+    const preview =
+    document.getElementById("preview");
+
+    preview.src =
+    URL.createObjectURL(event.target.files[0]);
+
+    preview.style.display = "block";
+}
+</script>
+
+</body>
+</html>

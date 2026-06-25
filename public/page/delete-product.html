@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delete Product</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#f4f7fc;
+    padding:30px;
+}
+
+.header{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.header h1{
+    color:#0f172a;
+}
+
+.search-box{
+    max-width:700px;
+    margin:0 auto 30px;
+}
+
+.search-box input{
+    width:100%;
+    padding:16px 25px;
+    border:none;
+    border-radius:50px;
+    font-size:16px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.1);
+    outline:none;
+}
+
+.product-list{
+    max-width:1000px;
+    margin:auto;
+}
+
+.product-card{
+    background:#fff;
+    padding:18px 20px;
+    margin-bottom:15px;
+    border-radius:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 4px 15px rgba(0,0,0,0.08);
+}
+
+.product-info h3{
+    color:#0f172a;
+}
+
+.product-info p{
+    color:#666;
+    font-size:14px;
+}
+
+.delete-btn{
+    background:#ef4444;
+    color:white;
+    border:none;
+    padding:10px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.delete-btn:hover{
+    background:#dc2626;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+    <h1>🗑 Delete Product</h1>
+</div>
+
+<div class="search-box">
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="Search Product Like Google..."
+        onkeyup="searchProduct()">
+</div>
+
+<div class="product-list">
+
+    <div class="product-card">
+        <div class="product-info">
+            <h3>iPhone 15</h3>
+            <p>₹75,000 | Stock: 20</p>
+        </div>
+
+        <button class="delete-btn"
+        onclick="deleteProduct(this)">
+            Delete
+        </button>
+    </div>
+
+    <div class="product-card">
+        <div class="product-info">
+            <h3>Samsung Galaxy S25</h3>
+            <p>₹68,000 | Stock: 15</p>
+        </div>
+
+        <button class="delete-btn"
+        onclick="deleteProduct(this)">
+            Delete
+        </button>
+    </div>
+
+    <div class="product-card">
+        <div class="product-info">
+            <h3>Bluetooth Speaker</h3>
+            <p>₹2,500 | Stock: 50</p>
+        </div>
+
+        <button class="delete-btn"
+        onclick="deleteProduct(this)">
+            Delete
+        </button>
+    </div>
+
+</div>
+
+<script>
+
+function searchProduct(){
+
+    let input =
+    document.getElementById("searchInput")
+    .value.toLowerCase();
+
+    let cards =
+    document.querySelectorAll(".product-card");
+
+    cards.forEach(card => {
+
+        let name =
+        card.querySelector("h3")
+        .innerText
+        .toLowerCase();
+
+        card.style.display =
+        name.includes(input)
+        ? "flex"
+        : "none";
+    });
+
+}
+
+function deleteProduct(btn){
+
+    if(confirm("Delete this product?")){
+
+        btn.parentElement.remove();
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>

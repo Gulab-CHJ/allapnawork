@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Student</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#0f172a,#2563eb);
+    padding:20px;
+}
+
+.container{
+    width:100%;
+    max-width:650px;
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+
+h2{
+    text-align:center;
+    margin-bottom:25px;
+    color:#0f172a;
+}
+
+.input-group{
+    margin-bottom:15px;
+}
+
+label{
+    display:block;
+    margin-bottom:6px;
+    font-weight:500;
+    color:#333;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:10px;
+    outline:none;
+    font-size:15px;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+    border-color:#2563eb;
+}
+
+textarea{
+    resize:none;
+    height:90px;
+}
+
+.photo-preview{
+    margin-top:10px;
+    text-align:center;
+}
+
+.photo-preview img{
+    width:120px;
+    height:140px;
+    border-radius:10px;
+    border:2px solid #2563eb;
+    object-fit:cover;
+    display:none;
+}
+
+.submit-btn{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#2563eb;
+    color:white;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.submit-btn:hover{
+    background:#1d4ed8;
+}
+
+.back-btn{
+    width:100%;
+    margin-top:10px;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#ef4444;
+    color:white;
+    font-size:15px;
+    cursor:pointer;
+}
+
+.back-btn:hover{
+    background:#dc2626;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <h2>🎓 Add Student</h2>
+
+    <form>
+
+        <div class="input-group">
+            <label>Student Name</label>
+            <input type="text" placeholder="Enter Student Name" required>
+        </div>
+
+        <div class="input-group">
+            <label>Father Name</label>
+            <input type="text" placeholder="Enter Father Name" required>
+        </div>
+
+        <div class="input-group">
+            <label>Age</label>
+            <input type="number" placeholder="Enter Age" required>
+        </div>
+
+        <div class="input-group">
+            <label>Phone Number</label>
+            <input type="tel" placeholder="Enter Phone Number" required>
+        </div>
+
+        <div class="input-group">
+            <label>Address</label>
+            <textarea placeholder="Enter Address" required></textarea>
+        </div>
+
+        <div class="input-group">
+            <label>Class</label>
+            <select required>
+                <option value="">Select Class</option>
+                <option>Class 1</option>
+                <option>Class 2</option>
+                <option>Class 3</option>
+                <option>Class 4</option>
+                <option>Class 5</option>
+                <option>Class 6</option>
+                <option>Class 7</option>
+                <option>Class 8</option>
+                <option>Class 9</option>
+                <option>Class 10</option>
+                <option>Class 11</option>
+                <option>Class 12</option>
+            </select>
+        </div>
+
+        <!-- Passport Size Photo -->
+        <div class="input-group">
+            <label>Passport Size Photo</label>
+
+            <input
+                type="file"
+                id="studentPhoto"
+                accept="image/*"
+                onchange="previewPhoto(event)"
+                required>
+
+            <div class="photo-preview">
+                <img id="preview" alt="Student Photo Preview">
+            </div>
+        </div>
+
+        <button type="submit" class="submit-btn">
+            ➕ Add Student
+        </button>
+
+        <button type="button"
+                class="back-btn"
+                onclick="window.location.href='/page/student-dashboard.html'">
+            ⬅ Back
+        </button>
+
+    </form>
+
+</div>
+
+<script>
+function previewPhoto(event){
+
+    const preview =
+    document.getElementById("preview");
+
+    preview.src =
+    URL.createObjectURL(event.target.files[0]);
+
+    preview.style.display = "block";
+}
+</script>
+
+</body>
+</html>

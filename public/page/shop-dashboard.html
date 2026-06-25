@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#f4f7fc;
+}
+
+.header{
+    background:#0f172a;
+    color:white;
+    padding:20px 30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.container{
+    padding:30px;
+}
+
+.actions{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+}
+
+.btn{
+    border:none;
+    padding:22px;
+    border-radius:15px;
+    color:white;
+    font-size:18px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.add{background:#10b981;}
+.update{background:#2563eb;}
+.delete{background:#ef4444;}
+.products{background:#8b5cf6;}
+.orders{background:#f59e0b;}
+.customers{background:#06b6d4;}
+.report{background:#059669;}
+</style>
+</head>
+<body>
+
+<div class="header">
+    <h1>🛒 Shop Dashboard</h1>
+
+    <button onclick="window.location.href='/page/admin-dashboard.html'">
+        Back
+    </button>
+</div>
+
+<div class="container">
+
+<div class="actions">
+<button class="btn add"
+onclick="window.location.href='/page/add-product.html'">
+    ➕ Add Product
+</button>
+
+<button class="btn update"
+onclick="window.location.href='/page/update-product.html'">
+    ✏ Update Product
+</button>
+
+<button class="btn delete"
+onclick="window.location.href='/page/delete-product.html'">
+    🗑 Delete Product
+</button>
+
+<button class="btn products"
+onclick="window.location.href='/page/all-products.html'">
+    📦 All Products
+</button>
+
+<button class="btn orders"
+onclick="window.location.href='/page/orders.html'">
+    🛒 Orders
+</button>
+
+<button class="btn customers"
+onclick="window.location.href='/page/customers.html'">
+    👥 Customers
+</button>
+
+<button class="btn report"
+onclick="window.location.href='/page/sales-report.html'">
+    📊 Sales Report
+</button>
+</div>
+
+</div>
+
+</body>
+</html>

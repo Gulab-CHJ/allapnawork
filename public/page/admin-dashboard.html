@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="../css/admin-dashboard.css" rel="stylesheet">
+
+
+</head>
+<body>
+
+<!-- Left Side -->
+<div class="sidebar">
+    <button class="logout-btn" onclick="logout()">
+        🚪 Logout
+    </button>
+</div>
+
+<!-- Main Area -->
+<div class="main">
+
+    <div class="header">
+        <h1>🔐 Admin Panel</h1>
+    </div>
+
+    <div class="welcome-card">
+       <button class="student-dashboard-btn"
+         onclick="window.location.href='/page/student-dashboard.html'">
+    🧑‍🎓 Student Dashboard
+    </button>
+    </div>
+    <div class="welcome-card">
+        <button class="dr signup-btn"
+        onclick="window.location.href='/page/doctor-signup.html'">
+            🧑‍⚕️ Doctor Signup
+        </button>
+    </div>
+    <div class="welcome-card">
+        <button class="shop-dashbord"
+        onclick="window.location.href='/page/shop-dashboard.html'">
+            shop-dashbord
+        </button>
+    </div>
+
+</div>
+
+<script>
+function logout(){
+    if(confirm("Are you sure you want to logout?")){
+        // Login page route
+        window.location.href = "../index.html";
+
+        // Agar static html use kar rahe ho:
+        // window.location.href = "/dr-login.html";
+    }
+}
+</script>
+
+</body>
+</html>

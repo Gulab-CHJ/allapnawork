@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Doctors</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#f4f7fc;
+    padding:30px;
+}
+
+.header{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.header h1{
+    color:#0f172a;
+}
+
+.top-bar{
+    max-width:1000px;
+    margin:auto;
+    display:flex;
+    gap:10px;
+    margin-bottom:20px;
+}
+
+.search-box{
+    flex:1;
+}
+
+.search-box input{
+    width:100%;
+    padding:14px 20px;
+    border:none;
+    border-radius:50px;
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+    outline:none;
+}
+
+.excel-btn{
+    border:none;
+    background:#16a34a;
+    color:white;
+    padding:14px 20px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.table-container{
+    max-width:1000px;
+    margin:auto;
+    background:white;
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#2563eb;
+    color:white;
+    padding:15px;
+}
+
+td{
+    padding:15px;
+    border-bottom:1px solid #eee;
+}
+
+.view-btn{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:8px 12px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.print-btn{
+    background:#f59e0b;
+    color:white;
+    border:none;
+    padding:8px 12px;
+    border-radius:8px;
+    cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+    <h1>🧑‍⚕️ All Doctors List</h1>
+</div>
+
+<div class="top-bar">
+
+    <div class="search-box">
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search Doctor..."
+            onkeyup="searchDoctor()">
+    </div>
+
+    <button class="excel-btn"
+    onclick="exportExcel()">
+        📊 Export Excel
+    </button>
+
+</div>
+
+<div class="table-container">
+
+<table id="doctorTable">
+
+<tr>
+    <th>Doctor Name</th>
+    <th>Phone</th>
+    <th>View</th>
+    <th>Print</th>
+</tr>
+
+<tr>
+    <td>Dr. Rahul Kumar</td>
+    <td>9876543210</td>
+
+    <td>
+        <button class="view-btn"
+        onclick="viewDoctor(
+        'Dr. Rahul Kumar',
+        '9876543210',
+        '9876543211',
+        'Patna')">
+            View
+        </button>
+    </td>
+
+    <td>
+        <button class="print-btn"
+        onclick="printDoctor(
+        'Dr. Rahul Kumar',
+        '9876543210',
+        '9876543211',
+        'Patna')">
+            Print
+        </button>
+    </td>
+</tr>
+
+<tr>
+    <td>Dr. Priya Singh</td>
+    <td>9876543220</td>
+
+    <td>
+        <button class="view-btn"
+        onclick="viewDoctor(
+        'Dr. Priya Singh',
+        '9876543220',
+        '9876543221',
+        'Delhi')">
+            View
+        </button>
+    </td>
+
+    <td>
+        <button class="print-btn"
+        onclick="printDoctor(
+        'Dr. Priya Singh',
+        '9876543220',
+        '9876543221',
+        'Delhi')">
+            Print
+        </button>
+    </td>
+</tr>
+
+</table>
+
+</div>
+
+<script>
+
+function searchDoctor(){
+
+let input =
+document.getElementById("searchInput")
+.value.toLowerCase();
+
+let rows =
+document.querySelectorAll("#doctorTable tr");
+
+rows.forEach((row,index)=>{
+
+if(index===0) return;
+
+let text =
+row.innerText.toLowerCase();
+
+row.style.display =
+text.includes(input)
+? ""
+: "none";
+
+});
+
+}
+
+function viewDoctor(
+name,
+phone,
+altPhone,
+address
+){
+
+alert(
+`Doctor Name : ${name}
+
+Phone : ${phone}
+
+Alternate Phone : ${altPhone}
+
+Address : ${address}`
+);
+
+}
+
+function printDoctor(
+name,
+phone,
+altPhone,
+address
+){
+
+let win =
+window.open("","","width=800,height=600");
+
+win.document.write(`
+<html>
+<head>
+<title>Doctor Details</title>
+<style>
+body{
+font-family:Arial;
+padding:30px;
+}
+table{
+width:100%;
+border-collapse:collapse;
+}
+td{
+border:1px solid #000;
+padding:10px;
+}
+</style>
+</head>
+<body>
+
+<h2>Doctor Details</h2>
+
+<table>
+
+<tr>
+<td><b>Name</b></td>
+<td>${name}</td>
+</tr>
+
+<tr>
+<td><b>Phone</b></td>
+<td>${phone}</td>
+</tr>
+
+<tr>
+<td><b>Alternate Phone</b></td>
+<td>${altPhone}</td>
+</tr>
+
+<tr>
+<td><b>Address</b></td>
+<td>${address}</td>
+</tr>
+
+</table>
+
+</body>
+</html>
+`);
+
+win.document.close();
+win.print();
+
+}
+
+function exportExcel(){
+alert("Excel Export Feature");
+}
+
+</script>
+
+</body>
+</html>

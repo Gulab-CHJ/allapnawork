@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#f4f7fc;
+}
+
+/* Header */
+.header{
+    background:#0f172a;
+    color:white;
+    padding:20px 30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.header h1{
+    font-size:28px;
+}
+
+.back-btn{
+    background:#ef4444;
+    color:white;
+    border:none;
+    padding:10px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.back-btn:hover{
+    background:#dc2626;
+}
+
+/* Main */
+.container{
+    padding:30px;
+}
+
+.title{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.title h2{
+    color:#0f172a;
+    margin-bottom:10px;
+}
+
+.title p{
+    color:#666;
+}
+
+/* Dashboard Buttons */
+.student-actions{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+}
+
+.action-btn{
+    border:none;
+    padding:22px;
+    border-radius:15px;
+    color:white;
+    font-size:18px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+.action-btn:hover{
+    transform:translateY(-5px);
+}
+
+/* Colors */
+.add-btn{
+    background:linear-gradient(135deg,#10b981,#059669);
+}
+
+.delete-btn{
+    background:linear-gradient(135deg,#ef4444,#dc2626);
+}
+
+.update-btn{
+    background:linear-gradient(135deg,#3b82f6,#2563eb);
+}
+
+.list-btn{
+    background:linear-gradient(135deg,#8b5cf6,#7c3aed);
+}
+
+/* Responsive */
+@media(max-width:768px){
+
+.header{
+    flex-direction:column;
+    gap:15px;
+    text-align:center;
+}
+
+.container{
+    padding:20px;
+}
+
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+    <h1>🎓 Student Dashboard</h1>
+
+    <button class="back-btn"
+    onclick="window.location.href='admin-dashboard.html'">
+        ⬅ Back
+    </button>
+</div>
+
+<!-- Main -->
+<div class="container">
+
+    <div class="title">
+        <h2>Student Management System</h2>
+        <p>Select an option below</p>
+    </div>
+
+    <div class="student-actions">
+
+        <button class="action-btn add-btn"
+        onclick="window.location.href='add-student.html'">
+            ➕ Add Student
+        </button>
+
+        <button class="action-btn delete-btn"
+        onclick="window.location.href='delete-student.html'">
+            🗑 Delete Student
+        </button>
+
+        <button class="action-btn update-btn"
+        onclick="window.location.href='update-student.html'">
+            ✏ Update Student
+        </button>
+
+        <button class="action-btn list-btn"
+        onclick="window.location.href='all-students.html'">
+            📋 All Student List
+        </button>
+
+    </div>
+
+</div>
+
+</body>
+</html>

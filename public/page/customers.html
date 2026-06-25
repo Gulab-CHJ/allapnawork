@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customers Management</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#f4f7fc;
+    padding:30px;
+}
+
+.header{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.header h1{
+    color:#0f172a;
+}
+
+.top-bar{
+    max-width:1200px;
+    margin:auto;
+    margin-bottom:20px;
+}
+
+.search-box input{
+    width:100%;
+    padding:15px 20px;
+    border:none;
+    border-radius:50px;
+    outline:none;
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+.table-container{
+    max-width:1200px;
+    margin:auto;
+    background:white;
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#2563eb;
+    color:white;
+    padding:15px;
+}
+
+td{
+    padding:15px;
+    border-bottom:1px solid #eee;
+    text-align:center;
+}
+
+.view-btn{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:8px 12px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.print-btn{
+    background:#10b981;
+    color:white;
+    border:none;
+    padding:8px 12px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.delete-btn{
+    background:#ef4444;
+    color:white;
+    border:none;
+    padding:8px 12px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.back-btn{
+    position:fixed;
+    top:20px;
+    left:20px;
+    background:#ef4444;
+    color:white;
+    border:none;
+    padding:10px 15px;
+    border-radius:10px;
+    cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<button class="back-btn"
+onclick="window.location.href='/page/shop-dashboard.html'">
+⬅ Back
+</button>
+
+<div class="header">
+    <h1>👥 Customers Management</h1>
+</div>
+
+<div class="top-bar">
+    <div class="search-box">
+        <input
+        type="text"
+        id="searchInput"
+        placeholder="Search Customer..."
+        onkeyup="searchCustomer()">
+    </div>
+</div>
+
+<div class="table-container">
+
+<table id="customerTable">
+
+<tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Phone</th>
+    <th>City</th>
+    <th>View</th>
+    <th>Print</th>
+    <th>Delete</th>
+</tr>
+
+<tr>
+    <td>C001</td>
+    <td>Rahul Kumar</td>
+    <td>9876543210</td>
+    <td>Patna</td>
+
+    <td>
+        <button class="view-btn"
+        onclick="viewCustomer('Rahul Kumar','9876543210','Patna')">
+        View
+        </button>
+    </td>
+
+    <td>
+        <button class="print-btn"
+        onclick="printCustomer('Rahul Kumar','9876543210','Patna')">
+        Print
+        </button>
+    </td>
+
+    <td>
+        <button class="delete-btn"
+        onclick="deleteCustomer(this)">
+        Delete
+        </button>
+    </td>
+</tr>
+
+<tr>
+    <td>C002</td>
+    <td>Priya Singh</td>
+    <td>9123456789</td>
+    <td>Delhi</td>
+
+    <td>
+        <button class="view-btn"
+        onclick="viewCustomer('Priya Singh','9123456789','Delhi')">
+        View
+        </button>
+    </td>
+
+    <td>
+        <button class="print-btn"
+        onclick="printCustomer('Priya Singh','9123456789','Delhi')">
+        Print
+        </button>
+    </td>
+
+    <td>
+        <button class="delete-btn"
+        onclick="deleteCustomer(this)">
+        Delete
+        </button>
+    </td>
+</tr>
+
+</table>
+
+</div>
+
+<script>
+
+function searchCustomer(){
+
+let input =
+document.getElementById("searchInput")
+.value.toLowerCase();
+
+let rows =
+document.querySelectorAll("#customerTable tr");
+
+rows.forEach((row,index)=>{
+
+if(index===0) return;
+
+let text =
+row.innerText.toLowerCase();
+
+row.style.display =
+text.includes(input)
+? ""
+: "none";
+
+});
+
+}
+
+function viewCustomer(name,phone,city){
+
+alert(
+"Customer Name: " + name +
+"\nPhone: " + phone +
+"\nCity: " + city
+);
+
+}
+
+function printCustomer(name,phone,city){
+
+let w = window.open("");
+
+w.document.write(`
+<h2>Customer Details</h2>
+<hr>
+<p><b>Name:</b> ${name}</p>
+<p><b>Phone:</b> ${phone}</p>
+<p><b>City:</b> ${city}</p>
+`);
+
+w.print();
+
+}
+
+function deleteCustomer(btn){
+
+if(confirm("Delete this customer?")){
+btn.parentElement.parentElement.remove();
+}
+
+}
+
+</script>
+
+</body>
+</html>

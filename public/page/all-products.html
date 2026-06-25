@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Products</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#f4f7fc;
+padding:30px;
+}
+
+.header{
+text-align:center;
+margin-bottom:25px;
+}
+
+.header h1{
+color:#0f172a;
+}
+
+.top-bar{
+max-width:1200px;
+margin:auto;
+display:flex;
+gap:10px;
+margin-bottom:20px;
+}
+
+.search-box{
+flex:1;
+}
+
+.search-box input{
+width:100%;
+padding:14px 20px;
+border:none;
+border-radius:50px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+outline:none;
+}
+
+.excel-btn{
+background:#16a34a;
+color:white;
+border:none;
+padding:14px 20px;
+border-radius:10px;
+cursor:pointer;
+font-weight:600;
+}
+
+.table-container{
+max-width:1200px;
+margin:auto;
+background:white;
+border-radius:15px;
+overflow:hidden;
+box-shadow:0 5px 15px rgba(0,0,0,.08);
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th{
+background:#2563eb;
+color:white;
+padding:15px;
+}
+
+td{
+padding:15px;
+border-bottom:1px solid #eee;
+text-align:center;
+}
+
+.product-img{
+width:60px;
+height:60px;
+border-radius:8px;
+object-fit:cover;
+}
+
+.view-btn{
+background:#2563eb;
+color:white;
+border:none;
+padding:8px 12px;
+border-radius:8px;
+cursor:pointer;
+}
+
+.print-btn{
+background:#f59e0b;
+color:white;
+border:none;
+padding:8px 12px;
+border-radius:8px;
+cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+<h1>📦 All Products List</h1>
+</div>
+
+<div class="top-bar">
+
+<div class="search-box">
+<input
+type="text"
+id="searchInput"
+placeholder="Search Product..."
+onkeyup="searchProduct()">
+</div>
+
+<button class="excel-btn"
+onclick="exportExcel()">
+📊 Export Excel
+</button>
+
+</div>
+
+<div class="table-container">
+
+<table id="productTable">
+
+<tr>
+<th>Image</th>
+<th>Product Name</th>
+<th>Price</th>
+<th>Stock</th>
+<th>View</th>
+<th>Print</th>
+</tr>
+
+<tr>
+<td>
+<img
+class="product-img"
+src="https://via.placeholder.com/60">
+</td>
+
+<td>iPhone 15</td>
+<td>₹75,000</td>
+<td>20</td>
+
+<td>
+<button class="view-btn"
+onclick="viewProduct(
+'iPhone 15',
+'75000',
+'20')">
+View
+</button>
+</td>
+
+<td>
+<button class="print-btn"
+onclick="printProduct(
+'iPhone 15',
+'75000',
+'20')">
+Print
+</button>
+</td>
+
+</tr>
+
+<tr>
+<td>
+<img
+class="product-img"
+src="https://via.placeholder.com/60">
+</td>
+
+<td>Samsung Galaxy S25</td>
+<td>₹68,000</td>
+<td>15</td>
+
+<td>
+<button class="view-btn"
+onclick="viewProduct(
+'Samsung Galaxy S25',
+'68000',
+'15')">
+View
+</button>
+</td>
+
+<td>
+<button class="print-btn"
+onclick="printProduct(
+'Samsung Galaxy S25',
+'68000',
+'15')">
+Print
+</button>
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+<script>
+
+function searchProduct(){
+
+let input =
+document.getElementById("searchInput")
+.value.toLowerCase();
+
+let rows =
+document.querySelectorAll("#productTable tr");
+
+rows.forEach((row,index)=>{
+
+if(index===0) return;
+
+let text =
+row.innerText.toLowerCase();
+
+row.style.display =
+text.includes(input)
+? ""
+: "none";
+
+});
+
+}
+
+function viewProduct(
+name,
+price,
+stock
+){
+
+alert(
+"Product: " + name +
+"\nPrice: ₹" + price +
+"\nStock: " + stock
+);
+
+}
+
+function printProduct(
+name,
+price,
+stock
+){
+
+let w =
+window.open("");
+
+w.document.write(`
+<h2>Product Details</h2>
+<hr>
+<p><b>Name:</b> ${name}</p>
+<p><b>Price:</b> ₹${price}</p>
+<p><b>Stock:</b> ${stock}</p>
+`);
+
+w.print();
+
+}
+
+function exportExcel(){
+
+alert(
+"Excel Export Feature Connected Later"
+);
+
+}
+
+</script>
+
+</body>
+</html>

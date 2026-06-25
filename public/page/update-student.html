@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Update Student</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#f4f7fc;
+    padding:30px;
+}
+
+.header{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.header h1{
+    color:#0f172a;
+}
+
+.search-box{
+    max-width:700px;
+    margin:0 auto 30px;
+}
+
+.search-box input{
+    width:100%;
+    padding:16px 25px;
+    border:none;
+    border-radius:50px;
+    font-size:16px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.1);
+    outline:none;
+}
+
+.student-list{
+    max-width:900px;
+    margin:auto;
+}
+
+.student-card{
+    background:#fff;
+    padding:18px 20px;
+    margin-bottom:15px;
+    border-radius:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 4px 15px rgba(0,0,0,0.08);
+}
+
+.student-info h3{
+    color:#0f172a;
+}
+
+.student-info p{
+    color:#666;
+    font-size:14px;
+}
+
+.update-btn{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:10px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.update-btn:hover{
+    background:#1d4ed8;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+    <h1>✏ Update Student</h1>
+</div>
+
+<div class="search-box">
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="Search student like Google..."
+        onkeyup="searchStudent()">
+</div>
+
+<div class="student-list">
+
+    <div class="student-card">
+        <div class="student-info">
+            <h3>Rahul Kumar</h3>
+            <p>Class 10 | Phone: 9876543210</p>
+        </div>
+
+        <button class="update-btn"
+        onclick="window.location.href='/page/add-student.html'">
+            Update
+        </button>
+    </div>
+
+    <div class="student-card">
+        <div class="student-info">
+            <h3>Priya Singh</h3>
+            <p>Class 9 | Phone: 9876543211</p>
+        </div>
+
+        <button class="update-btn"
+        onclick="updateStudent('Priya Singh')">
+            Update
+        </button>
+    </div>
+
+    <div class="student-card">
+        <div class="student-info">
+            <h3>Amit Verma</h3>
+            <p>Class 12 | Phone: 9876543212</p>
+        </div>
+
+        <button class="update-btn"
+        onclick="updateStudent('Amit Verma')">
+            Update
+        </button>
+    </div>
+
+</div>
+
+<script>
+function searchStudent() {
+    let input = document.getElementById("searchInput").value.toLowerCase();
+    let cards = document.querySelectorAll(".student-card");
+
+    cards.forEach(card => {
+        let name = card.querySelector("h3").innerText.toLowerCase();
+
+        if(name.includes(input)){
+            card.style.display = "flex";
+        }else{
+            card.style.display = "none";
+        }
+    });
+}
+
+function updateStudent(name){
+
+    // Future:
+    // window.location.href = "/page/update-student-form.html?id=123";
+    window.location.href = "/page/update-student-form.html?name=" + encodeURIComponent(name);
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,348 @@
+/* 
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:#f5f7fb;
+}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 5%;
+    background:#fff;
+    box-shadow:0 4px 20px rgba(0,0,0,.08);
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.logo a{
+    text-decoration:none;
+    font-size:30px;
+    font-weight:700;
+    color:#2563eb;
+}
+
+nav{
+    display:flex;
+    align-items:center;
+    gap:30px;
+}
+
+.nav-links{
+    display:flex;
+    list-style:none;
+    gap:25px;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#333;
+    font-weight:600;
+    transition:.3s;
+}
+
+.nav-links a:hover{
+    color:#2563eb;
+}
+
+.auth-buttons{
+    display:flex;
+    gap:12px;
+}
+
+.login-btn,
+.signup-btn{
+    text-decoration:none;
+    padding:10px 20px;
+    border-radius:30px;
+    font-weight:600;
+}
+
+.login-btn{
+    border:2px solid #2563eb;
+    color:#2563eb;
+}
+
+.signup-btn{
+    background:#2563eb;
+    color:#fff;
+}
+
+.menu-toggle{
+    display:none;
+    font-size:30px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+/* Responsive 
+
+@media(max-width:768px){
+
+    .menu-toggle{
+        display:block;
+    }
+
+    nav{
+        position:absolute;
+        top:75px;
+        left:-100%;
+        width:100%;
+        background:#fff;
+        flex-direction:column;
+        padding:25px;
+        transition:.4s;
+        box-shadow:0 5px 20px rgba(0,0,0,.1);
+    }
+
+    nav.active{
+        left:0;
+    }
+
+    .nav-links{
+        flex-direction:column;
+        text-align:center;
+        width:100%;
+    }
+
+    .auth-buttons{
+        flex-direction:column;
+        width:100%;
+    }
+
+    .login-btn,
+    .signup-btn{
+        text-align:center;
+    }
+} */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#f8fafc;
+}
+
+/* HEADER */
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:15px 6%;
+
+    background:#0f172a;
+
+    box-shadow:0 8px 30px rgba(0,0,0,.25);
+}
+
+/* LOGO */
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo img{
+    width:65px;
+    height:65px;
+    object-fit:cover;
+    border-radius:50%;
+
+    border:2px solid #fbbf24;
+
+    transition:.3s;
+}
+
+.logo img:hover{
+    transform:scale(1.05);
+}
+
+.logo h2{
+    font-size:28px;
+    font-weight:800;
+    color:#fbbf24;
+}
+
+/* NAVIGATION */
+
+nav{
+    display:flex;
+    align-items:center;
+    gap:40px;
+}
+
+.nav-links{
+    display:flex;
+    list-style:none;
+    gap:35px;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#f8fafc;
+    font-weight:600;
+    position:relative;
+    transition:.3s;
+}
+
+.nav-links a::after{
+    content:'';
+    position:absolute;
+    left:0;
+    bottom:-6px;
+
+    width:0;
+    height:3px;
+
+    background:#fbbf24;
+    border-radius:20px;
+
+    transition:.3s;
+}
+
+.nav-links a:hover{
+    color:#fbbf24;
+}
+
+.nav-links a:hover::after{
+    width:100%;
+}
+
+/* BUTTONS */
+
+.auth-buttons{
+    display:flex;
+    gap:15px;
+}
+
+.login-btn{
+    text-decoration:none;
+
+    padding:12px 24px;
+
+    border:2px solid #fbbf24;
+    border-radius:50px;
+
+    color:#fbbf24;
+    font-weight:600;
+
+    transition:.3s;
+}
+
+.login-btn:hover{
+    background:#fbbf24;
+    color:#000;
+}
+
+.signup-btn{
+    text-decoration:none;
+
+    padding:12px 24px;
+
+    border-radius:50px;
+
+    color:#000;
+    font-weight:700;
+
+    background:linear-gradient(
+        135deg,
+        #fbbf24,
+        #f59e0b
+    );
+
+    box-shadow:0 10px 25px rgba(251,191,36,.35);
+
+    transition:.3s;
+}
+
+.signup-btn:hover{
+    transform:translateY(-3px);
+}
+
+/* HAMBURGER */
+
+.menu-toggle{
+    display:none;
+    font-size:34px;
+    cursor:pointer;
+    color:#fbbf24;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+    .header{
+        padding:15px 20px;
+    }
+
+    .logo img{
+        width:50px;
+        height:50px;
+    }
+
+    .logo h2{
+        font-size:22px;
+    }
+
+    .menu-toggle{
+        display:block;
+    }
+
+    nav{
+        position:absolute;
+
+        top:85px;
+        left:-100%;
+
+        width:100%;
+
+        background:#0f172a;
+
+        flex-direction:column;
+
+        padding:30px;
+
+        transition:.4s;
+
+        box-shadow:0 10px 25px rgba(0,0,0,.25);
+    }
+
+    nav.active{
+        left:0;
+    }
+
+    .nav-links{
+        width:100%;
+        flex-direction:column;
+        text-align:center;
+        gap:25px;
+    }
+
+    .auth-buttons{
+        width:100%;
+        flex-direction:column;
+    }
+
+    .login-btn,
+    .signup-btn{
+        text-align:center;
+    }
+}
