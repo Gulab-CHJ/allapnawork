@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-
+/* 
 *{
     margin:0;
     padding:0;
@@ -21,7 +21,7 @@ body{
     background:#f5f7fb;
 }
 
-/* Header */
+/* Header 
 
 .header{
     background:white;
@@ -63,7 +63,7 @@ body{
     cursor:pointer;
 }
 
-/* Products */
+/* Products *
 
 .container{
     padding:30px;
@@ -75,7 +75,7 @@ body{
     gap:25px;
 }
 
-/* Card */
+/* Card *
 
 .product-card{
     background:white;
@@ -177,7 +177,7 @@ body{
     font-weight:600;
 }
 
-/* Mobile */
+/* Mobile *
 
 @media(max-width:768px){
 
@@ -194,203 +194,1314 @@ body{
     padding:15px;
 }
 
+} */
+
+/* Google Font */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+background:#f5f7fb;
+overflow-x:hidden;
+}
+
+/* HEADER */
+
+.header{
+
+position:sticky;
+top:0;
+z-index:999;
+
+background:#fff;
+
+display:flex;
+align-items:center;
+justify-content:space-between;
+
+padding:15px 40px;
+
+box-shadow:0 3px 20px rgba(0,0,0,.08);
+
+}
+
+.logo{
+
+font-size:28px;
+font-weight:700;
+color:#2563eb;
+
+}
+
+.search-box{
+
+width:45%;
+
+}
+
+.search-box input{
+
+width:100%;
+padding:13px 20px;
+
+border:none;
+outline:none;
+
+background:#eef2ff;
+
+border-radius:40px;
+
+font-size:15px;
+
+}
+
+.search-box input:focus{
+
+box-shadow:0 0 0 3px #2563eb33;
+
+}
+
+.header-right{
+
+display:flex;
+align-items:center;
+gap:20px;
+
+}
+
+.cart-btn{
+
+position:relative;
+
+border:none;
+
+background:#2563eb;
+
+color:#fff;
+
+padding:12px 22px;
+
+border-radius:12px;
+
+cursor:pointer;
+
+font-size:16px;
+
+transition:.3s;
+
+}
+
+.cart-btn:hover{
+
+background:#1d4ed8;
+
+}
+
+#cartCount{
+
+position:absolute;
+
+top:-8px;
+right:-8px;
+
+background:red;
+
+width:22px;
+height:22px;
+
+border-radius:50%;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:12px;
+font-weight:bold;
+
+}
+
+/* CONTAINER */
+
+.container{
+
+padding:30px;
+
+}
+
+/* GRID */
+
+.products-grid{
+
+display:grid;
+
+grid-template-columns:repeat(5,1fr);
+
+gap:22px;
+
+}
+
+/* CARD */
+
+.product-card{
+
+background:#fff;
+
+border-radius:18px;
+
+overflow:hidden;
+
+position:relative;
+
+transition:.35s;
+
+box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+}
+
+.product-card:hover{
+
+transform:translateY(-8px);
+
+box-shadow:0 15px 35px rgba(0,0,0,.15);
+
+}
+
+/* BADGE */
+
+.badge{
+
+position:absolute;
+
+top:12px;
+left:12px;
+
+background:#ef4444;
+
+color:#fff;
+
+padding:5px 12px;
+
+font-size:12px;
+
+border-radius:20px;
+
+z-index:2;
+
+}
+
+.badge.premium{
+
+background:#7c3aed;
+
+}
+
+.badge.new{
+
+background:#10b981;
+
+}
+
+.badge.top{
+
+background:#2563eb;
+
+}
+
+/* IMAGE */
+
+.product-image{
+
+width:100%;
+
+height:220px;
+
+object-fit:cover;
+
+display:block;
+
+}
+
+/* INFO */
+
+.product-info{
+
+padding:15px;
+
+}
+
+.product-title{
+
+font-size:15px;
+
+font-weight:600;
+
+margin-bottom:8px;
+
+color:#111827;
+
+height:42px;
+
+overflow:hidden;
+
+}
+
+.rating{
+
+display:inline-block;
+
+background:#10b981;
+
+color:#fff;
+
+padding:4px 8px;
+
+border-radius:6px;
+
+font-size:12px;
+
+margin-bottom:10px;
+
+}
+
+.price{
+
+font-size:22px;
+
+font-weight:700;
+
+margin-top:8px;
+
+}
+
+.old-price{
+
+font-size:13px;
+
+text-decoration:line-through;
+
+color:#94a3b8;
+
+margin-left:6px;
+
+}
+
+.discount{
+
+font-size:13px;
+
+color:#10b981;
+
+margin-left:6px;
+
+font-weight:600;
+
+}
+
+/* BUTTON */
+
+.btn-group{
+
+display:flex;
+
+gap:10px;
+
+margin-top:15px;
+
+}
+
+.cart{
+
+width:50px;
+
+border:none;
+
+background:#f59e0b;
+
+color:#fff;
+
+border-radius:10px;
+
+cursor:pointer;
+
+font-size:18px;
+
+transition:.3s;
+
+}
+
+.cart:hover{
+
+background:#d97706;
+
+}
+
+.buy{
+
+flex:1;
+
+border:none;
+
+background:linear-gradient(135deg,#2563eb,#1d4ed8);
+
+color:#fff;
+
+border-radius:10px;
+
+cursor:pointer;
+
+font-weight:600;
+
+font-size:15px;
+
+transition:.3s;
+
+padding:12px;
+
+}
+
+.buy:hover{
+
+transform:scale(1.03);
+
+}
+
+/* TABLET */
+
+@media(max-width:1200px){
+
+.products-grid{
+
+grid-template-columns:repeat(4,1fr);
+
+}
+
+}
+
+/* TABLET */
+
+@media(max-width:992px){
+
+.products-grid{
+
+grid-template-columns:repeat(3,1fr);
+
+}
+
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.header{
+
+padding:15px;
+
+flex-wrap:wrap;
+
+gap:12px;
+
+}
+
+.logo{
+
+font-size:22px;
+
+}
+
+.search-box{
+
+width:100%;
+order:3;
+
+}
+
+.container{
+
+padding:12px;
+
+}
+
+.products-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+gap:12px;
+
+}
+
+.product-image{
+
+height:150px;
+
+}
+
+.product-title{
+
+font-size:13px;
+
+height:35px;
+
+}
+
+.price{
+
+font-size:18px;
+
+}
+
+.buy{
+
+padding:10px;
+
+font-size:13px;
+
+}
+
+.cart{
+
+width:42px;
+
+font-size:16px;
+
+}
+
+}
+
+/* SMALL MOBILE */
+
+@media(max-width:400px){
+
+.products-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+gap:8px;
+
+}
+
+.product-image{
+
+height:130px;
+
+}
+
+.product-info{
+
+padding:10px;
+
+}
+
+.price{
+
+font-size:16px;
+
+}
+
+.buy{
+
+font-size:12px;
+
+}
+
+}
+.cart-sidebar{
+
+position:fixed;
+
+top:0;
+right:-420px;
+
+width:380px;
+height:100vh;
+
+background:#fff;
+
+box-shadow:-5px 0 20px rgba(0,0,0,.2);
+
+transition:.4s;
+
+z-index:99999;
+
+display:flex;
+
+flex-direction:column;
+
+}
+
+.cart-sidebar.active{
+
+right:0;
+
+}
+
+.cart-header{
+
+display:flex;
+
+justify-content:space-between;
+
+padding:20px;
+
+border-bottom:1px solid #eee;
+
+}
+
+#cartItems{
+
+flex:1;
+
+overflow:auto;
+
+padding:15px;
+
+}
+
+.cart-item{
+
+display:flex;
+
+justify-content:space-between;
+
+margin-bottom:15px;
+
+padding-bottom:10px;
+
+border-bottom:1px solid #eee;
+
+}
+
+.qty{
+
+display:flex;
+
+gap:10px;
+
+align-items:center;
+
+}
+
+.qty button{
+
+width:28px;
+height:28px;
+
+border:none;
+
+background:#2563eb;
+
+color:#fff;
+
+cursor:pointer;
+
+border-radius:5px;
+
+}
+
+.cart-footer{
+
+padding:20px;
+
+border-top:1px solid #eee;
+
+}
+
+#checkoutBtn{
+
+width:100%;
+
+padding:14px;
+
+background:#2563eb;
+
+border:none;
+
+color:white;
+
+font-size:16px;
+
+border-radius:10px;
+
+cursor:pointer;
+
 }
 
 </style>
 </head>
 <body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
 
-<!-- Header -->
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<div class="header">
+<title>My Premium Store</title>
 
-    <div class="logo">
-        🛍 My Shop
-    </div>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <div class="search-box">
-        <input type="text" placeholder="Search products...">
-    </div>
+<link rel="stylesheet" href="style.css">
 
-    <button class="cart-btn">
-        🛒 Cart
-    </button>
+</head>
+
+<!-- Cart Sidebar -->
+
+<div class="cart-sidebar" id="cartSidebar">
+
+<div class="cart-header">
+
+<h2>Shopping Cart</h2>
+
+<button id="closeCart">✖</button>
 
 </div>
 
-<!-- Products -->
+<div id="cartItems"></div>
 
-<div class="container">
+<div class="cart-footer">
 
-    <div class="products-grid">
+<h3>Total : ₹<span id="cartTotal">0</span></h3>
 
-        <!-- Product 1 -->
-
-        <div class="product-card">
-
-            <span class="badge">🔥 Bestseller</span>
-
-            <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=600"
-            class="product-image">
-
-            <div class="product-info">
-
-                <div class="product-title">
-                    Hair Growth Oil
-                </div>
-
-                <div class="rating">
-                    ⭐ 4.8
-                </div>
-
-                <div class="price">
-                    ₹299
-                    <span class="old-price">₹599</span>
-                    <span class="discount">50% OFF</span>
-                </div>
-
-                <div class="btn-group">
-
-                    <button class="add-cart">
-                        🛒
-                    </button>
-
-                    <button class="buy-now">
-                        Buy Now
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <!-- Product 2 -->
-
-        <div class="product-card">
-
-            <span class="badge">⭐ Premium</span>
-
-            <img src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=600"
-            class="product-image">
-
-            <div class="product-info">
-
-                <div class="product-title">
-                    Herbal Shampoo
-                </div>
-
-                <div class="rating">
-                    ⭐ 4.6
-                </div>
-
-                <div class="price">
-                    ₹399
-                    <span class="old-price">₹699</span>
-                    <span class="discount">43% OFF</span>
-                </div>
-
-                <div class="btn-group">
-
-                    <button class="add-cart">
-                        🛒
-                    </button>
-
-                    <button class="buy-now">
-                        Buy Now
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <!-- Product 3 -->
-
-        <div class="product-card">
-
-            <span class="badge">🚀 New</span>
-
-            <img src="https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=600"
-            class="product-image">
-
-            <div class="product-info">
-
-                <div class="product-title">
-                    Vitamin Capsules
-                </div>
-
-                <div class="rating">
-                    ⭐ 4.9
-                </div>
-
-                <div class="price">
-                    ₹499
-                    <span class="old-price">₹899</span>
-                    <span class="discount">45% OFF</span>
-                </div>
-
-                <div class="btn-group">
-
-                    <button class="add-cart">
-                        🛒
-                    </button>
-
-                    <button class="buy-now">
-                        Buy Now
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <!-- Product 4 -->
-
-        <div class="product-card">
-
-            <span class="badge">💎 Top Rated</span>
-
-            <img src="https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?w=600"
-            class="product-image">
-
-            <div class="product-info">
-
-                <div class="product-title">
-                    Skin Care Cream
-                </div>
-
-                <div class="rating">
-                    ⭐ 5.0
-                </div>
-
-                <div class="price">
-                    ₹799
-                    <span class="old-price">₹1299</span>
-                    <span class="discount">38% OFF</span>
-                </div>
-
-                <div class="btn-group">
-
-                    <button class="add-cart">
-                        🛒
-                    </button>
-
-                    <button class="buy-now">
-                        Buy Now
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
+<button id="checkoutBtn">Checkout</button>
 
 </div>
+
+</div>
+
+<body>
+
+<!-- HEADER -->
+
+<header class="header">
+
+<div class="logo">
+🛍 My Shop
+</div>
+
+<div class="search-box">
+
+<input
+type="text"
+id="searchInput"
+placeholder="Search Products...">
+
+</div>
+
+<div class="header-right">
+
+<button class="cart-btn">
+
+🛒 Cart
+
+<span id="cartCount">0</span>
+
+</button>
+
+</div>
+
+</header>
+
+<!-- PRODUCT SECTION -->
+
+<section class="container">
+
+<div class="products-grid">
+
+<!-- PRODUCT -->
+
+<div class="product-card">
+
+<div class="badge">
+🔥 Bestseller
+</div>
+
+<img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=700"
+class="product-image">
+
+<div class="product-info">
+
+<h3 class="product-title">
+Hair Growth Oil
+</h3>
+
+<div class="rating">
+⭐ 4.8
+</div>
+
+<div class="price">
+
+₹299
+
+<span class="old-price">
+₹599
+</span>
+
+<span class="discount">
+50% OFF
+</span>
+
+</div>
+
+<div class="btn-group">
+
+<button class="cart">
+🛒
+</button>
+
+<button class="buy">
+Buy Now
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- PRODUCT -->
+
+<div class="product-card">
+
+<div class="badge premium">
+⭐ Premium
+</div>
+
+<img src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=700"
+class="product-image">
+
+<div class="product-info">
+
+<h3 class="product-title">
+Herbal Shampoo
+</h3>
+
+<div class="rating">
+⭐ 4.7
+</div>
+
+<div class="price">
+
+₹399
+
+<span class="old-price">
+₹699
+</span>
+
+<span class="discount">
+43% OFF
+</span>
+
+</div>
+
+<div class="btn-group">
+
+<button class="cart">
+🛒
+</button>
+
+<button class="buy">
+Buy Now
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- PRODUCT -->
+
+<div class="product-card">
+
+<div class="badge new">
+🚀 New
+</div>
+
+<img src="https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=700"
+class="product-image">
+
+<div class="product-info">
+
+<h3 class="product-title">
+Vitamin Capsules
+</h3>
+
+<div class="rating">
+⭐ 4.9
+</div>
+
+<div class="price">
+
+₹499
+
+<span class="old-price">
+₹899
+</span>
+
+<span class="discount">
+45% OFF
+</span>
+
+</div>
+
+<div class="btn-group">
+
+<button class="cart">
+🛒
+</button>
+
+<button class="buy">
+Buy Now
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- PRODUCT -->
+
+<div class="product-card">
+
+<div class="badge top">
+💎 Top Rated
+</div>
+
+<img src="https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?w=700"
+class="product-image">
+
+<div class="product-info">
+
+<h3 class="product-title">
+Skin Care Cream
+</h3>
+
+<div class="rating">
+⭐ 5.0
+</div>
+
+<div class="price">
+
+₹799
+
+<span class="old-price">
+₹1299
+</span>
+
+<span class="discount">
+38% OFF
+</span>
+
+</div>
+
+<div class="btn-group">
+
+<button class="cart">
+🛒
+</button>
+
+<button class="buy">
+Buy Now
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- PRODUCT -->
+
+<div class="product-card">
+
+<div class="badge">
+🔥 Hot Deal
+</div>
+
+<img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=700"
+class="product-image">
+
+<div class="product-info">
+
+<h3 class="product-title">
+Protein Powder
+</h3>
+
+<div class="rating">
+⭐ 4.6
+</div>
+
+<div class="price">
+
+₹999
+
+<span class="old-price">
+₹1599
+</span>
+
+<span class="discount">
+37% OFF
+</span>
+
+</div>
+
+<div class="btn-group">
+
+<button class="cart">
+🛒
+</button>
+
+<button class="buy">
+Buy Now
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<script> // =========================
+// Premium Store Script
+// =========================
+
+let cart = [];
+
+// Elements
+const cartCount = document.getElementById("cartCount");
+const searchInput = document.getElementById("searchInput");
+
+const productCards = document.querySelectorAll(".product-card");
+const cartButtons = document.querySelectorAll(".cart");
+const buyButtons = document.querySelectorAll(".buy");
+
+// -------------------------
+// Cart Count
+// -------------------------
+
+function updateCart(){
+
+cartCount.innerText = cart.length;
+
+}
+
+// -------------------------
+// Toast
+// -------------------------
+
+function toast(message){
+
+const div = document.createElement("div");
+
+div.innerText = message;
+
+div.style.position="fixed";
+div.style.bottom="20px";
+div.style.right="20px";
+div.style.background="#2563eb";
+div.style.color="#fff";
+div.style.padding="12px 20px";
+div.style.borderRadius="10px";
+div.style.boxShadow="0 5px 15px rgba(0,0,0,.2)";
+div.style.zIndex="99999";
+div.style.fontWeight="600";
+
+document.body.appendChild(div);
+
+setTimeout(()=>{
+
+div.remove();
+
+},2000);
+
+}
+
+// -------------------------
+// Add Cart
+// -------------------------
+
+cartButtons.forEach((btn,index)=>{
+
+btn.onclick=function(){
+
+const title = productCards[index]
+.querySelector(".product-title")
+.innerText;
+
+cart.push(title);
+
+updateCart();
+
+toast(title+" Added To Cart");
+
+}
+
+});
+
+// -------------------------
+// Buy Now
+// -------------------------
+
+buyButtons.forEach((btn,index)=>{
+
+btn.onclick=function(){
+
+const title = productCards[index]
+.querySelector(".product-title")
+.innerText;
+
+const price = productCards[index]
+.querySelector(".price")
+.childNodes[0]
+.textContent.trim();
+
+alert(
+
+"Product : "+title+
+
+"\nPrice : "+price+
+
+"\n\nProceed To Checkout"
+
+);
+
+}
+
+});
+
+// -------------------------
+// Live Search
+// -------------------------
+
+searchInput.addEventListener("keyup",function(){
+
+const value = this.value.toLowerCase();
+
+productCards.forEach(card=>{
+
+const title = card
+.querySelector(".product-title")
+.innerText
+.toLowerCase();
+
+if(title.includes(value)){
+
+card.style.display="block";
+
+}else{
+
+card.style.display="none";
+
+}
+
+});
+
+});
+
+// -------------------------
+// Hover Animation
+// -------------------------
+
+productCards.forEach(card=>{
+
+card.onmouseenter=function(){
+
+this.style.transition=".3s";
+
+}
+
+});
+
+// -------------------------
+// Initial
+// -------------------------
+
+updateCart();
+
+
+// ----------------------
+// Local Storage
+// ----------------------
+
+let items = JSON.parse(localStorage.getItem("cart")) || [];
+
+const sidebar = document.getElementById("cartSidebar");
+
+const cartItems = document.getElementById("cartItems");
+
+const total = document.getElementById("cartTotal");
+
+document.querySelector(".cart-btn").onclick = () => {
+
+sidebar.classList.add("active");
+
+renderCart();
+
+}
+
+document.getElementById("closeCart").onclick = () => {
+
+sidebar.classList.remove("active");
+
+}
+
+function renderCart(){
+
+cartItems.innerHTML="";
+
+let totalPrice=0;
+
+items.forEach((item,index)=>{
+
+totalPrice += item.price * item.qty;
+
+cartItems.innerHTML += `
+
+<div class="cart-item">
+
+<div>
+
+<b>${item.name}</b>
+
+<br>
+
+₹${item.price}
+
+</div>
+
+<div class="qty">
+
+<button onclick="minus(${index})">-</button>
+
+${item.qty}
+
+<button onclick="plus(${index})">+</button>
+
+<button onclick="removeItem(${index})">🗑</button>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+total.innerText=totalPrice;
+
+cartCount.innerText=items.length;
+
+localStorage.setItem("cart",JSON.stringify(items));
+
+}
+
+function plus(i){
+
+items[i].qty++;
+
+renderCart();
+
+}
+
+function minus(i){
+
+if(items[i].qty>1){
+
+items[i].qty--;
+
+}else{
+
+items.splice(i,1);
+
+}
+
+renderCart();
+
+}
+
+function removeItem(i){
+
+items.splice(i,1);
+
+renderCart();
+
+}
+
+cartButtons.forEach((btn,index)=>{
+
+btn.onclick=function(){
+
+const name=productCards[index].querySelector(".product-title").innerText;
+
+const price=parseInt(
+
+productCards[index]
+
+.querySelector(".price")
+
+.innerText
+
+.replace(/[^\d]/g,"")
+
+);
+
+const found=items.find(x=>x.name===name);
+
+if(found){
+
+found.qty++;
+
+}else{
+
+items.push({
+
+name,
+
+price,
+
+qty:1
+
+});
+
+}
+
+renderCart();
+
+toast("Added To Cart");
+
+}
+
+});
+
+document.getElementById("checkoutBtn").onclick=function(){
+
+alert("Order Placed Successfully 🎉");
+
+items=[];
+
+renderCart();
+
+}
+</script>
+
+</body>
+</html>
 
 </body>
 </html>
