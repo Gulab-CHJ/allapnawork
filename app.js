@@ -8,6 +8,9 @@ const session = require("express-session");
 
 const app = express();
 
+// Trust Hostinger reverse proxy
+app.set("trust proxy", 1);
+
 
 // ===============================
 // DATABASE
