@@ -1,0 +1,37 @@
+.hero{
+    width:100%;
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+    gap:25px;
+    padding:30px;
+    justify-items:center;
+}
+
+.card{
+    width:100%;
+    max-width:320px;
+    min-height:380px;
+    padding:30px;
+
+    background:#fff;
+    border-radius:24px;
+    box-shadow:0 15px 35px rgba(0,0,0,.08);
+
+    transition:.4s;
+}
+
+.card:hover{
+    transform:translateY(-10px);
+}
+@media (max-width:768px){
+
+    .hero{
+        grid-template-columns:1fr;
+        padding:20px;
+    }
+
+    .card{
+        max-width:100%;
+    }
+
+}

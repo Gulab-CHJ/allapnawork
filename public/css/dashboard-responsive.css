@@ -1,0 +1,432 @@
+/* ==========================================
+   HHGS ADMIN DASHBOARD RESPONSIVE
+========================================== */
+
+/* ===========================
+   Large Laptop
+=========================== */
+
+@media (max-width:1200px){
+
+.admin-content{
+    padding:25px;
+}
+
+.stats-grid{
+    grid-template-columns:repeat(2,1fr);
+}
+
+.dashboard-card-grid{
+    grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+/* ===========================
+   Tablet
+=========================== */
+
+@media (max-width:992px){
+
+.admin-header{
+    padding:15px 20px;
+}
+
+.admin-logo img{
+    width:48px;
+    height:48px;
+}
+
+.admin-logo h2{
+    font-size:22px;
+}
+
+.admin-logo span{
+    font-size:12px;
+}
+
+.sidebar{
+    width:220px;
+}
+
+.sidebar a{
+    font-size:15px;
+    padding:12px;
+}
+
+.admin-content{
+    padding:20px;
+}
+
+.stats-grid{
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.dashboard-card-grid{
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+}
+
+/* ===========================
+   Mobile
+=========================== */
+
+@media (max-width:768px){
+
+.admin-header{
+
+height:70px;
+
+padding:12px 15px;
+
+}
+
+.admin-logo{
+
+gap:10px;
+
+}
+
+.admin-logo img{
+
+width:42px;
+height:42px;
+
+}
+
+.admin-logo h2{
+
+font-size:18px;
+
+}
+
+.admin-logo span{
+
+display:none;
+
+}
+
+.admin-profile{
+
+gap:10px;
+
+}
+
+.admin-profile i{
+
+width:38px;
+height:38px;
+
+font-size:16px;
+
+}
+
+.admin-layout{
+
+display:block;
+
+}
+
+.sidebar{
+
+width:100%;
+
+display:flex;
+
+overflow-x:auto;
+
+gap:10px;
+
+padding:12px;
+
+background:#0f172a;
+
+scrollbar-width:none;
+
+}
+
+.sidebar::-webkit-scrollbar{
+
+display:none;
+
+}
+
+.sidebar h3{
+
+display:none;
+
+}
+
+.sidebar a{
+
+white-space:nowrap;
+
+margin:0;
+
+padding:10px 14px;
+
+font-size:14px;
+
+border-radius:10px;
+
+}
+
+.admin-content{
+
+padding:15px;
+
+}
+
+.dashboard-search{
+
+margin-bottom:20px;
+
+}
+
+.dashboard-search input{
+
+height:48px;
+
+font-size:14px;
+
+padding-left:45px;
+
+}
+
+.dashboard-search i{
+
+left:16px;
+
+top:15px;
+
+font-size:16px;
+
+}
+
+.stats-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+gap:12px;
+
+}
+
+.stat-card{
+
+padding:18px;
+
+border-radius:16px;
+
+}
+
+.stat-card i{
+
+width:55px;
+
+height:55px;
+
+font-size:22px;
+
+}
+
+.stat-card h3{
+
+font-size:15px;
+
+}
+
+.stat-card span{
+
+font-size:24px;
+
+}
+
+.dashboard-section{
+
+margin-top:25px;
+
+}
+
+.dashboard-section-title{
+
+margin-bottom:18px;
+
+}
+
+.dashboard-section-title h2{
+
+font-size:22px;
+
+}
+
+.dashboard-card-grid{
+
+grid-template-columns:1fr;
+
+gap:15px;
+
+}
+
+.dashboard-card{
+
+padding:18px;
+
+}
+
+}
+
+/* ===========================
+   Small Mobile
+=========================== */
+
+@media (max-width:480px){
+
+.admin-header{
+
+padding:10px;
+
+}
+
+.admin-logo img{
+
+width:38px;
+height:38px;
+
+}
+
+.admin-logo h2{
+
+font-size:17px;
+
+}
+
+.admin-profile i{
+
+width:34px;
+height:34px;
+
+font-size:15px;
+
+}
+
+.dashboard-search input{
+
+height:45px;
+
+font-size:13px;
+
+}
+
+.stats-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.stat-card{
+
+padding:16px;
+
+}
+
+.stat-card i{
+
+width:50px;
+height:50px;
+
+font-size:20px;
+
+}
+
+.stat-card h3{
+
+font-size:14px;
+
+}
+
+.stat-card span{
+
+font-size:22px;
+
+}
+
+.dashboard-card{
+
+padding:16px;
+
+}
+
+.dashboard-card-icon{
+
+width:55px;
+
+height:55px;
+
+font-size:24px;
+
+}
+
+.dashboard-card h3{
+
+font-size:18px;
+
+}
+
+.dashboard-card-buttons a{
+
+font-size:13px;
+
+padding:10px 12px;
+
+}
+
+}
+
+/* ===========================
+   Ultra Small
+=========================== */
+
+@media (max-width:360px){
+
+.sidebar a{
+
+font-size:12px;
+
+padding:8px 10px;
+
+}
+
+.admin-content{
+
+padding:10px;
+
+}
+
+.dashboard-search input{
+
+font-size:12px;
+
+}
+
+.dashboard-section-title h2{
+
+font-size:18px;
+
+}
+
+.stat-card span{
+
+font-size:20px;
+
+}
+
+.dashboard-card h3{
+
+font-size:16px;
+
+}
+
+}

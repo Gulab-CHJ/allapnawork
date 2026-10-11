@@ -1,0 +1,159 @@
+/* ===================================
+   HHGS ADMIN HEADER
+=================================== */
+
+.dashboard-header{
+    position:sticky;
+    top:0;
+    z-index:999;
+    width:100%;
+    background:#ffffff;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 30px;
+    border-bottom:1px solid #e5e7eb;
+    box-shadow:0 4px 15px rgba(0,0,0,.08);
+}
+
+/* ==========================
+   LOGO
+========================== */
+
+.header-logo{
+    display:flex;
+    align-items:center;
+}
+
+.header-logo h2{
+    margin:0;
+    font-size:26px;
+    font-weight:700;
+    color:#0d6efd;
+}
+
+/* ==========================
+   MENU
+========================== */
+
+.header-menu{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.header-menu a{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 16px;
+    text-decoration:none;
+    color:#555;
+    border-radius:10px;
+    font-size:15px;
+    font-weight:600;
+    transition:.3s ease;
+    white-space:nowrap;
+}
+
+.header-menu a i{
+    font-size:16px;
+}
+
+/* Hover */
+
+.header-menu a:hover{
+    background:#eef4ff;
+    color:#0d6efd;
+}
+
+/* Active */
+
+.header-menu a.active{
+    background:#0d6efd;
+    color:#fff;
+}
+
+/* Logout */
+
+.header-menu a.logout{
+    color:#dc3545;
+}
+
+.header-menu a.logout:hover{
+    background:#dc3545;
+    color:#fff;
+}
+
+/* ==========================
+   TABLET
+========================== */
+
+@media(max-width:992px){
+
+.dashboard-header{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:15px;
+    padding:15px 20px;
+}
+
+.header-logo{
+    width:100%;
+    justify-content:center;
+}
+
+.header-logo h2{
+    font-size:22px;
+}
+
+.header-menu{
+    width:100%;
+    display:flex;
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    overflow-y:hidden;
+    gap:10px;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+    padding-bottom:5px;
+}
+
+.header-menu::-webkit-scrollbar{
+    display:none;
+}
+
+.header-menu a{
+    flex:0 0 auto;
+}
+
+}
+
+/* ==========================
+   MOBILE
+========================== */
+
+@media(max-width:576px){
+
+.dashboard-header{
+    padding:12px 15px;
+}
+
+.header-logo h2{
+    font-size:20px;
+}
+
+.header-menu{
+    gap:8px;
+}
+
+.header-menu a{
+    padding:8px 12px;
+    font-size:13px;
+}
+
+.header-menu a i{
+    font-size:15px;
+}
+
+}

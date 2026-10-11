@@ -1,0 +1,1094 @@
+/* /* ===========================
+   PREMIUM HEADER
+=========================== 
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Poppins",sans-serif;
+}
+
+body{
+    overflow-x:hidden;
+}
+
+/* Header 
+
+.header{
+
+    position:sticky;
+    top:0;
+    left:0;
+
+    width:100%;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:12px 6%;
+
+    background:rgba(255,255,255,.95);
+
+    backdrop-filter:blur(20px);
+
+    border-bottom:1px solid rgba(0,0,0,.08);
+
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+    z-index:99999;
+
+}
+
+/* Logo *
+
+.logo{
+
+    display:flex;
+    align-items:center;
+
+    gap:12px;
+
+}
+
+.logo img{
+
+    width:60px;
+    height:60px;
+
+    object-fit:contain;
+
+}
+
+.logo-text h2{
+
+    color:#0f172a;
+
+    font-size:24px;
+
+    font-weight:700;
+
+}
+
+.logo-text span{
+
+    display:block;
+
+    color:#2563eb;
+
+    font-size:12px;
+
+}
+
+/* Navbar *
+
+.navbar{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:22px;
+
+}
+
+.navbar a{
+
+    text-decoration:none;
+
+    color:#1f2937;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:10px 15px;
+
+    border-radius:10px;
+
+    transition:.3s;
+
+}
+
+.navbar a i{
+
+    color:#2563eb;
+
+    font-size:16px;
+
+}
+
+.navbar a:hover{
+
+    background:#2563eb;
+
+    color:#fff;
+
+    transform:translateY(-3px);
+
+}
+
+.navbar a:hover i{
+
+    color:#fff;
+
+}
+
+/* Admin Button *
+
+.admin-btn{
+
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+
+    color:#fff !important;
+
+    border-radius:30px;
+
+    padding:12px 22px !important;
+
+}
+
+.admin-btn i{
+
+    color:#fff !important;
+
+}
+
+.admin-btn:hover{
+
+    background:linear-gradient(135deg,#1d4ed8,#1e40af);
+
+}
+
+/* Hamburger *
+
+.menu-btn{
+
+    display:none;
+
+    width:50px;
+    height:50px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#2563eb;
+
+    color:#fff;
+
+    font-size:24px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.menu-btn:hover{
+
+    transform:scale(1.08);
+
+}
+
+/* Tablet *
+
+@media(max-width:992px){
+
+.logo-text span{
+
+display:none;
+
+}
+
+.navbar{
+
+gap:12px;
+
+}
+
+}
+
+/* Mobile *
+
+@media(max-width:768px){
+
+.menu-btn{
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+}
+
+.navbar{
+
+position:absolute;
+
+top:85px;
+
+left:0;
+
+width:100%;
+
+background:#fff;
+
+display:none;
+
+flex-direction:column;
+
+padding:20px;
+
+gap:15px;
+
+box-shadow:0 15px 40px rgba(0,0,0,.12);
+
+animation:slideDown .35s ease;
+
+}
+
+.navbar.active{
+
+display:flex;
+
+}
+
+.navbar a{
+
+width:100%;
+
+justify-content:flex-start;
+
+padding:14px;
+
+}
+
+.logo img{
+
+width:52px;
+
+height:52px;
+
+}
+
+.logo-text h2{
+
+font-size:20px;
+
+}
+
+}
+
+/* Animation *
+
+@keyframes slideDown{
+
+from{
+
+opacity:0;
+
+transform:translateY(-20px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+} */
+
+
+/* ===================================================
+   HHGS PREMIUM HEADER CSS
+   Part 1
+=================================================== */
+
+/* Google Font */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+/* Reset */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:#f6f8fb;
+    color:#1e293b;
+    overflow-x:hidden;
+    padding-top:85px;
+}
+
+/* Remove default */
+
+a{
+    text-decoration:none;
+}
+
+ul{
+    list-style:none;
+}
+
+img{
+    max-width:100%;
+    display:block;
+}
+
+/* ===================================================
+   HEADER
+=================================================== */
+
+.header{
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:85px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:0 6%;
+
+    background:rgba(255,255,255,.88);
+
+    backdrop-filter:blur(18px);
+
+    -webkit-backdrop-filter:blur(18px);
+
+    border-bottom:1px solid rgba(255,255,255,.25);
+
+    box-shadow:
+
+        0 8px 30px rgba(0,0,0,.08),
+
+        0 1px 5px rgba(0,0,0,.04);
+
+    z-index:99999;
+
+    transition:.35s;
+
+}
+
+/* Scroll Effect */
+
+.header.scrolled{
+
+    height:75px;
+
+    box-shadow:
+
+    0 12px 35px rgba(37,99,235,.15);
+
+}
+
+/* ===================================================
+   LOGO
+=================================================== */
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    cursor:pointer;
+
+}
+
+.logo img{
+
+    width:64px;
+
+    height:64px;
+
+    object-fit:cover;
+
+    border-radius:50%;
+
+    background:#fff;
+
+    padding:5px;
+
+    box-shadow:
+
+    0 12px 30px rgba(37,99,235,.18);
+
+    transition:.35s;
+
+}
+
+.logo:hover img{
+
+    transform:rotate(-5deg) scale(1.05);
+
+}
+
+.logo-text{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.logo-text h2{
+
+    font-size:27px;
+
+    font-weight:800;
+
+    color:#0f172a;
+
+    letter-spacing:.5px;
+
+    line-height:1;
+
+}
+
+.logo-text span{
+
+    font-size:13px;
+
+    color:#2563eb;
+
+    font-weight:600;
+
+    margin-top:4px;
+
+}
+
+/* ===================================================
+   NAVBAR
+=================================================== */
+
+.navbar{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+.navbar a{
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:12px 18px;
+
+    border-radius:40px;
+
+    color:#334155;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    transition:.35s;
+
+}
+
+.navbar a i{
+
+    font-size:17px;
+
+    color:#2563eb;
+
+    transition:.35s;
+
+}
+
+/* Hover */
+
+.navbar a:hover{
+
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+
+    color:#fff;
+
+    transform:translateY(-3px);
+
+    box-shadow:
+
+    0 12px 25px rgba(37,99,235,.28);
+
+}
+
+.navbar a:hover i{
+
+    color:#fff;
+
+}
+
+/* Active */
+
+.navbar a.active{
+
+    background:#2563eb;
+
+    color:#fff;
+
+}
+
+.navbar a.active i{
+
+    color:#fff;
+
+}
+
+/* ===================================================
+   ADMIN BUTTON
+=================================================== */
+
+.admin-btn{
+
+    background:
+
+    linear-gradient(135deg,#16a34a,#22c55e);
+
+    color:#fff!important;
+
+    padding:13px 24px!important;
+
+    border-radius:45px;
+
+    box-shadow:
+
+    0 12px 30px rgba(22,163,74,.28);
+
+}
+
+.admin-btn i{
+
+    color:#fff!important;
+
+}
+
+.admin-btn:hover{
+
+    transform:translateY(-3px);
+
+    background:
+
+    linear-gradient(135deg,#15803d,#16a34a);
+
+}
+
+/* ===================================================
+   MENU BUTTON
+=================================================== */
+
+.menu-btn{
+
+    width:52px;
+
+    height:52px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:
+
+    linear-gradient(135deg,#2563eb,#1d4ed8);
+
+    color:#fff;
+
+    font-size:22px;
+
+    cursor:pointer;
+
+    display:none;
+
+    transition:.35s;
+
+}
+
+.menu-btn:hover{
+
+    transform:rotate(90deg);
+
+}
+
+.menu-btn i{
+
+    color:#fff;
+
+}
+
+/* ===================================================
+   HHGS PREMIUM HEADER CSS
+   PART 2
+=================================================== */
+
+/* ---------- Search Button ---------- */
+
+.search-btn{
+
+    width:48px;
+    height:48px;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:#fff;
+
+    color:#2563eb;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+    transition:.35s;
+
+}
+
+.search-btn:hover{
+
+    background:#2563eb;
+
+    color:#fff;
+
+    transform:translateY(-3px);
+
+}
+
+/* ---------- Notification ---------- */
+
+.notification{
+
+    position:relative;
+
+}
+
+.notification .badge{
+
+    position:absolute;
+
+    top:-6px;
+
+    right:-6px;
+
+    width:18px;
+
+    height:18px;
+
+    background:#ef4444;
+
+    color:#fff;
+
+    border-radius:50%;
+
+    font-size:10px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-weight:700;
+
+}
+
+/* ---------- Navbar Underline ---------- */
+
+.navbar a::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+
+    bottom:6px;
+
+    width:0;
+
+    height:2px;
+
+    background:#fff;
+
+    transform:translateX(-50%);
+
+    transition:.3s;
+
+}
+
+.navbar a:hover::after{
+
+    width:60%;
+
+}
+
+/* ---------- Mobile ---------- */
+
+@media(max-width:992px){
+
+.logo-text span{
+
+display:none;
+
+}
+
+.navbar{
+
+gap:8px;
+
+}
+
+.navbar a{
+
+padding:10px 14px;
+
+font-size:14px;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.header{
+
+height:75px;
+
+padding:0 18px;
+
+}
+
+.logo img{
+
+width:54px;
+
+height:54px;
+
+}
+
+.logo-text h2{
+
+font-size:22px;
+
+}
+
+.menu-btn{
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+}
+
+.navbar{
+
+position:fixed;
+
+top:75px;
+
+right:-100%;
+
+width:300px;
+
+height:calc(100vh - 75px);
+
+background:#fff;
+
+display:flex;
+
+flex-direction:column;
+
+align-items:flex-start;
+
+padding:30px 20px;
+
+gap:18px;
+
+box-shadow:-8px 0 30px rgba(0,0,0,.12);
+
+transition:.4s ease;
+
+overflow-y:auto;
+
+}
+
+.navbar.active{
+
+right:0;
+
+}
+
+.navbar a{
+
+width:100%;
+
+padding:14px 16px;
+
+border-radius:12px;
+
+justify-content:flex-start;
+
+}
+
+.admin-btn{
+
+width:100%;
+
+justify-content:center;
+
+}
+
+}
+
+/* ---------- Overlay ---------- */
+
+.menu-overlay{
+
+position:fixed;
+
+top:0;
+
+left:0;
+
+width:100%;
+
+height:100%;
+
+background:rgba(0,0,0,.35);
+
+backdrop-filter:blur(3px);
+
+opacity:0;
+
+visibility:hidden;
+
+transition:.35s;
+
+z-index:9998;
+
+}
+
+.menu-overlay.active{
+
+opacity:1;
+
+visibility:visible;
+
+}
+
+/* ---------- Scroll Animation ---------- */
+
+.header.scrolled{
+
+background:rgba(255,255,255,.96);
+
+box-shadow:
+
+0 12px 35px rgba(0,0,0,.12);
+
+}
+
+/* ---------- Logo Animation ---------- */
+
+.logo img:hover{
+
+animation:logoFloat .8s ease;
+
+}
+
+@keyframes logoFloat{
+
+0%{
+
+transform:translateY(0);
+
+}
+
+50%{
+
+transform:translateY(-6px);
+
+}
+
+100%{
+
+transform:translateY(0);
+
+}
+
+}
+
+/* ---------- Button Ripple ---------- */
+
+.navbar a{
+
+overflow:hidden;
+
+}
+
+.navbar a::before{
+
+content:"";
+
+position:absolute;
+
+width:0;
+
+height:0;
+
+background:rgba(255,255,255,.25);
+
+border-radius:50%;
+
+left:50%;
+
+top:50%;
+
+transform:translate(-50%,-50%);
+
+transition:.45s;
+
+}
+
+.navbar a:hover::before{
+
+width:250px;
+
+height:250px;
+
+}
+
+/* ---------- Smooth ---------- */
+
+.header,
+.logo img,
+.navbar,
+.navbar a,
+.menu-btn{
+
+transition:.35s ease;
+
+}
+/* ===============================
+   Premium Hover Glow
+================================ */
+
+.navbar a:hover{
+
+box-shadow:
+0 15px 40px rgba(37,99,235,.30);
+
+}
+
+/* Smooth */
+
+html{
+
+scroll-behavior:smooth;
+
+}
+
+/* Custom Scroll */
+
+::-webkit-scrollbar{
+
+width:8px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:#2563eb;
+
+border-radius:50px;
+
+}
+
+::-webkit-scrollbar-track{
+
+background:#f1f5f9;
+
+}
+
+/* Selection */
+
+::selection{
+
+background:#2563eb;
+
+color:#fff;
+
+}
+
+/* Logo */
+
+.logo{
+
+transition:.35s;
+
+}
+
+.logo:hover{
+
+transform:scale(1.03);
+
+}
+
+/* Admin */
+
+.admin-btn{
+
+font-weight:700;
+
+letter-spacing:.3px;
+
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+.navbar{
+
+border-left:4px solid #2563eb;
+
+}
+
+}

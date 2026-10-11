@@ -1,0 +1,228 @@
+.service-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,160px);
+
+    justify-content:center;
+
+    gap:16px;
+
+}
+
+.section-title{
+
+    text-align:center;
+
+    margin-bottom:45px;
+
+}
+
+.section-title h2{
+
+    font-size:38px;
+    font-weight:800;
+    color:#0f172a;
+
+}
+
+.section-title p{
+
+    margin-top:10px;
+    color:#64748b;
+    font-size:16px;
+
+}
+
+.service-card{
+
+    width:160px;
+
+    margin:auto;
+
+    background:#fff;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    transition:.3s;
+
+    box-shadow:0 8px 22px rgba(0,0,0,.08);
+
+}
+
+.service-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 14px 30px rgba(37,99,235,.18);
+
+}
+
+.service-card a{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:18px 12px;
+
+    text-decoration:none;
+
+    color:#111827;
+
+}
+
+.service-icon{
+
+    width:65px;
+
+    height:65px;
+
+    border-radius:18px;
+
+    background:#f1f5f9;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    margin-bottom:14px;
+
+}
+
+.service-icon img{
+
+    width:42px;
+
+    height:42px;
+
+    object-fit:contain;
+
+}
+
+.service-card h3{
+
+    font-size:15px;
+
+    font-weight:700;
+
+    text-align:center;
+
+    line-height:1.4;
+
+    margin-bottom:8px;
+
+}
+
+.service-card p{
+
+    display:none;
+
+}
+
+.service-card span{
+
+    font-size:13px;
+
+    color:#2563eb;
+
+    font-weight:600;
+
+}
+@media (max-width:768px){
+
+.service-grid{
+
+    grid-template-columns:repeat(auto-fit,150px);
+
+    justify-content:center;
+
+    gap:12px;
+
+}
+
+.service-card{
+
+    width:150px;
+
+}
+
+.service-card a{
+
+    padding:15px 10px;
+
+}
+
+.service-icon{
+
+    width:58px;
+
+    height:58px;
+
+}
+
+.service-icon img{
+
+    width:36px;
+
+    height:36px;
+
+}
+
+.service-card h3{
+
+    font-size:14px;
+
+}
+
+}
+
+@media (max-width:480px){
+
+.service-grid{
+
+    grid-template-columns:repeat(auto-fit,150px);
+
+    justify-content:center;
+
+    gap:12px;
+
+}
+
+.service-card{
+
+    width:145px;
+
+}
+
+.service-card h3{
+
+    font-size:13px;
+
+}
+
+.service-icon{
+
+    width:54px;
+
+    height:54px;
+
+}
+
+.service-icon img{
+
+    width:32px;
+
+    height:32px;
+
+}
+
+}

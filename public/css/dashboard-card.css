@@ -1,0 +1,339 @@
+/* ===================================
+   HHGS DASHBOARD MANAGEMENT CARDS
+=================================== */
+
+.dashboard-section{
+
+    margin-top:40px;
+
+}
+
+.dashboard-section-title{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-bottom:25px;
+
+}
+
+.dashboard-section-title i{
+
+    width:50px;
+
+    height:50px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-radius:14px;
+
+    background:linear-gradient(135deg,#2563eb,#06b6d4);
+
+    color:#fff;
+
+    font-size:22px;
+
+}
+
+.dashboard-section-title h2{
+
+    font-size:28px;
+
+    font-weight:700;
+
+    color:#0f172a;
+
+}
+
+/* Grid */
+
+.dashboard-card-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+
+    gap:25px;
+
+}
+
+/* Card */
+
+.dashboard-card{
+
+    background:#fff;
+
+    border-radius:22px;
+
+    padding:25px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+    transition:.35s;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.dashboard-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:6px;
+
+    background:linear-gradient(90deg,#2563eb,#06b6d4);
+
+}
+
+.dashboard-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 20px 40px rgba(37,99,235,.18);
+
+}
+
+/* Icon */
+
+.dashboard-card-icon{
+
+    width:70px;
+
+    height:70px;
+
+    border-radius:18px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:#eff6ff;
+
+    color:#2563eb;
+
+    font-size:32px;
+
+    margin-bottom:18px;
+
+}
+
+/* Title */
+
+.dashboard-card h3{
+
+    font-size:22px;
+
+    color:#0f172a;
+
+    margin-bottom:10px;
+
+}
+
+/* Text */
+
+.dashboard-card p{
+
+    color:#64748b;
+
+    line-height:1.7;
+
+    margin-bottom:20px;
+
+    font-size:14px;
+
+}
+
+/* Buttons */
+
+.dashboard-card-buttons{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+}
+
+.dashboard-card-buttons a{
+
+    text-decoration:none;
+
+    background:#f8fafc;
+
+    color:#334155;
+
+    padding:12px 16px;
+
+    border-radius:12px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.dashboard-card-buttons a i{
+
+    color:#2563eb;
+
+}
+
+.dashboard-card-buttons a:hover{
+
+    background:#2563eb;
+
+    color:#fff;
+
+    transform:translateX(5px);
+
+}
+
+.dashboard-card-buttons a:hover i{
+
+    color:#fff;
+
+}
+
+/* Different Colors */
+
+.blue::before{
+
+background:#2563eb;
+
+}
+
+.green::before{
+
+background:#16a34a;
+
+}
+
+.orange::before{
+
+background:#f59e0b;
+
+}
+
+.red::before{
+
+background:#dc2626;
+
+}
+
+.purple::before{
+
+background:#7c3aed;
+
+}
+
+.cyan::before{
+
+background:#0891b2;
+
+}
+
+/* Responsive */
+
+@media(max-width:992px){
+
+.dashboard-card-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+}
+
+@media(max-width:768px){
+
+.dashboard-card-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.dashboard-card{
+
+padding:20px;
+
+}
+
+.dashboard-card h3{
+
+font-size:20px;
+
+}
+
+.dashboard-section-title h2{
+
+font-size:24px;
+
+}
+
+.dashboard-section-title i{
+
+width:45px;
+
+height:45px;
+
+font-size:20px;
+
+}
+
+}
+
+@media(max-width:480px){
+
+.dashboard-card{
+
+border-radius:18px;
+
+padding:18px;
+
+}
+
+.dashboard-card-buttons a{
+
+padding:11px;
+
+font-size:14px;
+
+}
+
+.dashboard-card-icon{
+
+width:60px;
+
+height:60px;
+
+font-size:28px;
+
+}
+
+}
