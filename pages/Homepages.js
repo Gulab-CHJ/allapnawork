@@ -1740,7 +1740,7 @@ const QuickServiceSection =
 
 
 // ======================================================
-// HOME
+// HOME PAGE
 // ======================================================
 
 function Home() {
@@ -1799,9 +1799,7 @@ function Home() {
         href="/images/hhgs-icon-192.png"
     >
 
-    <title>
-        GLOBAL QUICK SERVICES | HHGS
-    </title>
+    <title>GLOBAL QUICK SERVICES | HHGS</title>
 
     <link
         rel="stylesheet"
@@ -1818,10 +1816,8 @@ function Home() {
         body {
             width: 100%;
             max-width: 100%;
-
             margin: 0;
             padding: 0;
-
             overflow-x: hidden;
         }
 
@@ -1831,11 +1827,32 @@ function Home() {
 
         img {
             max-width: 100%;
+            height: auto;
         }
 
-        main,
-        section,
-        .container {
+        /* HEADER */
+        .home-header {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            position: relative;
+            clear: both;
+        }
+
+        /* QUICK SERVICES BELOW HEADER */
+        .home-quick-services {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            position: relative;
+            clear: both;
+            float: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .home-quick-services > section,
+        .home-quick-services > div {
             max-width: 100%;
         }
 
@@ -1847,12 +1864,11 @@ function Home() {
                 min-width: 0;
             }
 
-            .container {
+            .home-header,
+            .home-quick-services {
                 width: 100%;
-                margin: 0 auto;
-
-                padding-left: 10px;
-                padding-right: 10px;
+                float: none;
+                clear: both;
             }
 
         }
@@ -1863,11 +1879,15 @@ function Home() {
 
 <body>
 
-    <!-- HEADER -->
-    ${Header()}
+    <!-- HEADER: TOP -->
+    <div class="home-header">
+        ${Header()}
+    </div>
 
-    <!-- GLOBAL QUICK SERVICES -->
-    ${QuickServiceSection()}
+    <!-- QUICK SERVICES: BELOW HEADER -->
+    <main class="home-quick-services">
+        ${QuickServiceSection()}
+    </main>
 
     <!-- SERVICE WORKER -->
     <script>
