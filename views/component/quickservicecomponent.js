@@ -4,10 +4,14 @@ function QuickServiceSection(){
 
 <style>
 
-.quick-service-section{
-    width:calc(100% - 30px);
-    max-width:1180px;
-    margin:20px auto;
+.quick-service-section {
+    display: block;
+    width: 100%;
+    max-width: 1180px;
+    margin: 20px auto;
+    float: none;
+    clear: both;
+    position: relative;
 }
 
 .quick-service-card{
@@ -33,6 +37,10 @@ function QuickServiceSection(){
     box-shadow:
         0 10px 28px
         rgba(13,96,75,.20);
+
+         width: 100%;
+    float: none;
+    box-sizing: border-box;
 }
 
 .quick-service-icon{
