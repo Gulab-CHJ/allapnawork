@@ -15528,132 +15528,149 @@ router.post(
 
 router.post(
     "/quick-service/verify-payment",
-
-    async(req,res)=>{
-
-        try{
-
+    async (req, res) => {
+        try {
             const {
-
                 orderId,
-
                 razorpay_order_id,
-
                 razorpay_payment_id,
-
                 razorpay_signature
-
             } = req.body;
 
+            // Validate required fields
+            if (
+                !orderId ||
+                !razorpay_order_id ||
+                !razorpay_payment_id ||
+                !razorpay_signature
+            ) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Missing payment details"
+                });
+            }
+
+            // Check Razorpay secret
+            const secret =
+                process.env.RAZORPAY_KEY_SECRET;
+
+            if (!secret) {
+                console.error(
+                    "RAZORPAY_KEY_SECRET is missing"
+                );
+
+                return res.status(500).json({
+                    success: false,
+                    message: "Payment configuration error"
+                });
+            }
+
+            // Generate expected signature
             const body =
-
                 razorpay_order_id +
-
                 "|" +
-
                 razorpay_payment_id;
 
             const expectedSignature =
-
                 crypto
+                    .createHmac("sha256", secret)
+                    .update(body)
+                    .digest("hex");
 
-                .createHmac(
-                    "sha256",
-                    process.env
-                    .RAZORPAY_KEY_SECRET
+            // Validate signature format
+            if (
+                !/^[a-f0-9]{64}$/i.test(
+                    razorpay_signature
                 )
+            ) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Invalid Payment Signature"
+                });
+            }
 
-                .update(
-                    body
+            const expectedBuffer = Buffer.from(
+                expectedSignature,
+                "hex"
+            );
+
+            const receivedBuffer = Buffer.from(
+                razorpay_signature,
+                "hex"
+            );
+
+            // Verify signature securely
+            if (
+                expectedBuffer.length !== 32 ||
+                receivedBuffer.length !== 32 ||
+                !crypto.timingSafeEqual(
+                    expectedBuffer,
+                    receivedBuffer
                 )
-
-                .digest(
-                    "hex"
+            ) {
+                console.error(
+                    "RAZORPAY SIGNATURE VERIFICATION FAILED"
                 );
 
-          const expectedBuffer = Buffer.from(
-    expectedSignature,
-    "hex"
-);
+                return res.status(400).json({
+                    success: false,
+                    message: "Invalid Payment Signature"
+                });
+            }
 
-const receivedBuffer = Buffer.from(
-    razorpay_signature || "",
-    "hex"
-);
+            // Find the existing order
+            const order = await QuickOrder.findById(
+                orderId
+            );
 
-if (
-    expectedBuffer.length !== 32 ||
-    receivedBuffer.length !== 32 ||
-    !crypto.timingSafeEqual(
-        expectedBuffer,
-        receivedBuffer
-    )
-) {
-    console.error(
-        "RAZORPAY SIGNATURE VERIFICATION FAILED"
-    );
+            if (!order) {
+                return res.status(404).json({
+                    success: false,
+                    message: "Order not found"
+                });
+            }
 
-    return res.status(400).json({
-        success: false,
-        message: "Invalid Payment Signature"
-    });
-}
+            // IMPORTANT:
+            // Confirm that razorpay_order_id belongs
+            // to this database order.
+            //
+            // Replace "razorpayOrderId" below with
+            // your actual schema field name.
+            if (
+                order.razorpayOrderId !==
+                razorpay_order_id
+            ) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Order ID mismatch"
+                });
+            }
 
-            const order =
-                await QuickOrder
-                .findByIdAndUpdate(
+            // Update only after successful verification
+            order.paymentStatus = "Paid";
+            order.razorpayPaymentId =
+                razorpay_payment_id;
+            order.status = "Pending";
 
-                    orderId,
-
-                    {
-
-                        paymentStatus:
-                            "Paid",
-
-                        razorpayPaymentId:
-                            razorpay_payment_id,
-
-                        status:
-                            "Pending"
-
-                    },
-
-                    {
-                        new:true
-                    }
-
-                );
+            await order.save();
 
             return res.json({
-
-                success:true,
-
-                orderNumber:
-                    order.orderId
-
+                success: true,
+                orderNumber: order.orderId
             });
-
-        }
-        catch(error){
-
+        } catch (error) {
             console.error(
                 "VERIFY PAYMENT ERROR:",
                 error
             );
 
-            return res
-            .status(500)
-            .json({
-
-                success:false
-
+            return res.status(500).json({
+                success: false,
+                message: "Payment verification failed"
             });
-
         }
-
     }
 );
-
 // ======================================================
 // SUCCESS PAGE
 // ======================================================
