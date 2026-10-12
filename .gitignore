@@ -5,3 +5,6 @@ node_modules/
 *.log
 
 public/uploads/
+
+# Private customer uploads and local storage
+/storage/
