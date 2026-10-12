@@ -15571,23 +15571,33 @@ router.post(
                     "hex"
                 );
 
-            if(
-                expectedSignature !==
-                razorpay_signature
-            ){
+          const expectedBuffer = Buffer.from(
+    expectedSignature,
+    "hex"
+);
 
-                return res
-                .status(400)
-                .json({
+const receivedBuffer = Buffer.from(
+    razorpay_signature || "",
+    "hex"
+);
 
-                    success:false,
+if (
+    expectedBuffer.length !== 32 ||
+    receivedBuffer.length !== 32 ||
+    !crypto.timingSafeEqual(
+        expectedBuffer,
+        receivedBuffer
+    )
+) {
+    console.error(
+        "RAZORPAY SIGNATURE VERIFICATION FAILED"
+    );
 
-                    message:
-                        "Invalid Payment Signature"
-
-                });
-
-            }
+    return res.status(400).json({
+        success: false,
+        message: "Invalid Payment Signature"
+    });
+}
 
             const order =
                 await QuickOrder
