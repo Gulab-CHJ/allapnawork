@@ -1302,7 +1302,7 @@ function Home(
 
     ${Banner(banners)}
 
-
+${QuickServiceSection()}
     
 
 ${CustomerBakayaSection(customers)}
